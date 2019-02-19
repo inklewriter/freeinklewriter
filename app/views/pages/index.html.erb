@@ -10,7 +10,7 @@
     <meta name="format-detection" content="telephone=no"/>
 
     <title>inklewriter</title>
-    
+    <%= csrf_meta_tags %>
         
     
     
@@ -45,7 +45,7 @@
     
     <script type="text/javascript">
 //<![CDATA[
-var AUTH_TOKEN = "MW4HLqt4L1VWMYnkJ4IG/sCV+lx+8bj62z1dIIWrinE=";
+var AUTH_TOKEN = $('meta[name=csrf-token]').attr('content');
 //]]>
 </script>
     
