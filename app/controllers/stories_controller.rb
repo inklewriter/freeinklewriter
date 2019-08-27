@@ -21,12 +21,18 @@ class StoriesController < ApplicationController
   		end
 	end
 
+	# def update
+	# 	@user = current_user
+
+	# end
+
+
 	def create
 		@user = current_user
-		@story = @user.stories.new(data: params[:data])
+		@story = @user.stories.new(data: params[:data], title: params[:title])
 
 		if @story.save
-			render json: {}, :status => 201
+			render json: { title: @story.title, data: @story.data }, :status => 201
 		else
 			render json: {}, :status => 400
 		end
