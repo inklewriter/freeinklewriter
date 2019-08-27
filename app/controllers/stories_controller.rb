@@ -9,6 +9,10 @@ class StoriesController < ApplicationController
 		@user = current_user
 		@stories = @user.stories
 
+		@stories.each do |s|
+			s.url_key = s.id
+		end
+		
 		# if @stories.empty?
   #   		render json: {  }, :status => 200
   #   	else
