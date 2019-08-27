@@ -22,10 +22,18 @@ class StoriesController < ApplicationController
   		end
 	end
 
-	# def update
-	# 	@user = current_user
-
-	# end
+	def update
+		@story = Story.find(params[:id])
+		
+		if params[:data].present? and params[:title].present?
+			@story.data = params[:data]
+			@story.title = params[:title]
+			@story.save
+			render json: { message: "ok" }, :status => 201
+		else
+			render json: {}, :status => 400
+		end
+	end
 
 
 	def create
@@ -33,7 +41,7 @@ class StoriesController < ApplicationController
 		@story = @user.stories.new(data: params[:data], title: params[:title])
 
 		if @story.save
-			render json: { title: @story.title, data: @story.data }, :status => 201
+			render json: { title: @story.title, data: @story.data, url_key: @story.url_key }, :status => 201
 		else
 			render json: {}, :status => 400
 		end
@@ -55,6 +63,8 @@ class StoriesController < ApplicationController
 	end
 
 	def story_params
-    	params.require(:story).permit(:data)
+    	params.require(:story).permit(:data, :title)
   	end
+
+  	
 end
