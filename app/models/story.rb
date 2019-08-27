@@ -1,5 +1,5 @@
 class Story < ApplicationRecord
-	before_create :assign_url_key
+	after_create :assign_url_key
 
 	belongs_to :user
 
@@ -7,6 +7,7 @@ class Story < ApplicationRecord
 
 	def assign_url_key
 		self.url_key = self.id
+		self.save	
 	end
 
 end
