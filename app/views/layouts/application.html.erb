@@ -1,12 +1,52 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-GB">
+
+<!-- Mirrored from writer.inklestudios.com/ by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 19 Jun 2018 21:15:07 GMT -->
+
+
   <head>
-    <title>Freeifwriter</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>   
+    <meta name="viewport" content="width=device-width, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no"/>
+
+    <title>inklewriter</title>
+    
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+    <%= if File.exist?("app/assets/javascripts/#{params[:controller]}/#{params[:action]}.js") 
+    then javascript_include_tag "#{params[:controller]}/#{params[:action]}"
+    end %>
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-26887304-2']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+    
+    <script>
+
+        // get around console undefined bug in IE
+        if(typeof(console) === 'undefined') {
+            var console = {}
+            console.log = console.error = console.info = console.debug = console.warn = console.trace = console.dir = console.dirxml = console.group = console.groupEnd = console.time = console.timeEnd = console.assert = console.profile = function() {};
+        }
+
+
+        var AUTH_TOKEN = $('meta[name=csrf-token]').attr('content');
+    </script>
+
   </head>
 
   <body>

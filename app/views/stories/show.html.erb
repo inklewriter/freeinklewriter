@@ -1,0 +1,97 @@
+
+
+
+    <div id="main_viewport">
+        <div id="branding">
+            <img id="red" src="/img/red.png" />
+            <div id="shelf"></div>
+            <a href="http://www.inklestudios.com/inklewriter"><img src="/img/inklewriter_logo-beta.png" alt="inklewriter" id="logo" /></a>
+            
+            <div id="right-shelf-container">
+                <a class="shelf-icon" style="background-image: url('/img/sorcery-shelf-icon.png')" href="http://www.inklestudios.com/sorcery" tooltip="Sorcery!"></a>
+                <a class="shelf-icon" style="background-image: url('/img/80-days-shelf-icon.png')" href="http://www.inklestudios.com/80days" tooltip="80 Days"></a>
+            
+                <div id="saveStateMessage">
+                    
+                    
+                    
+                </div>
+            </div>
+            
+        </div>
+
+
+<script>
+
+$(document).ready(function() { 
+    
+    Player.setReadOnlyMode(true);
+    
+    // The story data
+    var storyData = <%= raw(@data) %>;
+    
+    // Start from beginning
+    StoryModel.importStory(storyData.title, storyData.data);
+    var initialStitches = Player.getSavedGame();
+    Player.setup(initialStitches);
+
+    sizeEditorCorrectly();
+    $(window).resize(sizeEditorCorrectly);
+})
+
+</script>
+
+<div id="sidebar-ads">
+    
+    <a class="app" href="http://www.inklestudios.com/sorcery?iw">
+        <img src="/img/sorcery-icon.png"/>
+        <h3>Steve Jackson's Sorcery!</h3>
+        <p>An epic journey through a magical land</p>
+    </a>
+    
+    <a class="app" href="http://www.inklestudios.com/80days">
+        <img src="/img/80-days-icon.png"/>
+        <h3>80 Days</h3>
+        <p>The award winning adaptation of Verne's classic.</p>
+    </a>
+    <!-- COMING SOON! -->
+    <!--a class="app" href="http://www.inklestudios.com/archives/561">
+        <img src="/img/dead-men-icon.png"/>
+        <h3>Down Among the Dead Men</h3>
+        <p>Take to the high seas in this pirate adventure!</p>
+    </a-->
+    <a href="http://www.inklestudios.com"><img src="/img/inkle-logo-small.png"/></a>
+</div>
+
+<div id="player_container">
+    
+    <div id="read_area">
+        
+        
+
+<!-- Initial chunk -->
+<div class="chunk">
+    
+    
+    <!-- Initial options -->
+    <div class="stitchBlock">
+            <div class='option_button'>&quot;Well, just one then.&quot;</div>
+            <div class='option_button'>&quot;No, I really must go.&quot;</div>
+    </div>
+    
+</div>
+
+        <!-- div>
+          < %= link_to 'Edit', edit_story_path(@story) % > |
+          < %= link_to 'Back to list of stories', stories_path % > |
+          < %= link_to 'View JSON', story_path(@story, :format => 'json') % >
+        </div -->
+        
+    </div> <!-- #read_area -->
+</div> <!-- #player_container -->
+
+
+            
+    </div>
+
+

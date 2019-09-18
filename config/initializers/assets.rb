@@ -13,3 +13,5 @@ Rails.application.config.assets.paths << Rails.root.join('node_modules')
 # folder are already added.
 # Rails.application.config.assets.precompile += %w( admin.js admin.css )
 Rails.application.config.assets.precompile += %w( ifwriter-main.js )
+Rails.application.config.assets.precompile += %w( pages/index.js )
+Rails.application.config.assets.precompile += %w( stories/show.js )

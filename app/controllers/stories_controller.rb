@@ -4,17 +4,20 @@ class StoriesController < ApplicationController
 	# before_action :check_story_owner, only: [:update, :destroy]
 	# before_action :current_user_x_story_id, only: [:show, :destroy]
 
+	def show
+		@story = Story.find(params[:id])
+		@data = {title: @story.title, data: @story.data}.to_json
+
+
+	end
+
 
 	def index
 		@user = current_user
 		@stories = @user.stories
 
 
-		# if @stories.empty?
-  #   		render json: {  }, :status => 200
-  #   	else
-  #   		render json: { @stories.to_a }, :status => 200
-  #   	end
+		
   		if @stories.empty?
   			render json: [], :status => 200
   		else
