@@ -9277,7 +9277,7 @@ var Editor = function() {
 //            footer: "<br/>Choose the <b>Release</b> option below to publish your story online at <a href='http://www.textadventures.co.uk'><b>textadventures.co.uk</b></a>."
         })
           , t = e.addField()
-          , n = window.location.protocol+"://"+window.location.host+"/stories/" + EditorAccount.currentStoryId();
+          , n = window.location.protocol+"//"+window.location.host+"/stories/" + EditorAccount.currentStoryId();
         t.value(n),
         t.$.find("input").css({
             borderRadius: 20,
@@ -9289,7 +9289,7 @@ var Editor = function() {
         t.select(),
         e.addButton("Okay"),
         e.addButton("Read now", function() {
-            window.open(window.location.protocol+"://"+window.location.host+"/stories/" + EditorAccount.currentStoryId())
+            window.open(window.location.protocol+"//"+window.location.host+"/stories/" + EditorAccount.currentStoryId())
         })
         /*
         e.addButton("Release", function() {
