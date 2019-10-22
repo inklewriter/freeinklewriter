@@ -38,7 +38,7 @@ $(document).ready(function(){
     
     rangy.init();
     
-    <%if current_user.present? %>        
+    <% if current_user.present? %>        
         EditorAccount.setUserSession({ 
             id:         <%= current_user.id %>, 
             email:      '<%= current_user.email %>'
@@ -48,7 +48,7 @@ $(document).ready(function(){
                 EditorMenu.processSignedInTasks();
             }
         });
-    <%else %>
+    <% else %>
         // Locally saved story
         if( EditorAccount.hasLocalStoryData() ) {
             Editor.setup();
@@ -60,7 +60,7 @@ $(document).ready(function(){
             new Splash();
         }
         
-    <%end %>
+    <% end %>
     EditorMenu.setup();
     
     sizeEditorCorrectly();

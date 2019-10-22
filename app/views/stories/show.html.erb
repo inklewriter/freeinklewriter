@@ -8,8 +8,8 @@
             <a href="http://www.inklestudios.com/inklewriter"><img src="/img/inklewriter_logo-beta.png" alt="inklewriter" id="logo" /></a>
             
             <div id="right-shelf-container">
-                <a class="shelf-icon" style="background-image: url('/img/sorcery-shelf-icon.png')" href="http://www.inklestudios.com/sorcery" tooltip="Sorcery!"></a>
-                <a class="shelf-icon" style="background-image: url('/img/80-days-shelf-icon.png')" href="http://www.inklestudios.com/80days" tooltip="80 Days"></a>
+                <!-- <a class="shelf-icon" style="background-image: url('/img/sorcery-shelf-icon.png')" href="http://www.inklestudios.com/sorcery" tooltip="Sorcery!"></a>
+                <a class="shelf-icon" style="background-image: url('/img/80-days-shelf-icon.png')" href="http://www.inklestudios.com/80days" tooltip="80 Days"></a> -->
             
                 <div id="saveStateMessage">
                     
@@ -28,7 +28,7 @@ $(document).ready(function() {
     Player.setReadOnlyMode(true);
     
     // The story data
-    var storyData = <%= raw(@data) %>;
+    var storyData = <%= @data.html_safe %>;
     
     // Start from beginning
     StoryModel.importStory(storyData.title, storyData.data);
@@ -43,7 +43,7 @@ $(document).ready(function() {
 
 <div id="sidebar-ads">
     
-    <a class="app" href="http://www.inklestudios.com/sorcery?iw">
+    <!-- <a class="app" href="http://www.inklestudios.com/sorcery?iw">
         <img src="/img/sorcery-icon.png"/>
         <h3>Steve Jackson's Sorcery!</h3>
         <p>An epic journey through a magical land</p>
@@ -53,14 +53,14 @@ $(document).ready(function() {
         <img src="/img/80-days-icon.png"/>
         <h3>80 Days</h3>
         <p>The award winning adaptation of Verne's classic.</p>
-    </a>
+    </a> -->
     <!-- COMING SOON! -->
     <!--a class="app" href="http://www.inklestudios.com/archives/561">
         <img src="/img/dead-men-icon.png"/>
         <h3>Down Among the Dead Men</h3>
         <p>Take to the high seas in this pirate adventure!</p>
     </a-->
-    <a href="http://www.inklestudios.com"><img src="/img/inkle-logo-small.png"/></a>
+    <!-- <a href="http://www.inklestudios.com"><img src="/img/inkle-logo-small.png"/></a> -->
 </div>
 
 <div id="player_container">
