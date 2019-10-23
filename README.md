@@ -1,24 +1,43 @@
-# README
+# Inklewriter / Freeinklewriter
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This project is a free reverse-engineered version of the (inklewriter server)[https://writer.inklestudios.com].
 
-Things you may want to cover:
+Thanks to Inklestudio for allowing us to use the JS code and make their work available for everyone again !
 
-* Ruby version
+## Crash course
 
-* System dependencies
+Caution, this is an untested method, more to come soon
 
-* Configuration
+On a debian / ubuntu server it should look like this 
 
-* Database creation
+  # install rbenv
+  cd
+  git clone https://github.com/rbenv/rbenv.git ~/.rbenv
+  echo 'export path="$home/.rbenv/bin:$path"' >> ~/.bashrc
+  echo 'eval "$(rbenv init -)"' >> ~/.bashrc
+  exec $shell
 
-* Database initialization
+  git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
+  echo 'export path="$home/.rbenv/plugins/ruby-build/bin:$path"' >> ~/.bashrc
+  exec $shell
 
-* How to run the test suite
+  rbenv install 2.6.5
+  rbenv global 2.6.5
+  ruby -v
 
-* Services (job queues, cache servers, search engines, etc.)
+  gem install rails -v 6.0.0
 
-* Deployment instructions
+  # install pgsql
+  sudo apt install postgresql-11 libpq-dev
 
-* ...
+  # Clone the app
+  git clone https://github.com/inklewriter/freeinklewriter
+
+  # Configure the app 
+  # That's @todo
+  # Create db & role
+  # Edit the local config
+ 
+  rake db:create
+
+  rails server
