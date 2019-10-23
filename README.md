@@ -9,7 +9,7 @@ Thanks to Inklestudio for allowing us to use the JS code and make their work ava
 Caution, this is an untested method, more to come soon
 
 On a debian / ubuntu server it should look like this 
-
+<code>
   # install rbenv
   cd
   git clone https://github.com/rbenv/rbenv.git ~/.rbenv
@@ -41,3 +41,4 @@ On a debian / ubuntu server it should look like this
   rake db:create
 
   rails server
+</code>
