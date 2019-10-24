@@ -8888,7 +8888,7 @@ var Editor = function() {
             t.url_key && t.url_key != "local" ? i.currentStoryId = t.url_key : (o = !0,
             i.currentStoryId = "local");
         var u = jQuery.stringifyJSON(t);
-        o ? _gaq.push(["_trackEvent", "Server Interaction", "Saving", "New story", u.length / 1e3]) : _gaq.push(["_trackEvent", "Server Interaction", "Saving", "Resave of existing story", u.length / 1e3]);
+        // o ? _gaq.push(["_trackEvent", "Server Interaction", "Saving", "New story", u.length / 1e3]) : _gaq.push(["_trackEvent", "Server Interaction", "Saving", "Resave of existing story", u.length / 1e3]);
         if (o)
             $.ajax({
                 type: "POST",
