@@ -45,10 +45,10 @@ Requires=network.target
 
 [Service]
 Type=simple
-User=deploy
-Group=wheel
+User=www-data
+Group=www-data
 WorkingDirectory=/var/www/freeinklewriter
-ExecStart=/usr/bin/bash -lc 'RAILS_ENV=production PORT=8080 bundle exec puma -C config/puma.rb'
+ExecStart=/bin/bash -lc 'RAILS_ENV=production PORT=8080 bundle exec puma -C config/puma.rb'
 TimeoutSec=30
 RestartSec=15s
 Restart=always
