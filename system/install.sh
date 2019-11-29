@@ -92,10 +92,11 @@ cd /var/www/freeinklewriter
 
 bundle install
 
+chown -R www-data:www-data /var/www/freeinklewriter
+
+
 su www-data -s /bin/bash -c "bin/rails db:migrate RAILS_ENV=production"
 su www-data -s /bin/bash -c "rake assets:precompile"
-
-chown -R www-data:www-data /var/www/freeinklewriter
 
 systemctl enable inklewriter
 systemctl start inklewriter
