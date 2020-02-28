@@ -1,0 +1,25 @@
+version: '3'
+
+volumes:
+  inkledb:
+    external: false
+
+services:
+
+  db:
+    env_file: .env
+    image: postgres
+    volumes:
+      - inkledb:/usr/local/pgsql/data
+      
+  app:
+    env_file: .env
+    build: .
+    volumes:
+        - .:/usr/src/app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+  
+
