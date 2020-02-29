@@ -9402,6 +9402,7 @@ var Editor = function() {
         EditorAccount.signedIn() ? F("sign out", e, J, "Sign out") : F("sign in", e, EditorAccount.signIn, "Sign in to your account"),
         F("new", e, EditorMenu.createNew, "Start a new story"),
         EditorAccount.signedIn() && F("open", e, EditorMenu.open, "Open one of your saved stories"),
+        EditorAccount.signedIn() && F("import", e, EditorMenu.importStory, "Import a story from another instance"),
         u != o ? (F("tutorial", e, EditorMenu.loadTutorial, "Load the tutorial"),
         EditorAccount.signedIn() ? u > t && F("share", e, EditorMenu.showShareDialogue, "Share your story") : F("share", e, EditorAccount.signIn, "Sign in to share your story")) : F("restart tutorial", e, EditorMenu.loadTutorial, "Restart the tutorial"),
         u != o && F("?", e, function() {
@@ -9502,9 +9503,75 @@ var Editor = function() {
     }
       , K = function() {
         var e = EditorAccount.loadLocalStory();
-        e && (Editor.load(e),
-        z())
-    };
+        e && (Editor.load(e),z())
+        }
+      , importStory = function(){
+
+        // Copy from N
+        var t = new Dialogue({
+            title: "Import",
+            message: "Paste the story to import"
+        })
+          , n = "Import story"
+          , r = $('<form><textarea rows=20 cols=45></textarea></form>');
+          
+        t.addContent(r);
+
+        var i = function() {
+          /*
+            var n = [];
+            EditorAccount.signedIn() && (n = EditorAccount.allStories());
+            var o = e.hasDelete ? '<div class="delete button">X</div>' : "";
+            for (var u in n) {
+                var a = n[u];
+                if (a) {
+                    var f = a.title
+                      , l = $("<li>" + f + o + "</li>");
+                    l.data("storyId", u),
+                    r.append(l)
+                }
+            }
+            r.find("li").bind("click tap", function() {
+                $(this).hasClass("selected") ? ($(this).removeClass("selected"),
+                s.disable()) : (r.find(".selected").removeClass("selected"),
+                $(this).addClass("selected"),
+                s.enable())
+            }),
+            r.find("li").bind("dblclick", function() {
+                var n = $(this).data("storyId");
+                n && (e.choose(n),
+                t.close())
+            }),
+            e.hasDelete && r.find(".delete.button").bind("click tap", function() {
+                var e = $(this).closest("li")
+                  , t = e.data("storyId")
+                  , n = EditorAccount.allStories()[t]
+                  , o = "Untitled";
+                n && (o = n.title);
+                var u = new Dialogue({
+                    title: "Delete story",
+                    message: "Are you sure you wish to delete the story " + o + "?"
+                });
+                u.addButton("Cancel"),
+                u.addButton("Delete", function() {
+                    EditorAccount.currentStoryId() == t && x(),
+                    EditorAccount.deleteStory(t),
+                    r.find("li").remove(),
+                    i(),
+                    s.disable(),
+                    u.close()
+                })
+            })
+          */
+        };
+        i(),
+        t.addButton("Cancel");
+        t.addButton("Import story", function() {
+          
+          console.log("import ")
+            })
+        return t
+      };
     return {
         eraseAndStartNew: x,
         createNew: _,
@@ -9525,7 +9592,8 @@ var Editor = function() {
         setup: V,
         update: U,
         processSignedInTasks: X,
-        loadLocalStory: K
+        loadLocalStory: K,
+        importStory: importStory,
     }
 }()
   , Player = function() {
