@@ -1,4 +1,4 @@
-version: '3'
+version: '3.3'
 
 volumes:
   inkledb:
@@ -10,11 +10,12 @@ services:
     env_file: .env
     image: postgres
     volumes:
-      - inkledb:/usr/local/pgsql/data
+      - inkledb:/var/lib/postgresql/data/pgdata
       
   app:
     env_file: .env
     build: .
+    image: inkewriter:0.1
     volumes:
         - .:/usr/src/app
     ports:
