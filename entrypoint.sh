@@ -2,7 +2,7 @@
 set -e
 
 # Remove a potentially pre-existing server.pid for Rails.
-rm -f /myapp/tmp/pids/server.pid
+rm -f /usr/src/app/tmp/pids/server.pid
 
 # Initialize / update DB
 rake db:create db:migrate
