@@ -8882,7 +8882,7 @@ var Editor = function() {
                 })
             }
     }
-      , M = function(t, n, s) {
+      , saveStoryData = function(t, n, s) {
         var o = !1;
         if (!i.currentStoryId || i.currentStoryId === "local")
             t.url_key && t.url_key != "local" ? i.currentStoryId = t.url_key : (o = !0,
@@ -8892,7 +8892,7 @@ var Editor = function() {
         if (o)
             $.ajax({
                 type: "POST",
-                url: r + "/stories.json",
+                url: r  + "/stories.json",
                 contentType: "application/json",
                 processData: !0,
                 data: u,
@@ -8992,7 +8992,7 @@ var Editor = function() {
         signOut: N,
         signedIn: C,
         openRegisterDialogue: S,
-        saveStoryData: M,
+        saveStoryData: saveStoryData,
         localSave: k,
         hasLocalStoryData: L,
         clearSession: c,
@@ -9071,7 +9071,7 @@ var Editor = function() {
       , T = function() {
         EditorAccount.signedIn() ? EditorAccount.startNewStory() : EditorAccount.clearSession()
     }
-      , N = function(e) {
+      , OpenStory = function(e) {
         var t = new Dialogue({
             title: e.title,
             message: e.message
@@ -9137,7 +9137,7 @@ var Editor = function() {
     }
       , C = function() {
         var e = function() {
-            var e = N({
+            var e = OpenStory({
                 title: "Open",
                 message: "Choose the story to open",
                 hasDelete: !0,
@@ -9171,7 +9171,7 @@ var Editor = function() {
         e.addButton("Cancel"),
         e.addButton("Enter", function() {
             e.close();
-            var t = N({
+            var t = OpenStory({
                 title: "Competition entry",
                 message: "Choose the story you'd like to enter in the competition",
                 mainButtonTitle: "Submit",
@@ -9510,66 +9510,50 @@ var Editor = function() {
         // Copy from N
         var t = new Dialogue({
             title: "Import",
-            message: "Paste the story to import"
+            message: "Paste your story to import in JSON format.",
+            footer: "After import, your story will be added to your account. Use the <b>Open</b> button to select it from the list and edit it.",
         })
           , n = "Import story"
           , r = $('<form><textarea rows=20 cols=45></textarea></form>');
-          
-        t.addContent(r);
 
-        var i = function() {
-          /*
-            var n = [];
-            EditorAccount.signedIn() && (n = EditorAccount.allStories());
-            var o = e.hasDelete ? '<div class="delete button">X</div>' : "";
-            for (var u in n) {
-                var a = n[u];
-                if (a) {
-                    var f = a.title
-                      , l = $("<li>" + f + o + "</li>");
-                    l.data("storyId", u),
-                    r.append(l)
-                }
-            }
-            r.find("li").bind("click tap", function() {
-                $(this).hasClass("selected") ? ($(this).removeClass("selected"),
-                s.disable()) : (r.find(".selected").removeClass("selected"),
-                $(this).addClass("selected"),
-                s.enable())
-            }),
-            r.find("li").bind("dblclick", function() {
-                var n = $(this).data("storyId");
-                n && (e.choose(n),
-                t.close())
-            }),
-            e.hasDelete && r.find(".delete.button").bind("click tap", function() {
-                var e = $(this).closest("li")
-                  , t = e.data("storyId")
-                  , n = EditorAccount.allStories()[t]
-                  , o = "Untitled";
-                n && (o = n.title);
-                var u = new Dialogue({
-                    title: "Delete story",
-                    message: "Are you sure you wish to delete the story " + o + "?"
-                });
-                u.addButton("Cancel"),
-                u.addButton("Delete", function() {
-                    EditorAccount.currentStoryId() == t && x(),
-                    EditorAccount.deleteStory(t),
-                    r.find("li").remove(),
-                    i(),
-                    s.disable(),
-                    u.close()
-                })
-            })
-          */
-        };
-        i(),
+        t.addContent(r);
         t.addButton("Cancel");
         t.addButton("Import story", function() {
-          
-          console.log("import ")
-            })
+
+            // Based on saveStoryData
+            var story = $(".dialogue textarea").val();
+            try { 
+              JSON.parse(story); 
+            } catch(e){
+              console.log("Invalid JSON format:",e);
+              alert("Oops, your JSON format is invalid!");
+            }
+            $.ajax({
+                type: "POST",
+                url: "/stories.json",
+                contentType: "application/json",
+                processData: !0,
+                data: story,
+                success: function(jqXHR, textStatus, errorThrown) {
+                    console.log("Successfully sent data (import)."),
+                    e=0,
+                    t.close()
+                },
+                error: function(t, n, r) {
+                    e++
+                    alert("Could not save new story. Try again ?")
+                }
+            }).done(function(e) {
+                console.log("Sending (importing) done."),
+                EditorAccount.fetchStories()
+            });
+            
+            
+          })
+
+
+
+
         return t
       };
     return {
