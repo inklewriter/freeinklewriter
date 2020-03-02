@@ -1,5 +1,5 @@
 ### Status
-[![Build Status](https://api.travis-ci.org/albancrommer/inklewriter.png)](https://travis-ci.com/inklewriter/freeinklewriter)
+[![Build Status](https://travis-ci.com/inklewriter/freeinklewriter.svg?branch=master)](https://travis-ci.com/inklewriter/freeinklewriter)
 
 # Inklewriter / Freeinklewriter
 
