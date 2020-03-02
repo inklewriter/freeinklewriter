@@ -4,4 +4,26 @@ rvm:
  - jruby
 services:
   - postgresql
+env:
+  global:
+
+    # for postgresql
+    - PGHOST=localhost
+    - PGPORT=5433
+    - PGUSER=postgres
+    - PGPASSWORD=anything
+    
+    # for application
+    - POSTGRES_DB=travis_ci
+    - POSTGRES_HOST=localhost
+    - POSTGRES_PORT=5433
+    - POSTGRES_USER=postgres
+    - POSTGRES_PASSWORD=anything
+    - SECRET_KEY_BASE=development_secret
+
+before_install:
+  # make sure postgres is initialised
+  - sudo sed -i -e '/local.*peer/s/postgres/all/' -e 's/peer\|md5/trust/g' /etc/postgresql/*/main/pg_hba.conf
+  - sudo service postgresql restart
+  - sleep 1
 
