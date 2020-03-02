@@ -1,3 +1,6 @@
+### Status
+[![Build Status](https://api.travis-ci.org/albancrommer/inklewriter.png)](https://travis-ci.com/inklewriter/freeinklewriter)
+
 # Inklewriter / Freeinklewriter
 
 This project is a free reverse-engineered version of the [inklewriter server](https://writer.inklestudios.com).
