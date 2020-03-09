@@ -1,4 +1,4 @@
-version: '3.3'
+version: '2'
 
 volumes:
   inkledb:
@@ -10,7 +10,7 @@ services:
     env_file: .env
     image: postgres
     volumes:
-      - inkledb:/var/lib/postgresql/data/pgdata
+      - inkledb:/opt
       
   app:
     env_file: .env
