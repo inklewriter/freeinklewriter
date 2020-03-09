@@ -1,7 +1,4 @@
-FROM ruby:2.5
-
-# QEMU to target ARM / raspi
-COPY qemu-arm-static /usr/bin/qemu-arm-static
+FROM arm32v6/ruby:2.5
 
 RUN apt-get update -qq && apt-get install -y --no-install-recommends nodejs postgresql-client && apt-get -q clean && rm -rf /var/lib/apt/lists
 RUN mkdir -p /usr/src/app
