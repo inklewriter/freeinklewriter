@@ -1,4 +1,4 @@
-FROM arm32v6/ruby:2.5
+FROM arm32v6/ruby:2.5-alpine
 
 RUN apt-get update -qq && apt-get install -y --no-install-recommends nodejs postgresql-client && apt-get -q clean && rm -rf /var/lib/apt/lists
 RUN mkdir -p /usr/src/app
