@@ -1,6 +1,6 @@
 FROM arm32v6/ruby:2.5-alpine
 
-RUN apt-get update -qq && apt-get install -y --no-install-recommends nodejs postgresql-client && apt-get -q clean && rm -rf /var/lib/apt/lists
+RUN apk update -qq && apk add  nodejs postgresql-client bash 
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 COPY Gemfile* /usr/src/app/ 
