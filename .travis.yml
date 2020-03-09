@@ -36,7 +36,7 @@ script:
     # test image: @todo
     # - docker run albancrommer/freeinklewriter-arm
     # push image: 
-      - >
+    - >
       if [ "$TRAVIS_BRANCH" == "arm" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
         docker login -u="$DOCKER_USER" -p="$DOCKER_PASS"
         TAG=latest 
