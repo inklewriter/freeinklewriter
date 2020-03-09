@@ -1,12 +1,20 @@
-FROM ruby:2.5
+FROM ruby:2.5-alpine
 
-RUN apt-get update -qq && apt-get install -y --no-install-recommends nodejs postgresql-client && apt-get -q clean && rm -rf /var/lib/apt/lists && mkdir -p /usr/src/app
-
+RUN apk add --update \ 
+  nodejs \
+  postgresql-client \
+  build-base \
+  postgresql-dev \
+  sqlite-dev \
+  && rm -rf /var/cache/apk/* \
+  && mkdir -p /usr/src/app \
 WORKDIR /usr/src/app
 COPY Gemfile* /usr/src/app/ 
-COPY entrypoint.sh /usr/bin/
-RUN chmod +x /usr/bin/entrypoint.sh && bundle install
+RUN cd /usr/src/app && bundle install
 COPY . . 
+
+COPY entrypoint.sh /usr/bin/
+RUN chmod +x /usr/bin/entrypoint.sh 
 
 ENTRYPOINT ["entrypoint.sh"]
 EXPOSE 3000
