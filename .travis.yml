@@ -4,6 +4,7 @@ rvm:
  - 2.5
 services:
   - postgresql
+  - docker
 env:
   global:
 
@@ -12,7 +13,7 @@ env:
     - PGPORT=5432
     - PGUSER=postgres
     - PGPASSWORD=anything
-    
+
     # for application
     - POSTGRES_DB=travis_ci
     - POSTGRES_HOST=localhost
@@ -37,7 +38,7 @@ script:
   - docker build -t albancrommer/freeinklewriter-arm .
   # test image: @todo
   # - docker run albancrommer/freeinklewriter-arm
-  # push image: 
+  # push image:
   - >
       if [ "$TRAVIS_BRANCH" == "arm" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
           echo "$DOCKER_PASS" | docker login -u=albancrommer --password-stdin;
