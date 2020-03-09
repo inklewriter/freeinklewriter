@@ -1,7 +1,6 @@
 FROM arm32v6/ruby:2.5-alpine
 
-RUN apk update 
-RUN apk add nodejs postgresql-client bash 
+RUN /sbin/apk add nodejs postgresql-client bash 
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 COPY Gemfile* /usr/src/app/ 

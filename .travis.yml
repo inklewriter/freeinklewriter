@@ -40,7 +40,7 @@ script:
   # push image: 
   - >
       if [ "$TRAVIS_BRANCH" == "arm" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
-          docker login -u="$DOCKER_USER" -p="$DOCKER_PASS";
+          echo "$DOCKER_PASS" | docker login -u=albancrommer --password-stdin;
           TAG=latest ;
           docker tag albancrommer/freeinklewriter-arm albancrommer/freeinklewriter-arm:$TAG;
           docker push albancrommer/freeinklewriter-arm:$TAG;
