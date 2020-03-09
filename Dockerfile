@@ -1,8 +1,7 @@
 FROM arm32v6/ruby:2.5-alpine
 
-RUN /sbin/apk add --no-cache nodejs postgresql-client bash 
-RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
+RUN mkdir -p /usr/src/app tmp/db && /sbin/apk add --no-cache nodejs postgresql-client bash 
 COPY Gemfile* /usr/src/app/ 
 RUN bundle install
 COPY . . 
