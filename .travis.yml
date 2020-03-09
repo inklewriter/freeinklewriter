@@ -35,15 +35,15 @@ script:
     - docker build -t albancrommer/freeinklewriter-arm .
     # test image: @todo
     # - docker run albancrommer/freeinklewriter-arm
-    # push image: @todo
-    # - >
-    # if [ "$TRAVIS_BRANCH" == "master" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
-    #   docker login -u="$DOCKER_USER" -p="$DOCKER_PASS"
-    #   TAG=$(grep "ENV MYSQL_VERSION" Dockerfile | awk 'NF>1{print $NF}')
-    #   docker tag albancrommer/freeinklewriter-arm albancrommer/freeinklewriter-arm:$TAG
-    #   docker push albancrommer/freeinklewriter-arm:$TAG
-    #   docker push albancrommer/freeinklewriter-arm
-    # fi
+    # push image: 
+      - >
+      if [ "$TRAVIS_BRANCH" == "arm" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
+        docker login -u="$DOCKER_USER" -p="$DOCKER_PASS"
+        TAG=latest 
+        docker tag albancrommer/freeinklewriter-arm albancrommer/freeinklewriter-arm:$TAG
+        docker push albancrommer/freeinklewriter-arm:$TAG
+        docker push albancrommer/freeinklewriter-arm
+      fi
 script:
   - RAILS_ENV=test bundle exec rake --trace db:migrate
   - bundle exec rake db:test:prepare
