@@ -29,22 +29,21 @@ before_install:
   - psql -c 'create database inklewriter_test' -U postgres
 
 script:
-    # prepare qemu
-    - docker run --rm --privileged multiarch/qemu-user-static:register --reset
-    # build image
-    - docker build -t albancrommer/freeinklewriter-arm .
-    # test image: @todo
-    # - docker run albancrommer/freeinklewriter-arm
-    # push image: 
-    - >
-      if [ "$TRAVIS_BRANCH" == "arm" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
-        docker login -u="$DOCKER_USER" -p="$DOCKER_PASS"
-        TAG=latest 
-        docker tag albancrommer/freeinklewriter-arm albancrommer/freeinklewriter-arm:$TAG
-        docker push albancrommer/freeinklewriter-arm:$TAG
-        docker push albancrommer/freeinklewriter-arm
-      fi
-script:
   - RAILS_ENV=test bundle exec rake --trace db:migrate
   - bundle exec rake db:test:prepare
+  # prepare qemu
+  - docker run --rm --privileged multiarch/qemu-user-static:register --reset
+  # build image
+  - docker build -t albancrommer/freeinklewriter-arm .
+  # test image: @todo
+  # - docker run albancrommer/freeinklewriter-arm
+  # push image: 
+  - >
+      if [ "$TRAVIS_BRANCH" == "arm" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
+      docker login -u="$DOCKER_USER" -p="$DOCKER_PASS"
+      TAG=latest 
+      docker tag albancrommer/freeinklewriter-arm albancrommer/freeinklewriter-arm:$TAG
+      docker push albancrommer/freeinklewriter-arm:$TAG
+      docker push albancrommer/freeinklewriter-arm
+      fi
 
