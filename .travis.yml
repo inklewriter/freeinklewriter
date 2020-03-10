@@ -1,3 +1,4 @@
+dist: xenial
 language: ruby
 sudo: required
 rvm:
@@ -28,12 +29,11 @@ before_install:
   - sudo service postgresql restart
   - sleep 1
   - psql -c 'create database inklewriter_test' -U postgres
+  - docker run --privileged linuxkit/binfmt:v0.6
 
 script:
   - RAILS_ENV=test bundle exec rake --trace db:migrate
   - bundle exec rake db:test:prepare
-  # prepare qemu
-  - docker run --rm --privileged multiarch/qemu-user-static:register --reset
   # build image
   - docker build -t albancrommer/freeinklewriter-arm .
   # test image: @todo
