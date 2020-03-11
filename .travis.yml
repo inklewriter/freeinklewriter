@@ -36,8 +36,8 @@ script:
   - bundle exec rake db:test:prepare
   # build image
   - docker build -t albancrommer/freeinklewriter-arm .
-  # test image: @todo
-  - docker run albancrommer/freeinklewriter-arm
+  # test image: 
+  - docker-compose up 
   # push image:
   - >
       if [ "$TRAVIS_BRANCH" == "arm" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
