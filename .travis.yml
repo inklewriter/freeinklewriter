@@ -37,7 +37,7 @@ script:
   # build image
   - docker build -t albancrommer/freeinklewriter-arm .
   # test image: 
-  - docker-compose up 
+  - cp .env.sample .env && docker-compose up 
   # push image:
   - >
       if [ "$TRAVIS_BRANCH" == "arm" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
