@@ -11,7 +11,7 @@ env:
     - PGPORT=5432
     - PGUSER=postgres
     - PGPASSWORD=anything
-    
+
     # for application
     - POSTGRES_DB=travis_ci
     - POSTGRES_HOST=localhost
@@ -30,4 +30,16 @@ before_install:
 script:
   - RAILS_ENV=test bundle exec rake --trace db:migrate
   - bundle exec rake db:test:prepare
+  # build and test docker image:
+  - cp .env.sample .env
+  - docker-compose up -d || travis_terminate 1
+  - docker-compose stop
+  - >
+      if [ "$TRAVIS_BRANCH" == "master" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
+          echo "$DOCKER_PASS" | docker login -u=albancrommer --password-stdin;
+          TAG=latest ;
+          docker tag albancrommer/inklewriter albancrommer/inklewriter:$TAG;
+          docker push albancrommer/inklewriter:$TAG;
+          docker push albancrommer/inklewriter;
+      fi
 
