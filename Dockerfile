@@ -1,4 +1,4 @@
-FROM arm32v6/ruby:2.5-alpine
+FROM arm32v7/ruby:2.5-alpine
 
 RUN apk add --update \
   bash \
