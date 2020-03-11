@@ -36,7 +36,8 @@ script:
   - bundle exec rake db:test:prepare
   # build and test docker image: 
   - cp .env.sample .env 
-  - docker-compose up -d
+  - docker-compose build -t albancrommer/freeinklewriter:latest
+  - docker-compose up -d --no-recreate
   - docker-compose stop 
   # push image:
   - >
