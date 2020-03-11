@@ -37,7 +37,7 @@ script:
   # build image
   - docker build -t albancrommer/freeinklewriter-arm .
   # test image: @todo
-  # - docker run albancrommer/freeinklewriter-arm
+  - docker run albancrommer/freeinklewriter-arm
   # push image:
   - >
       if [ "$TRAVIS_BRANCH" == "arm" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
