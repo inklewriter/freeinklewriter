@@ -7,6 +7,7 @@ RUN apk add --update \
   postgresql-client \
   postgresql-dev \
   sqlite-dev \
+  tzdata \
   && rm -rf /var/cache/apk/* \
   && mkdir -p /usr/src/app/tmp/db
 WORKDIR /usr/src/app
