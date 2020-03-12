@@ -31,7 +31,10 @@ reload(){
 }
 
 rm -f /tmp/ci*
-docker &
-while inotifywait -e close_write,close_nowrite,create,delete .; do 
-  reload& 
+while true; do 
+    docker &
+    read something
 done
+#while inotifywait -e close_write,close_nowrite,create,delete .; do 
+#  reload& 
+#done
