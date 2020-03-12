@@ -11,7 +11,8 @@ class StoriesController < ApplicationController
 			@story = Story.find(params[:id])
 			@data = {title: @story.title, data: @story.data}.to_json
 		else
-		render "stories/not_found"	
+          @id = params[:id]
+          render "stories/not_found"
 		end
 	end
 
