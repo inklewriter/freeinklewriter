@@ -7,8 +7,12 @@ class StoriesController < ApplicationController
 	before_action :check_story_owner, only: [:update, :destroy]
 
 	def show
-		@story = Story.find(params[:id])
-		@data = {title: @story.title, data: @story.data}.to_json
+		if Story.exists?(params[:id])
+			@story = Story.find(params[:id])
+			@data = {title: @story.title, data: @story.data}.to_json
+		else
+		render "stories/not_found"	
+		end
 	end
 
 
