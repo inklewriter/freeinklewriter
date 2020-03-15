@@ -2,7 +2,7 @@ dist: xenial
 language: ruby
 sudo: required
 rvm:
- - 2.5
+ - 2.6
 services:
   - postgresql
   - docker
