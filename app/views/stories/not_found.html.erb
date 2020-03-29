@@ -4,33 +4,54 @@
           <div id="shelf"></div>
           <a href="http://www.inklestudios.com/inklewriter"><img src="/img/inklewriter_logo-free.png" alt="inklewriter" id="logo" /></a>
       </div>
-      
-        <div id="player_container">
-          <div id="read_area">
+      <div id="player_container">
+        <div id="read_area">
 
-            <!-- Initial chunk -->
-            <div class="chunk">
+          <!-- Initial chunk -->
+          <div class="chunk">
 
-            <h1>Oops! Looks like you searched for a non-existing story.</h1>
-            <h3>You might have followed a link to a story stored on the legacy version of Inklewriter.</h3>
-            <p>If so there is a solution to your problem!</p>
+          <h1>Oops! Looks like you searched for a non-existing story.</h1>
+          <h3>You might have followed a link to a story stored on the legacy version of Inklewriter.</h3>
+          <p>If so there is a solution to your problem!</p>
 
-            <h3>Old stories can be imported out of the old database and into the new one, but the process should be fast and easy. You can start importing now:</h3>
+          <h3>Old stories can be imported out of the old database and into the new one, but the process should be fast and easy. You can start importing now:</h3>
 
-            <ol>
-              <li><a target="_blank" href="http://oldinklewriter.inklestudios.com/stories/<%= @id %>.json">Head to the legacy version of inklewriter</a> to grab your the story 
-              data in JSON format (if it exists, of course).</li>
-              </li>
+          <ol>
+            <li><a target="_blank" href="http://oldinklewriter.inklestudios.com/stories/<%= @id %>.json">Head to the legacy version of inklewriter</a> to grab your the story 
+            data in JSON format (if it exists, of course).</li>
+            </li>
 
-              <li> Open in another tab this version of inklewriter at <a target="_blank" href="https://www.inklewriter.com/">inklewriter.com</a>.</li>
-              <li>You'll need to first register a new account on the new version to import your story</li>
-              <li>Once logged in, click on the import link.</li>
-              <li>Copy the JSON data from your story, and paste it into the text area of the import box, and click Import.</li>
-              <li>Next click on the "open" link: your story should be here, ready to open.</li>
-            </ol>
+            <li> Open in another tab this version of inklewriter at <a target="_blank" href="https://www.inklewriter.com/">inklewriter.com</a>.</li>
+            <li>You'll need to first register a new account on the new version to import your story</li>
+            <li>Once logged in, click on the import link.</li>
+            <li>Copy the JSON data from your story, and paste it into the text area of the import box, and click Import.</li>
+            <li>Next click on the "open" link: your story should be here, ready to open.</li>
+          </ol>
 
-            </div>
-          </div> <!-- #read_area -->
-        </div> <!-- #player_container -->
-      
+          </div>
+        </div> <!-- #read_area -->
+      </div> <!-- #player_container -->
     </div>
+
+<style>
+
+  #player_container #read_area h1{
+    padding-top:20px;
+  }
+  #player_container .chunk {
+    padding: 50px;
+  }
+  p,ul,li,a, h3{
+    font-size: 16pt;    
+    text-align: left;
+    margin-top: 20px;
+    line-height: 1.4em;
+  }
+  li{
+    list-style-type: decimal;
+    margin-left: 20px;
+  }
+  h3{
+    font-weight: bold;
+  }
+</style>
