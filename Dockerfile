@@ -1,5 +1,7 @@
 FROM ruby:2.6-alpine
 
+WORKDIR /usr/src/app
+COPY Gemfile* /usr/src/app/ 
 RUN apk add --update \ 
   nodejs \
   postgresql-client \
@@ -8,9 +10,8 @@ RUN apk add --update \
   sqlite-dev \
   tzdata \
   && rm -rf /var/cache/apk/* \
-  && mkdir -p /usr/src/app \
-WORKDIR /usr/src/app
-COPY Gemfile* /usr/src/app/ 
+  && cd /usr/src/app \
+  && bundle install
 RUN cd /usr/src/app && bundle install
 COPY . . 
 
