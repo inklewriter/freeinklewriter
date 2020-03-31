@@ -70,7 +70,11 @@ class StoriesController < ApplicationController
 	# end
 
 	def set_user
-		@user = current_user
+		if current_user.present?
+			@user = current_user
+		else 
+			redirect_to root_path
+		end	
 	end
 
 	def check_story_owner
