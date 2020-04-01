@@ -9,7 +9,7 @@ We would like to thank Inkle Studio for letting us open their great software!
 
 ## Test 
 
-You can test it on https://ifwriter.crommer.fr
+You can test it on https://www.inklewriter.com
 
 ## Crash course
 
