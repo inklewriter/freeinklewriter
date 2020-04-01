@@ -11,7 +11,14 @@ We would like to thank Inkle Studio for letting us open their great software!
 
 You can test it on https://www.inklewriter.com
 
-## Crash course
+## Run your own
+
+We strongly advise you to check the [dedicated repository](https://github.com/inklewriter/freeinklewriter-system) for running this application on a system in a "production-ready" approach.
+
+It runs on x86 and arm, using docker-compose or as a system service.
+
+
+## Development Crash course
 
 ### docker-compose 
 
