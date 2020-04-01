@@ -30,13 +30,6 @@ docker-compose run
 ```
 Open your browser on http://localhost:3000
 
-### bash script (Debian-based systems)
-```
-cd /tmp # or any directory of your choice 
-wget https://raw.githubusercontent.com/inklewriter/freeinklewriter/master/system/install.sh
-bash ./install.sh
-```
-
 ## Support 
 
 Please open tickets in this issue tracker. 
