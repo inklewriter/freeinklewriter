@@ -8692,6 +8692,9 @@ var Editor = function() {
                             var s = i.error || "could not sign in";
                         else
                             var s = "could not sign in";
+                          
+                        // Add a reference to old version
+                        s += "<br /><b>If your account was created before March 11th, go read <a href=\"https://www.inklestudios.com/2019/03/11/inklewriter-is-back-online.html\" target=\"blank\">this blog post</a>.</b>"
                         n.failure(s)
                     } else
                         n.failure("could not sign in.")

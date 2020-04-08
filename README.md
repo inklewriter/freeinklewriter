@@ -9,9 +9,16 @@ We would like to thank Inkle Studio for letting us open their great software!
 
 ## Test 
 
-You can test it on https://ifwriter.crommer.fr
+You can test it on https://www.inklewriter.com
 
-## Crash course
+## Run your own
+
+We strongly advise you to check the [dedicated repository](https://github.com/inklewriter/freeinklewriter-system) for running this application on a system in a "production-ready" approach.
+
+It runs on x86 and arm, using docker-compose or as a system service.
+
+
+## Development Crash course
 
 ### docker-compose 
 
@@ -22,13 +29,6 @@ cp .env.template .env
 docker-compose run
 ```
 Open your browser on http://localhost:3000
-
-### bash script (Debian-based systems)
-```
-cd /tmp # or any directory of your choice 
-wget https://raw.githubusercontent.com/inklewriter/freeinklewriter/master/system/install.sh
-bash ./install.sh
-```
 
 ## Support 
 
