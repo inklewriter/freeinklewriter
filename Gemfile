@@ -40,7 +40,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 
 gem 'devise'
 # gem 'devise-jwt'
-gem 'bcrypt'
+
 
 
 group :development, :test do
