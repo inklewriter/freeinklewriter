@@ -2,19 +2,28 @@ default: &default
         adapter: postgresql
         encoding: unicode
         pool: 5
-        username: <%= ENV["POSTGRES_USER"] %>
-        password: <%= ENV["POSTGRES_PASSWORD"] %>
-        host: <%= ENV["POSTGRES_HOST"] %>
+        
 development:
   <<: *default
   database: inklewriter_dev
+  user: <%= Rails.application.secrets.db_user %>
+  password: <%= Rails.application.secrets.db_password %>
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
+  
+  
+
 test:
   <<: *default
   database: inklewriter_test
+  username: <%= ENV["POSTGRES_USER"] %>
+  password: <%= ENV["POSTGRES_PASSWORD"] %>
+  host: <%= ENV["POSTGRES_HOST"] %>
 
 production:
   <<: *default
   database: inklewriter_prod
+  username: <%= ENV["POSTGRES_USER"] %>
+  password: <%= ENV["POSTGRES_PASSWORD"] %>
+  host: <%= ENV["POSTGRES_HOST"] %>
