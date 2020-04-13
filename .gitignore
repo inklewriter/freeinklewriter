@@ -36,3 +36,4 @@
 
 # Docker
 .env
+/config/database.yml
