@@ -9,10 +9,10 @@ RUN apk add --update \
   postgresql-dev \
   sqlite-dev \
   tzdata \
+  yarn \
   && rm -rf /var/cache/apk/* \
   && cd /usr/src/app \
   && bundle install
-RUN cd /usr/src/app && bundle install
 COPY . . 
 
 COPY entrypoint.sh /usr/bin/
