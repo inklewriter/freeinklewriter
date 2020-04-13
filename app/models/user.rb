@@ -6,7 +6,7 @@ class User < ApplicationRecord
          
   has_many :stories, dependent: :destroy
 
-  validates :password, presence: true
+  
   validates :email, presence: true
   validates :email, format: { with: /\A\S+@.+\.\S+\z/ }
   
