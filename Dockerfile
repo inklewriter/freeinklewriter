@@ -13,11 +13,7 @@ RUN apk add --update \
   && rm -rf /var/cache/apk/* \
   && cd /usr/src/app \
   && bundle install
-#RUN cd /usr/src/app && bundle install 
-
 COPY . . 
-
-RUN cd /usr/src/app && rake assets:precompile 
 
 COPY entrypoint.sh /usr/bin/
 RUN chmod +x /usr/bin/entrypoint.sh 
