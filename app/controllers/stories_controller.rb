@@ -66,14 +66,12 @@ class StoriesController < ApplicationController
 	end
 
 	def set_user
-		if current_user.present?
-			return current_user		
-		end	
+		return current_user				
 	end
 
 	def check_story_owner
-		unless @user.id == Story.find(params[:id]).user.id
-	      	redirect_to root_path
+		unless set_user.id == Story.find(params[:id]).user.id
+	      	redirect_to "stories/not_story_owner"
 	    end	    
 	end
 
