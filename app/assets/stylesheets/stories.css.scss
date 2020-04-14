@@ -3,8 +3,33 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 
-.story-not-found {
+.story-not-found{
 	#player_container #read_area h1{
+    padding-top:20px;
+    
+  }
+  #player_container .chunk {
+    padding: 50px;
+  }
+  p,ul,li,a, h3{
+    font-size: 16pt;    
+    text-align: left;
+    margin-top: 20px;
+    line-height: 1.4em;
+  }
+  li{
+    list-style-type: decimal;
+    margin-left: 20px;
+  }
+  h3{
+    font-weight: bold;
+  }
+}
+
+  
+
+ .cannot-display-story{
+  #player_container #read_area h1{
     padding-top:20px;
   }
   #player_container .chunk {
@@ -22,5 +47,6 @@
   }
   h3{
     font-weight: bold;
+    margin-bottom: 40px;
   }
 }

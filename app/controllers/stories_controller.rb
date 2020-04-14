@@ -1,9 +1,7 @@
 class StoriesController < ApplicationController
 
 	# before_action :authenticate_user!, only: [:create, :update, :destroy] 
-	
-	# before_action :current_user_x_story_id, only: [:show, :destroy]
-	before_action :set_user, only: [:create, :update, :index, :destroy]
+	before_action :user_logged_in, only: [:create, :update, :destroy]
 	before_action :check_story_owner, only: [:update, :destroy]
 
 	def show
@@ -18,11 +16,11 @@ class StoriesController < ApplicationController
 
 
 	def index
-		@stories = @user.stories		
-  		if @stories.empty?
-  			render json: [], :status => 200
+		if current_user.present?
+			@stories = set_user.stories
+			render json:  @stories.to_a , :status => 200	  		
   		else
-  			render json:  @stories.to_a , :status => 200
+  			render "stories/cannot_display_stories"
   		end
 	end
 
@@ -42,7 +40,7 @@ class StoriesController < ApplicationController
 
 
 	def create		
-		@story = @user.stories.new(data: params[:data], title: params[:title])
+		@story = set_user.stories.new(data: params[:data], title: params[:title])
 		if @story.save
 			render json: { title: @story.title, data: @story.data, url_key: @story.url_key }, :status => 201
 		else
@@ -59,21 +57,17 @@ class StoriesController < ApplicationController
 		end	
 	end
 
-	private 
+	private 	
 
-	
-
-	# def current_user_x_story_id
-	# 	unless current_user.id == params[:user_id]
- #      		redirect_to root_path
- #    	end
-	# end
+	def user_logged_in
+		unless current_user.present?
+			redirect_to root_path
+		end
+	end
 
 	def set_user
 		if current_user.present?
-			@user = current_user
-		else 
-			redirect_to root_path
+			return current_user		
 		end	
 	end
 
