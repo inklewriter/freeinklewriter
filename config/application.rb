@@ -14,6 +14,8 @@ module Freeifwriter
 
     config.action_controller.default_protect_from_forgery = false
     
+    # Allow custom 404 500 ...
+    config.exceptions_app = self.routes
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers
