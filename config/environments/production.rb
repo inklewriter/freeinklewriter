@@ -105,7 +105,7 @@ Rails.application.configure do
       password: ENV["MAILING_PASSWORD"], #Your SMTP password
       authentication: :login,
       enable_starttls_auto: true,
-      domain: ENV["MAILING_PORT"]
+      domain: ENV["MAILING_DOMAIN"]
   }
 
 end
