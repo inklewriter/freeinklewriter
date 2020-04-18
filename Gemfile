@@ -42,6 +42,10 @@ gem 'devise'
 # gem 'devise-jwt'
 
 
+# premailer allows to define email styling in a CSS file and automatically inlines it when email is sent
+gem 'premailer-rails'
+
+
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
