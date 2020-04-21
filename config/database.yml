@@ -6,8 +6,10 @@ default: &default
 development:
   <<: *default
   database: inklewriter_dev
-  user: <%= Rails.application.secrets.db_user.present? ? Rails.application.secrets.db_user : ENV["POSTGRES_USER"] %>
-  password: <%= Rails.application.secrets.db_password.present? ? Rails.application.secrets.db_password : ENV["POSTGRES_PASSWORD"] %>
+  user: <%=  ENV.has_key?('POSTGRES_USER') ? ENV['POSTGRES_USER'] : Rails.application.secrets.db_user  %>
+  password: <%=  ENV.has_key?('POSTGRES_PASSWORD') ? ENV['POSTGRES_PASSWORD'] : Rails.application.secrets.db_password  %>
+  host: <%=  ENV.has_key?('POSTGRES_HOST') ? ENV['POSTGRES_HOST'] : Rails.application.secrets.dh_host  %>
+  
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
