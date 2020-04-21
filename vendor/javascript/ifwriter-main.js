@@ -10537,7 +10537,7 @@ var Editor = function() {
                 }]
             },
             LogicNextStep: {
-                content: ['Click where it says "Always show this option" and it will bring up an interface for adding tests, which have to either be passed - or /=not=/ be passed - for the option to appear. Try it now - and try it in *-read-* mode too!', {
+                content: ['Click where it says "Add conditions" and it will bring up an interface for adding tests, which have to either be passed - or /=not=/ be passed - for the option to appear. Try it now - and try it in *-read-* mode too!', {
                     option: "Okay, I get it",
                     linkPath: "inlineTests",
                     ifConditions: null,
