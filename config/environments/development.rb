@@ -33,7 +33,7 @@ Rails.application.configure do
   config.active_storage.service = :local
 
   # Don't care if the mailer can't send.
-  config.action_mailer.raise_delivery_errors = false
+  # config.action_mailer.raise_delivery_errors = true
 
   config.action_mailer.perform_caching = false
 
@@ -61,15 +61,21 @@ Rails.application.configure do
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.default :charset => "utf-8"
+
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 
   config.action_mailer.smtp_settings = {
       address: Rails.application.secrets.mailing_address.present? ? Rails.application.secrets.mailing_address : ENV["MAILING_ADDRESS"],
-      port: Rails.application.secrets.mailing_port.present? ? Rails.application.secrets.port : ENV["MAILING_PORT"],
+      port: Rails.application.secrets.mailing_port.present? ? Rails.application.secrets.mailing_port : ENV["MAILING_PORT"],
       user_name: Rails.application.secrets.mailing_user.present? ? Rails.application.secrets.mailing_user : ENV["MAILING_USER"], #Your SMTP user
       password: Rails.application.secrets.mailing_password.present? ? Rails.application.secrets.mailing_password : ENV["MAILING_PASSWORD"], #Your SMTP password
       authentication: :login,
       enable_starttls_auto: true,
+      ssl: true,
       domain: Rails.application.secrets.mailing_domain.present? ? Rails.application.secrets.mailing_domain : ENV["MAILING_DOMAIN"]
   }
 
