@@ -8741,7 +8741,7 @@ var Editor = function() {
         var e = new Dialogue({
             title: "Create new account",
             message: "Please enter your email address, and your desired password.",
-            footer: "<a href='javascript:EditorAccount.popupLoginHelp()'>Don't have an email address?</a>"
+            footer: "<a href='javascript:EditorAccount.popupLoginHelp()'>Don't have an email address?</a>\n"
         });
         s = e;
         var t = e.addField("Email")
@@ -8782,7 +8782,8 @@ var Editor = function() {
         }
         var r = new Dialogue({
             title: "Sign in",
-            message: "Welcome! Please enter your sign in details."
+            message: "Welcome! Please enter your sign in details.",
+            footer: "<br><a href='javascript:EditorAccount.popupPasswordRecovery()' style='' class='aside_help'>Forgotten password?</a>\n"
         });
         s = r,
         r.addContent("(or <a href='javascript:EditorAccount.openRegisterDialogue()'>Create New Account</a>)");
@@ -8891,7 +8892,6 @@ var Editor = function() {
             t.url_key && t.url_key != "local" ? i.currentStoryId = t.url_key : (o = !0,
             i.currentStoryId = "local");
         var u = jQuery.stringifyJSON(t);
-        // o ? _gaq.push(["_trackEvent", "Server Interaction", "Saving", "New story", u.length / 1e3]) : _gaq.push(["_trackEvent", "Server Interaction", "Saving", "Resave of existing story", u.length / 1e3]);
         if (o)
             $.ajax({
                 type: "POST",
@@ -8977,7 +8977,46 @@ var Editor = function() {
         }),
         i.currentStoryId === e && (A(),
         l())
-    };
+    },
+      popupPasswordRecovery = function() {
+        var dialogue = new Dialogue({
+            title: "Forgotten your password?",
+            message: "Don't worry! We will send you a link with instructions on how to reset it. \
+              In case you subscribed with a <b>username@inklewriter</b> email address, you will have to create a new account and reimport your stories."
+        });
+        var emailField = dialogue.addField("Your email");
+        dialogue.addButton("Cancel");
+        var validate_button = dialogue.addButton("Submit", function() {
+          if (!(emailField.value())) {
+              dialogue.setMessage("Please provide your email");
+              return;
+          }
+          validate_button.disable();
+          var data = {email:emailField.value()};
+          $.ajax({
+              type: "POST",
+              url: "/send_reset_password_instructions.json",
+              contentType: "application/json",
+              processData: !0,
+              data: jQuery.stringifyJSON(data),
+              success: function(jqXHR, textStatus, errorThrown) {
+                  dialogue.close();
+                  var okayDialogue = new Dialogue({
+                      title: "Check your email",
+                      message: "We have sent you the informations and a confirmation link."
+                  });
+                  okayDialogue.addButton("Okay", function() {
+                      okayDialogue.close()
+                  })              },
+              error: function(t, n, r) {
+                  alert("An error occured... Are you sure your email is valid?");
+                  validate_button.enable();
+              }
+          });
+        })   
+        
+    }
+    ;
     return $(document).ajaxSend(function(e, t, n) {
         if (typeof AUTH_TOKEN == "undefined")
             return;
@@ -9019,6 +9058,7 @@ var Editor = function() {
             return i.currentStoryId
         },
         popupLoginHelp: T,
+        popupPasswordRecovery: popupPasswordRecovery,
         fetchStories: g
     }
 }()
