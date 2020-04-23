@@ -8995,7 +8995,7 @@ var Editor = function() {
           var data = {email:emailField.value()};
           $.ajax({
               type: "POST",
-              url: "/send_reset_password_instructions.json",
+              url: "/users/password",
               contentType: "application/json",
               processData: !0,
               data: jQuery.stringifyJSON(data),
