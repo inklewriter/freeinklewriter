@@ -8992,7 +8992,11 @@ var Editor = function() {
               return;
           }
           validate_button.disable();
-          var data = {email:emailField.value()};
+          var data = {
+            "utf8" : "✓", 
+            "user" : 
+              {"email" : emailField.value(), "commit" : "Send me reset password instructions"}
+          };
           $.ajax({
               type: "POST",
               url: "/users/password",
