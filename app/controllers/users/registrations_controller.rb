@@ -3,6 +3,7 @@
 class Users::RegistrationsController < Devise::RegistrationsController
   # before_action :configure_sign_up_params, only: [:create]
   # before_action :configure_account_update_params, only: [:update]
+  clear_respond_to
   respond_to :json
   # GET /resource/sign_up
   # def new
@@ -10,31 +11,35 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # POST /resource
-  def create
-    # super
-    user = User.new(params[:user])
-    if user.save
-      render :json=> user.as_json(:auth_token=>user.authentication_token, :email=>user.email), :status=>201
-      return
-    else
-      warden.custom_failure!
-      render :json=> user.errors, :status=>422
-    end
-  end
+  # def create
+  #   super
+  #   # user = User.new(params[:user])
+  #   # if user.save
+  #   #   render :json=> user.as_json(:auth_token=>user.authentication_token, :email=>user.email), :status=>201
+  #   #   return
+  #   # else
+  #   #   warden.custom_failure!
+  #   #   render :json=> user.errors, :status=>422
+  #   # end
+    
+  # end
 
   # GET /resource/edit
   # def edit
   #   super
+    
   # end
 
   # PUT /resource
   # def update
   #   super
+    
   # end
 
   # DELETE /resource
   # def destroy
   #   super
+    
   # end
 
   # GET /resource/cancel
@@ -44,6 +49,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # removing all OAuth session data.
   # def cancel
   #   super
+    
   # end
 
   # protected
