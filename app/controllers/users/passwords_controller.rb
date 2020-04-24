@@ -1,15 +1,26 @@
 # frozen_string_literal: true
 
 class Users::PasswordsController < Devise::PasswordsController
+
+
+
   # GET /resource/password/new
   # def new
   #   super
   # end
 
   # POST /resource/password
-  # def create
-  #   super
-  # end
+  def create
+    self.resource = resource_class.send_reset_password_instructions(resource_params)
+    yield resource if block_given?
+    
+    if successfully_sent?(resource)
+      render json: { message: "success, an email has been sent over to you" }, status: 200
+    else
+      render json: { error: "email can't be found or is not valid" }, status: 400
+    end
+    
+  end
 
   # GET /resource/password/edit?reset_password_token=abcdef
   # def edit

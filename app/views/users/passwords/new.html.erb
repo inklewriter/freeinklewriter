@@ -1,16 +1,36 @@
-<h2>Forgot your password?</h2>
+<div id="main_viewport">
+      <div id="branding">
+          <img id="red" src="/img/red.png" />
+          <div id="shelf"></div>
+          <a href="http://www.inklestudios.com/inklewriter"><img src="/img/inklewriter_logo-free.png" alt="inklewriter" id="logo" /></a>
+      </div>
 
-<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
+      
+      <div id="player_container" class="cannot-display-story">
+        <div id="read_area">
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
+          <!-- Initial chunk -->
+          <div class="chunk">
 
-  <div class="actions">
-    <%= f.submit "Send me reset password instructions" %>
-  </div>
-<% end %>
+          <h1>Forgot your password?</h1>
 
-<%= render "users/shared/links" %>
+			<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+			  <%= render "devise/shared/error_messages", resource: resource %>
+
+			  <div class="field">
+			    <%= f.label :email %><br />
+			    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+			  </div>
+
+			  <div class="actions">
+			    <%= f.submit "Send me reset password instructions" %>
+			  </div>
+			<% end %>
+          
+
+          </div>
+        </div> <!-- #read_area -->
+      </div> <!-- #player_container -->
+      
+
+    </div>
