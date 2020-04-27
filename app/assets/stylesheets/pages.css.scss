@@ -2836,3 +2836,33 @@ li+li.addFlag {
     max-width: 100%;
     max-height: 200px
 }
+
+
+div.actions input[type=submit]{
+    background: rgb(166,166,166);
+    background: linear-gradient(0deg, rgb(141, 141, 141) 0%, rgb(190, 190, 190) 100%);
+    padding: 10px 20px;
+    margin: 20px 0;
+    font-size: 20px;
+    border-radius: 30px;
+    border: none;
+    color: white;
+    text-shadow: 0px -1px 1px #656565;
+    box-shadow: 0px 2px 3px #525252;
+}
+div.actions input[type="submit"]:hover {
+    background: #a6a6a6;
+    background: linear-gradient(0deg, #828282 0%, rgb(190, 190, 190)  100%);
+    text-shadow: 0px 1px 1px #656565;
+    box-shadow: inset 0px 2px 3px #8e8e8e;
+}
+div#error_explanation li {
+    color: red;
+    margin: 0px 0 40px;
+    font-weight: bold;
+    font-size: 20px;
+}
+#player_container #read_area #error_explanation h2 {
+    font-size: 24px;
+    padding-bottom: 20px;
+}
