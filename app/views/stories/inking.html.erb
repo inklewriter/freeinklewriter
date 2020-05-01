@@ -1,0 +1,137 @@
+
+
+    <div class="container" id="inking">
+
+        <h1>inklewriter JSON to ink converter</h1>
+
+        <p>This converter takes the data from an <a href="https://www.inklestudios.com/inklewriter">inklewriter</a> story, and converts it to an <a href="https://www.inklestudios.com/ink">ink</a> file.</p>
+        
+
+        
+        <div class="input_option">
+            <label for="json-story">Your current inklewriter story : </label>
+            <textarea id="json-story" name="inklewriter JSON story" rows="10"><%= @data %></textarea>
+        </div>
+
+
+
+        <div class="input_option">
+        	<input type="checkbox" id="terminateLooseEnds" checked/>
+            <label for="terminateLooseEnds">Terminate all loose ends with <pre class='inline'>-> END</pre> </label>            
+            
+        </div>
+
+        <div id="converted_ink" class="hidden converted_ink">
+            <button class="download_button" id="download_button">Download</button>
+            <pre id="result_ink" class="ink"></pre>
+        </div>
+
+        
+        </pre>
+    </div>
+
+    <!-- Hack to allow easy reuse of the node-based JS file! -->
+    <script>let exports = {}</script>
+    <%= javascript_include_tag 'inklewriter-convert.js' %>
+
+
+    <script>
+        
+        let currentFilename = "";
+        let convertedInk = "";
+        let convertedInkFilename = "";
+        let loadedJSONTxt = "";
+
+        // function onSelectFile(evt) {
+        //     let files = evt.target.files; // FileList object
+        //     if( !files || files.length <= 0 )
+        //         return;
+
+        //     let file = files[0];
+        //     var reader = new FileReader();
+
+        //     currentFilename = file.name;
+
+        //     reader.onload = function(theFile) {
+        //         loadedJSONTxt = reader.result;
+        //         convertLoadedText();
+        //     };
+
+        //     // Read in the image file as a data URL.
+        //     reader.readAsText(file);
+        // }
+
+
+        function inkConversion(e) {
+        	loadedJSONTxt = document.querySelector('#json-story').value;
+        	convertLoadedText();
+        }
+
+        function onCheckTerminate(evt) {
+            if( loadedJSONTxt ) {
+                // The re-conversion is too fast to be noticeable
+                // so let's insert a pause so it's clear that it's refreshed!
+                document.getElementById("result_ink").style.color = "white";
+                setTimeout(() => {
+                    convertLoadedText();
+                    document.getElementById("result_ink").style.color = "black";
+                }, 100);
+            }
+        }
+
+        // document.getElementById('file').addEventListener('change', onSelectFile, false);
+        document.getElementById('terminateLooseEnds').addEventListener('change', onCheckTerminate, false);
+        document.getElementById('download_button').addEventListener('click', download, false);
+        document.querySelector('#json-story').addEventListener('change', inkConversion, false);
+        document.addEventListener('DOMContentLoaded', inkConversion, false);
+
+        function convertLoadedText() {
+
+            let terminateLooseEnds = document.getElementById('terminateLooseEnds').checked;
+
+            try {
+                let loadedJSON = JSON.parse(loadedJSONTxt);
+                convertedInk = convert(loadedJSON, terminateLooseEnds);
+            } catch(e) {
+                convertedInk = e.toString();
+            }
+
+            convertedInkFilename = currentFilename.replace(".json", ".ink");
+            if( convertedInkFilename.indexOf(".ink") == -1 ) convertedInkFilename += ".ink";
+
+            document.getElementById('result_ink').innerText = convertedInk;
+            document.getElementById('converted_ink').classList.remove("hidden");
+            document.getElementById('download_button').innerText = "Download "+convertedInkFilename;
+        }
+
+        function download() {
+            download_file(convertedInkFilename, convertedInk);
+        }
+
+        // Yay, stackoverflow coding!
+        // https://stackoverflow.com/questions/8310657/how-to-create-a-dynamic-file-link-for-download-in-javascript
+        function download_file(name, contents, mime_type) {
+            mime_type = mime_type || "text/plain";
+
+            var blob = new Blob([contents], {type: mime_type});
+
+            var dlink = document.createElement('a');
+            dlink.download = name;
+            dlink.href = window.URL.createObjectURL(blob);
+            dlink.onclick = function(e) {
+                // revokeObjectURL needs a delay to work properly
+                var that = this;
+                setTimeout(function() {
+                    window.URL.revokeObjectURL(that.href);
+                }, 1500);
+            };
+
+            dlink.click();
+            dlink.remove();
+        }
+    </script>
+
+
+    <% content_for :headcss do %>    
+      <%= stylesheet_link_tag "inking.css" %>      
+  <% end %>

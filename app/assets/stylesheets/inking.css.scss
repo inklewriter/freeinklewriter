@@ -1,0 +1,46 @@
+body {
+	background-color: white;
+}
+
+#inking {
+
+	width: auto;
+	margin: 0 auto;
+	padding: 20px 5px 10px 5px;
+	max-width: 1000px;
+
+	h1 {
+		text-align: left;
+		font-size: 24px;
+		margin: 5px 0 10px 0;
+	}
+
+	textarea {
+		// display: block;
+	    width: 100%;
+	    max-width: 978px;
+	    border-radius: 5px;
+	    
+	    padding: 10px;
+
+	}
+
+	.input_option {
+		padding: 10px 0 10px 0;
+	}
+
+	.inline {
+		display: inline-block;
+	}
+
+	.converted_ink {
+		margin: 20px 0;
+		pre {
+			margin: 20px 0 0 0;
+			padding: 20px 5px;
+			border-radius: 5px;
+			box-shadow: 0px 5px 20px 0 rgba(0,0,0,0.13);
+		}
+	}
+
+}

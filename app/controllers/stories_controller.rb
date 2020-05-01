@@ -8,6 +8,15 @@ class StoriesController < ApplicationController
 		if Story.exists?(params[:id])
 			@story = Story.find(params[:id])
 			@data = {title: @story.title, data: @story.data}.to_json
+			
+			respond_to do |format|
+				format.html
+				format.json
+				format.ink { 
+					@data = {title: @story.title, data: @story.data, url_key: @story.id}.to_json 
+					render "inking.html"
+				}
+			end
 		else
           @id = params[:id]
           render "stories/not_found"

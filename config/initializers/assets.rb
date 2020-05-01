@@ -7,6 +7,8 @@ Rails.application.config.assets.version = '1.0'
 # Rails.application.config.assets.paths << Emoji.images_path
 # Add Yarn node_modules folder to the asset load path.
 Rails.application.config.assets.paths << Rails.root.join('node_modules')
+Rails.application.config.assets.paths << Rails.root.join('vendor', 'assets')
+
 
 # Precompile additional assets.
 # application.js, application.css, and all non-JS/CSS in the app/assets
@@ -15,3 +17,6 @@ Rails.application.config.assets.paths << Rails.root.join('node_modules')
 Rails.application.config.assets.precompile += %w( ifwriter-main.js )
 Rails.application.config.assets.precompile += %w( pages/index.js )
 Rails.application.config.assets.precompile += %w( stories/show.js )
+Rails.application.config.assets.precompile += %w( inklewriter-convert.js )
+Rails.application.config.assets.precompile += %w( inklewriter-convert.js.map )
+Rails.application.config.assets.precompile += %w( inking.css )
