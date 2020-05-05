@@ -9004,7 +9004,15 @@ var Editor = function() {
               processData: !0,
               data: jQuery.stringifyJSON(data),
               success: function(jqXHR, textStatus, errorThrown) {
+                
+                  if ( "errors" in jqXHR ) {
+                    errMsg = "The email you provided is not in the database or is invalid.";
+                    dialogue.setMessage(errMsg);
+                    validate_button.enable();
+                    return;
+                  }
                   dialogue.close();
+                  console.log( "j",jqXHR, "t",textStatus, "e",errorThrown, "d",data)                  
                   var okayDialogue = new Dialogue({
                       title: "Check your email",
                       message: "We have sent you the informations and a confirmation link."
@@ -9012,8 +9020,9 @@ var Editor = function() {
                   okayDialogue.addButton("Okay", function() {
                       okayDialogue.close()
                   })              },
-              error: function(t, n, r) {
-                  alert("An error occured... Are you sure your email is valid?");
+              error: function(jqXHR, textStatus, errorThrown, data) {
+                  console.log( jqXHR, textStatus, errorThrown, data)
+                  alert("An error occured... Something might be wrong with the server.");
                   validate_button.enable();
               }
           });

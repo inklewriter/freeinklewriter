@@ -15,9 +15,9 @@ class Users::PasswordsController < Devise::PasswordsController
     yield resource if block_given?
     
     if successfully_sent?(resource)
-      render json: { message: "success, an email has been sent over to you" }, status: 200
+      render json: { message: "Success, an email has been sent over to you" }, status: 200
     else
-      render json: { error: "email can't be found or is not valid" }, status: 400
+      render json: { errors: "Invalid or not found email address." }, status: 200
     end
     
   end
