@@ -10,12 +10,14 @@ class StoriesController < ApplicationController
 			@data = {title: @story.title, data: @story.data}.to_json
 			@author = @story.data["editorData"]["authorName"]
 			@title = @story.title
-			@story.data["stitches"][@story.data["initial"]]["content"].each do |elem|
-				if elem.is_a?String 
-					@first_stitch_content = elem
-				end
-			end
+			
+			# @story.data["stitches"][@story.data["initial"]]["content"].each do |elem|
+			# 	if elem.is_a?String 
+			# 		@first_stitch_content = elem
+			# 	end
+			# end
 
+			@first_stitches_content = []
 			finding_option(@story.data["stitches"][@story.data["initial"]])
 
 		else
@@ -69,8 +71,17 @@ class StoriesController < ApplicationController
 
 	private 
 
+	def find_chain(current_stitch)
+		current_stitch["content"].each do |elem|
+			if elem.is_a?String 
+				@first_stitches_content << elem
+			end
+		end
+	end
+
 	def find_next_stitch(current_stitch)
 		found = false
+
   		current_stitch["content"].each do |elem|
 			if elem.is_a?Hash 
 				if elem.has_key?("divert")
@@ -102,11 +113,11 @@ class StoriesController < ApplicationController
 
   	  		
   	def finding_option(current_stitch)
-  		 
+  		find_chain(current_stitch) 
   		if is_an_option(current_stitch)  			
   			@first_option_content = is_an_option(current_stitch)
   		else
-  			if find_next_stitch(current_stitch)
+  			if find_next_stitch(current_stitch)  				
   				finding_option(find_next_stitch(current_stitch))
   			else
   				@first_option_content = ""

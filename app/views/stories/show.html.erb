@@ -73,12 +73,23 @@ $(document).ready(function() {
     <h1><%= @title %></h1>
     <h2><%= @author %></h2>
     
-
-    <div class="stitch_block">
-        <div class='stitch openingStitch'>
-            <%= @first_stitch_content %> 
+    <% if @first_stitches_content.present? %>
+        <div class="stitch_block">
+            <div class='stitch openingStitch'>
+                <%= @first_stitches_content.first %> 
+            </div>
+            
+            <% @first_stitches_content = @first_stitches_content.drop(1) %>
+            
+            <% if @first_stitches_content.present? %>
+                <% @first_stitches_content.each do |value| %>
+                    <div class='stitch'>
+                        <%= value %> 
+                    </div>
+                <% end %>
+            <% end %>
         </div>
-    </div>
+    <% end %>
 
     <!-- Initial options -->
     <% if @first_option_content.present? %>
