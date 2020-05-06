@@ -9012,7 +9012,6 @@ var Editor = function() {
                     return;
                   }
                   dialogue.close();
-                  console.log( "j",jqXHR, "t",textStatus, "e",errorThrown, "d",data)                  
                   var okayDialogue = new Dialogue({
                       title: "Check your email",
                       message: "We have sent you the informations and a confirmation link."
