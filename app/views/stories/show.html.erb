@@ -81,10 +81,11 @@ $(document).ready(function() {
     </div>
 
     <!-- Initial options -->
-    <!-- <div class="stitchBlock">
-            <div class='option_button'>&quot;Well, just one then.&quot;</div>
-            <div class='option_button'>&quot;No, I really must go.&quot;</div>
-    </div> -->
+    <% if @first_option_content.present? %>
+        <div class="stitchBlock">
+                <div class='option_button'><%= @first_option_content %></div>                
+        </div>
+    <% end %>
     
 </div>
 

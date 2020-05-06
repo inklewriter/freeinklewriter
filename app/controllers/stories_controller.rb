@@ -16,6 +16,10 @@ class StoriesController < ApplicationController
 				end
 			end
 
+			finding_option(@story.data["stitches"][@story.data["initial"]])
+			
+
+
 		else
           @id = params[:id]
           render "stories/not_found"
@@ -87,5 +91,41 @@ class StoriesController < ApplicationController
     	params.require(:story).permit(:data, :title)
   	end
 
+  	def find_next_stitch(current_stitch)
+  		@story.data["stitches"][current_stitch]["content"].each do |elem|
+			if elem.is_a?Hash 
+				if elem.has_key?("divert")
+					return elem["divert"]	
+				else			
+					return false
+				end
+			end
+		end
+  	end	
+
+  	def is_an_option(current_stitch)
+  		@story.data["stitches"][current_stitch]["content"].each do |elem|
+			if elem.is_a?Hash 
+				if elem.has_key?("option")
+					return elem["option"]	
+				else
+					return false								
+				end
+			end
+		end
+  	end
+
+  	  		
+  	def finding_option(current_stitch)
+  		if is_an_option(current_stitch)
+  			@first_option_content = is_an_option(current_stitch)
+  		else
+  			if find_next_stitch(current_stitch)
+  				finding_option(find_next_stitch(current_stitch))
+  			else
+  				@first_option_content = ""
+  			end
+  		end
+  	end 	
   	
 end
