@@ -18,8 +18,13 @@ class StoriesController < ApplicationController
 				}
 			end
 		else
-          @id = params[:id]
-          render "stories/not_found"
+       		@id = params[:id]
+        	
+          	respond_to do |format|
+				format.html { render "stories/not_found.html.erb" }
+				format.json { render json: { message: "Oops like you searched for a non existing story"}, status: 500 }
+				format.ink { render "stories/not_found.html.erb" }
+			end
 		end
 	end
 
