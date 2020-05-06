@@ -2,7 +2,7 @@ version: '2'
 
 volumes:
   inkledb:
-    external: false
+    external: true
 
 services:
 
@@ -10,7 +10,7 @@ services:
     env_file: .env
     image: postgres
     volumes:
-      - inkledb:/opt
+      - inkledb:/var/lib/postgresql/data/pgdata
       
   app:
     env_file: .env
