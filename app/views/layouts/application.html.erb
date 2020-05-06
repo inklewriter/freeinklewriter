@@ -17,7 +17,8 @@
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-
+    <%= yield(:headcss) %>
+    
     <%= if File.exist?("app/assets/javascripts/#{params[:controller]}/#{params[:action]}.js") 
     then javascript_include_tag "#{params[:controller]}/#{params[:action]}"
     end %>
