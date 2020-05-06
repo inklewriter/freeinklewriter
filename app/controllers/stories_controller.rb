@@ -83,20 +83,26 @@ class StoriesController < ApplicationController
 
   	def is_an_option(current_stitch)
   		found = false
+  		answer = []
   		current_stitch["content"].each do |elem|
 			if elem.is_a?Hash 
 				if elem.has_key?("option")
-					found = elem["option"]												
+					answer << elem["option"]
+					found = true												
 				end
 			end
 		end
-		return found
+		if found
+			return answer
+		else
+			return false
+		end
 
   	end
 
   	  		
   	def finding_option(current_stitch)
-  		logger.debug is_an_option(current_stitch)  
+  		 
   		if is_an_option(current_stitch)  			
   			@first_option_content = is_an_option(current_stitch)
   		else
