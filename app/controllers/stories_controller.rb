@@ -17,8 +17,6 @@ class StoriesController < ApplicationController
 			end
 
 			finding_option(@story.data["stitches"][@story.data["initial"]])
-			
-
 
 		else
           @id = params[:id]
@@ -69,7 +67,48 @@ class StoriesController < ApplicationController
 		end	
 	end
 
-	private 	
+	private 
+
+	def find_next_stitch(current_stitch)
+		found = false
+  		current_stitch["content"].each do |elem|
+			if elem.is_a?Hash 
+				if elem.has_key?("divert")
+					found = @story.data["stitches"][elem["divert"]]	
+				end
+			end
+		end
+		return found
+  	end	
+
+  	def is_an_option(current_stitch)
+  		found = false
+  		current_stitch["content"].each do |elem|
+			if elem.is_a?Hash 
+				if elem.has_key?("option")
+					found = elem["option"]												
+				end
+			end
+		end
+		return found
+
+  	end
+
+  	  		
+  	def finding_option(current_stitch)
+  		logger.debug is_an_option(current_stitch)  
+  		if is_an_option(current_stitch)  			
+  			@first_option_content = is_an_option(current_stitch)
+  		else
+  			if find_next_stitch(current_stitch)
+  				finding_option(find_next_stitch(current_stitch))
+  			else
+  				@first_option_content = ""
+  			end
+  		end
+  	end 
+
+	
 
 	def user_logged_in
 		unless current_user.present?
@@ -91,41 +130,6 @@ class StoriesController < ApplicationController
     	params.require(:story).permit(:data, :title)
   	end
 
-  	def find_next_stitch(current_stitch)
-  		@story.data["stitches"][current_stitch]["content"].each do |elem|
-			if elem.is_a?Hash 
-				if elem.has_key?("divert")
-					return elem["divert"]	
-				else			
-					return false
-				end
-			end
-		end
-  	end	
-
-  	def is_an_option(current_stitch)
-  		@story.data["stitches"][current_stitch]["content"].each do |elem|
-			if elem.is_a?Hash 
-				if elem.has_key?("option")
-					return elem["option"]	
-				else
-					return false								
-				end
-			end
-		end
-  	end
-
-  	  		
-  	def finding_option(current_stitch)
-  		if is_an_option(current_stitch)
-  			@first_option_content = is_an_option(current_stitch)
-  		else
-  			if find_next_stitch(current_stitch)
-  				finding_option(find_next_stitch(current_stitch))
-  			else
-  				@first_option_content = ""
-  			end
-  		end
-  	end 	
+  		
   	
 end

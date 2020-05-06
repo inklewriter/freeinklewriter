@@ -81,7 +81,7 @@ $(document).ready(function() {
     </div>
 
     <!-- Initial options -->
-    <% if @first_option_content.present? %>
+    <% unless @first_option_content.empty? %>
         <div class="stitchBlock">
                 <div class='option_button'><%= @first_option_content %></div>                
         </div>
