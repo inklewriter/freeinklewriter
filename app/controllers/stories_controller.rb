@@ -8,15 +8,22 @@ class StoriesController < ApplicationController
 		if Story.exists?(params[:id])
 			@story = Story.find(params[:id])
 			@data = {title: @story.title, data: @story.data}.to_json
+			@author = @story.data["editorData"]["authorName"]
+			@title = @story.title
 			
+
 			respond_to do |format|
-				format.html
+				format.html {  
+                  @first_stitches_content = []
+                  finding_option(@story.data["stitches"][@story.data["initial"]])
+                }
 				format.json
 				format.ink { 
 					@data = {title: @story.title, data: @story.data, url_key: @story.id}.to_json 
 					render "inking.html"
 				}
 			end
+
 		else
        		@id = params[:id]
         	
@@ -71,7 +78,63 @@ class StoriesController < ApplicationController
 		end	
 	end
 
-	private 	
+	private 
+
+	def find_chain(current_stitch)
+		current_stitch["content"].each do |elem|
+			if elem.is_a?String 
+				@first_stitches_content << elem
+			end
+		end
+	end
+
+	def find_next_stitch(current_stitch)
+		found = false
+
+  		current_stitch["content"].each do |elem|
+			if elem.is_a?Hash 
+				if elem.has_key?("divert")
+					found = @story.data["stitches"][elem["divert"]]	
+				end
+			end
+		end
+		return found
+  	end	
+
+  	def is_an_option(current_stitch)
+  		found = false
+  		answer = []
+  		current_stitch["content"].each do |elem|
+			if elem.is_a?Hash 
+				if elem.has_key?("option")
+					answer << elem["option"]
+					found = true												
+				end
+			end
+		end
+		if found
+			return answer
+		else
+			return false
+		end
+
+  	end
+
+  	  		
+  	def finding_option(current_stitch)
+  		find_chain(current_stitch) 
+  		if is_an_option(current_stitch)  			
+  			@first_option_content = is_an_option(current_stitch)
+  		else
+  			if find_next_stitch(current_stitch)  				
+  				finding_option(find_next_stitch(current_stitch))
+  			else
+  				@first_option_content = ""
+  			end
+  		end
+  	end 
+
+	
 
 	def user_logged_in
 		unless current_user.present?
@@ -93,5 +156,6 @@ class StoriesController < ApplicationController
     	params.require(:story).permit(:data, :title)
   	end
 
+  		
   	
 end
