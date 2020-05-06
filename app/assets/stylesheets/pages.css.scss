@@ -549,6 +549,16 @@ a.shelf-icon:hover {
     text-align: center
 }
 
+
+.dialogue #content input.selectInput {
+    border-radius: 20px;
+    font-size: 14px;
+    text-decoration: underline;
+    padding: 10px;
+    width: 95%;
+    margin: 0px 0px 20px;
+}
+
 .dialogue #content .optionSet label {
     padding: 4px
 }
@@ -556,6 +566,7 @@ a.shelf-icon:hover {
 .dialogue p {
     margin-bottom: 20px
 }
+
 
 .splash {
     position: fixed;
