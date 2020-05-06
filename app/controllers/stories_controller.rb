@@ -8,6 +8,14 @@ class StoriesController < ApplicationController
 		if Story.exists?(params[:id])
 			@story = Story.find(params[:id])
 			@data = {title: @story.title, data: @story.data}.to_json
+			@author = @story.data["editorData"]["authorName"]
+			@title = @story.title
+			@story.data["stitches"][@story.data["initial"]]["content"].each do |elem|
+				if elem.is_a?String 
+					@first_stitch_content = elem
+				end
+			end
+
 		else
           @id = params[:id]
           render "stories/not_found"

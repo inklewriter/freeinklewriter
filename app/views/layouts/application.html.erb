@@ -10,7 +10,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="format-detection" content="telephone=no"/>
 
-    <title>inklewriter</title>
+    <title><%= content_for?(:title) ? yield(:title) : "inklewriter" %></title>
     
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>

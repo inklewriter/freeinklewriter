@@ -70,12 +70,21 @@ $(document).ready(function() {
 <!-- Initial chunk -->
 <div class="chunk">
     
+    <h1><%= @title %></h1>
+    <h2><%= @author %></h2>
     
+
+    <div class="stitch_block">
+        <div class='stitch openingStitch'>
+            <%= @first_stitch_content %> 
+        </div>
+    </div>
+
     <!-- Initial options -->
-    <div class="stitchBlock">
+    <!-- <div class="stitchBlock">
             <div class='option_button'>&quot;Well, just one then.&quot;</div>
             <div class='option_button'>&quot;No, I really must go.&quot;</div>
-    </div>
+    </div> -->
     
 </div>
 
@@ -93,3 +102,4 @@ $(document).ready(function() {
     </div>
 
 
+<% content_for :title do %><%= "#{@title} by #{@author}" %><% end %>
