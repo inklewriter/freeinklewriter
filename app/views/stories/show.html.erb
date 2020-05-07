@@ -92,10 +92,10 @@ $(document).ready(function() {
     <% end %>
 
     <!-- Initial options -->
-    <% if @first_option_content.present? %>
+    <% if @first_options_content.present? %>
         <div class="stitchBlock">
-            <% @first_option_content.each do |value| %>  
-            <div class='option_button'><%= value %></div>   
+            <% @first_options_content.each do |value| %>  
+                <div class='option_button'><%= value %></div>   
             <% end %>
         </div>
     <% end %>

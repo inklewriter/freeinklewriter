@@ -7,29 +7,29 @@ class StoriesController < ApplicationController
 	def show
 		if Story.exists?(params[:id])
 			@story = Story.find(params[:id])
-			@data = {title: @story.title, data: @story.data}.to_json
+			@data = {title: @story.title, data: @story.data, url_key: @story.id}.to_json
 			@author = @story.data["editorData"]["authorName"]
 			@title = @story.title
 			
 
 			respond_to do |format|
 				format.html {  
-                  @first_stitches_content = []
-                  finding_option(@story.data["stitches"][@story.data["initial"]])
+					# building preview here 
+                	@first_stitches_content = []
+                	@first_options_content = []
+                	finding_option(@story.data["stitches"][@story.data["initial"]], @first_stitches_content, @first_options_content)                	
                 }
 				format.json
-				format.ink { 
-					@data = {title: @story.title, data: @story.data, url_key: @story.id}.to_json 
-					render "inking.html"
-				}
+				format.ink { render "inking.html"	}
 			end
 
 		else
+			# below id is created to pass to the failing view the id of what might be an oldinklewriter story
        		@id = params[:id]
         	
           	respond_to do |format|
 				format.html { render "stories/not_found.html.erb" }
-				format.json { render json: { message: "Oops like you searched for a non existing story"}, status: 500 }
+				format.json { render json: { message: "Oops like you searched for a non existing story. You may head to legacy app and check this address http://oldinklewriter.inklestudios.com/stories/#{@id}.json to retrieve your story. You can then import it into the new app"}, status: 500 }
 				format.ink { render "stories/not_found.html.erb" }
 			end
 		end
@@ -80,10 +80,12 @@ class StoriesController < ApplicationController
 
 	private 
 
-	def find_chain(current_stitch)
+	# The 4 methods below help to recursively build the story preview in show action
+
+	def find_chain(current_stitch, story_diverts)
 		current_stitch["content"].each do |elem|
 			if elem.is_a?String 
-				@first_stitches_content << elem
+				story_diverts << elem
 			end
 		end
 	end
@@ -121,15 +123,15 @@ class StoriesController < ApplicationController
   	end
 
   	  		
-  	def finding_option(current_stitch)
-  		find_chain(current_stitch) 
+  	def finding_option(current_stitch, story_diverts, story_options)
+  		find_chain(current_stitch, story_diverts) 
   		if is_an_option(current_stitch)  			
-  			@first_option_content = is_an_option(current_stitch)
+  			story_options << is_an_option(current_stitch)  			
   		else
   			if find_next_stitch(current_stitch)  				
-  				finding_option(find_next_stitch(current_stitch))
+  				finding_option(find_next_stitch(current_stitch), story_diverts, story_options)
   			else
-  				@first_option_content = ""
+  				story_options = ""
   			end
   		end
   	end 
