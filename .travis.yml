@@ -32,6 +32,7 @@ script:
   - bundle exec rake db:test:prepare
   # build and test docker image:
   - cp .env.sample .env
+  - docker volume create --name=inkledb
   - docker-compose up -d || travis_terminate 1
   - docker-compose stop
   - >
