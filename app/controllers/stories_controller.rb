@@ -17,7 +17,8 @@ class StoriesController < ApplicationController
 					# building preview here 
                 	@first_stitches_content = []
                 	@first_options_content = []
-                	finding_option(@story.data["stitches"][@story.data["initial"]], @first_stitches_content, @first_options_content)                	
+                	finding_option(@story.data["stitches"][@story.data["initial"]], @first_stitches_content, @first_options_content)  
+                	@first_options_content = @first_options_content.flatten             	
                 }
 				format.json
 				format.ink { render "inking.html"	}
