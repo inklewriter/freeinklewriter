@@ -17,8 +17,7 @@ class StoriesController < ApplicationController
 					# building preview here 
                 	@first_stitches_content = []
                 	@first_options_content = []
-                	finding_option(@story.data["stitches"][@story.data["initial"]], @first_stitches_content, @first_options_content)  
-                	@first_options_content = @first_options_content.flatten             	
+                	finding_option(@story.data["stitches"][@story.data["initial"]], @first_stitches_content, @first_options_content)                 	            	
                 }
 				format.json
 				format.ink { render "inking.html"	}
@@ -104,37 +103,28 @@ class StoriesController < ApplicationController
 		return found
   	end	
 
-  	def is_an_option(current_stitch)
+  	def is_an_option(current_stitch, story_options)
   		found = false
   		answer = []
   		current_stitch["content"].each do |elem|
 			if elem.is_a?Hash 
 				if elem.has_key?("option")
-					answer << elem["option"]
+					story_options << elem["option"]
 					found = true												
 				end
 			end
 		end
-		if found
-			return answer
-		else
-			return false
-		end
-
   	end
 
   	  		
   	def finding_option(current_stitch, story_diverts, story_options)
   		find_chain(current_stitch, story_diverts) 
-  		if is_an_option(current_stitch)  			
-  			story_options << is_an_option(current_stitch)  			
-  		else
-  			if find_next_stitch(current_stitch)  				
-  				finding_option(find_next_stitch(current_stitch), story_diverts, story_options)
-  			else
-  				story_options = ""
-  			end
-  		end
+  		is_an_option(current_stitch, story_options)   					
+  		
+		if find_next_stitch(current_stitch)  				
+			finding_option(find_next_stitch(current_stitch), story_diverts, story_options)		
+		end
+  		
   	end 
 
 	
