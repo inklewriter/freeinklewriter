@@ -1,11 +1,10 @@
 
 
-    <div class="container" id="inking">
+    <div id="inking">
 
         <h1>inklewriter JSON to ink converter</h1>
 
-        <p>This converter takes the data from an <a href="https://www.inklestudios.com/inklewriter">inklewriter</a> story, and converts it to an <a href="https://www.inklestudios.com/ink">ink</a> file.</p>
-        
+        <p>This converter takes the data from an <a href="https://www.inklestudios.com/inklewriter">inklewriter</a> story, and converts it to an <a href="https://www.inklestudios.com/ink">ink</a> file.</p>       
 
         
         <div class="input_option">
@@ -18,16 +17,15 @@
         <div class="input_option">
         	<input type="checkbox" id="terminateLooseEnds" checked/>
             <label for="terminateLooseEnds">Terminate all loose ends with <pre class='inline'>-> END</pre> </label>            
-            
         </div>
 
         <div id="converted_ink" class="hidden converted_ink">
             <button class="download_button" id="download_button">Download</button>
-            <pre id="result_ink" class="ink"></pre>
+            <div id="result_ink" class="ink"></div>
         </div>
 
         
-        </pre>
+        
     </div>
 
     <!-- Hack to allow easy reuse of the node-based JS file! -->
