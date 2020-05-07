@@ -29,7 +29,7 @@ class StoriesController < ApplicationController
         	
           	respond_to do |format|
 				format.html { render "stories/not_found.html.erb" }
-				format.json { render json: { message: "Oops like you searched for a non existing story. You may head to legacy app and check this address http://oldinklewriter.inklestudios.com/stories/#{@id}.json to retrieve your story. You can then import it into the new app"}, status: 500 }
+				format.json { render json: { message: "Oops like you searched for a non existing story. You may head to legacy app and check this address http://oldinklewriter.inklestudios.com/stories/#{@id}.json to retrieve your story. You can then import it into the new app"}, status: 404 }
 				format.ink { render "stories/not_found.html.erb" }
 			end
 		end
