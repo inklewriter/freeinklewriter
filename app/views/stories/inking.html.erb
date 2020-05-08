@@ -20,7 +20,8 @@
         </div>
 
         <div id="converted_ink" class="hidden converted_ink">
-            <button class="download_button" id="download_button">Download</button>
+            <button class="download_button" id="download_button">Download .ink file</button> or 
+            <button id="copy-ink">copy .ink to clipboard</button>
             <pre id="result_ink" class="ink"></pre>
         </div>
 
@@ -82,6 +83,19 @@
         document.getElementById('download_button').addEventListener('click', download, false);
         document.querySelector('#json-story').addEventListener('change', inkConversion, false);
         document.addEventListener('DOMContentLoaded', inkConversion, false);
+        document.querySelector('#copy-ink').addEventListener('click', copyContent);
+
+        function copyContent() {
+            let textToCopy = document.querySelector('#result_ink').innerText;
+            let dummy = document.createElement("textarea");
+            document.body.appendChild(dummy);
+            // dummy.style.display = 'none';
+            dummy.value = textToCopy;
+            dummy.select();
+            dummy.setSelectionRange(0, 99999);
+            document.execCommand("copy");
+            document.body.removeChild(dummy);
+        }
 
         function convertLoadedText() {
 
@@ -99,7 +113,8 @@
 
             document.getElementById('result_ink').innerText = convertedInk;
             document.getElementById('converted_ink').classList.remove("hidden");
-            document.getElementById('download_button').innerText = "Download "+convertedInkFilename;
+            // document.getElementById('download_button').innerText = "Download "+convertedInkFilename;
+            
         }
 
         function download() {
