@@ -6422,7 +6422,7 @@ var GraphNode = function(e, t, n, r) {
     a
 };
 $(window).on("resize", (a,b,c) => { 
-  $(".dialogue").each( (key,element) => { 
+  $([".splash", ".dialogue"]).each( (key,element) => { 
       $(element).css("top",  ($(window).innerHeight() - $(element).height() ) / 2 ); 
       $(element).css("left", ( $(window).innerWidth() - $(element).width() ) / 2 );
   })
