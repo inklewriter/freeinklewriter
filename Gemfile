@@ -45,6 +45,7 @@ gem 'devise'
 # premailer allows to define email styling in a CSS file and automatically inlines it when email is sent
 gem 'premailer-rails'
 
+gem "health_check"
 
 
 group :development, :test do
