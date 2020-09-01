@@ -4844,9 +4844,13 @@ var EditorAccount = function() {
         var s = function(n, i) {
                 this.jqPlayOption = $('<div class="option_button">' + p(n.text()) + "</div>"), this.linkTo = n.linkStitch();
                 var s = this.linkTo;
+                var previousHeight =  $("#read_area").prop('scrollHeight');
                 !n.writeModeOnly && i ? this.jqPlayOption.bind("click tap", function() {
                     !t || e.last().hadSectionHeading && StoryModel.allowCheckpoints ? e.last().jqRewindButton.show() : e.first().jqRewindButton.show();
                     var i = s;
+                    let newHeight =  $("#read_area").prop('scrollHeight');
+                    let scrollTo = ( previousHeight > newHeight ? newHeight : previousHeight ) - 200;
+                    $("#read_area").animate({ scrollTop: scrollTo }, 1000);
                     $(".option_block").addClass("expired"), e.push(new r(i)), k(), y(), o(n)
                 }) : (this.jqPlayOption.addClass("disabled"), n.writeModeOnly ? this.jqPlayOption.attr("tooltip", "Switch to write mode to continue.") : this.jqPlayOption.attr("tooltip", "This option has been disallowed by conditions."))
             },
