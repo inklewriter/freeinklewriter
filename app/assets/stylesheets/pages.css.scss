@@ -273,6 +273,15 @@ a.shelf-icon {
     cursor: pointer
 }
 
+a.shelf-text {
+    color: white;
+    display: block;
+    float: right;
+    font-size: 9pt;
+    font-style: italic;
+    padding: .81em 0.4em 0em 0.4em;
+    text-decoration: none;
+}
 a.shelf-icon:hover {
     background-position: right center
 }
