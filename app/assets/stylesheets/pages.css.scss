@@ -2802,47 +2802,54 @@ li+li.addFlag {
     position: fixed;
     bottom: 10px;
     left: 10px;
-    width: 200px;
-    z-index: 10000
+    width: auto;
+    z-index: 10000;
+}
+
+#sidebar-ads img {
+    // display:inline-block;
 }
 
 #sidebar-ads a {
     display: block;
-    width: 200px;
+    width: 128px;
     border-radius: 10px;
     background: #4c4c4c;
     background: rgba(0, 0, 0, 0.35);
     text-align: center;
     padding: 15px;
-    margin: 10px
+    margin: 10px;    
+
+
 }
 
 #sidebar-ads a:hover {
     background: #222;
-    background: rgba(0, 0, 0, 0.5)
+    background: rgba(0, 0, 0, 0.5);
 }
 
 #sidebar-ads a.app {
     color: white;
     text-decoration: none;
-    text-align: left
+    text-align: left;
 }
 
 #sidebar-ads a.app img {
-    float: left;
-    margin-right: 10px
+    // float: left;
+    // margin-right: 10px;
 }
 
 #sidebar-ads a.app h3 {
-    margin-left: 74px;
     font-size: 11pt;
-    margin-bottom: 5px
+    margin: 5px 0;
+    font-weight: 500;
+    line-height: 1.15em
 }
 
 #sidebar-ads a.app p {
-    margin-left: 74px;
-    font-size: 10pt;
-    line-height: 1.1em
+    font-size: 9pt;
+    line-height: 1.2em;
+    color: #e0e0e0;
 }
 
 #player_container #illustration {

@@ -13,6 +13,16 @@
  *
  * Date: Mon Nov 21 21:11:03 2011 -0500
  */
+
+
+
+
+
+
+
+
+
+
 function cleanWordPaste(e) {
     var t = document.createElement("DIV");
     t.innerHTML = e;
