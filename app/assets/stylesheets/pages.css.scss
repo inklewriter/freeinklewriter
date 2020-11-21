@@ -2806,6 +2806,27 @@ li+li.addFlag {
     z-index: 10000;
 }
 
+#sidebar-ads .ad-container {
+
+}
+
+#sidebar-ads .ad-close {
+    text-align: center;
+    background-color: #271625;
+    color: #b1b1b1;
+    border-radius: 10px 10px 0 0;
+    margin: 0px 10px 0 10px; 
+    padding: 4px;
+    cursor: pointer;
+    opacity: 0.7;
+    user-select: none;
+}
+
+#sidebar-ads .ad-close:hover {
+    // background-color: #712771;
+    color: #d5d5d5;
+}
+
 #sidebar-ads img {
     // display:inline-block;
 }
@@ -2813,12 +2834,12 @@ li+li.addFlag {
 #sidebar-ads a {
     display: block;
     width: 128px;
-    border-radius: 10px;
+    border-radius: 0 0 10px 10px;
     background: #4c4c4c;
     background: rgba(0, 0, 0, 0.35);
     text-align: center;
     padding: 15px;
-    margin: 10px;    
+    margin: 0px 10px 10px 10px;    
 
 
 }
@@ -2828,25 +2849,25 @@ li+li.addFlag {
     background: rgba(0, 0, 0, 0.5);
 }
 
-#sidebar-ads a.app {
+#sidebar-ads a.ad-link {
     color: white;
     text-decoration: none;
     text-align: left;
 }
 
-#sidebar-ads a.app img {
+#sidebar-ads a.ad-link img {
     // float: left;
     // margin-right: 10px;
 }
 
-#sidebar-ads a.app h3 {
+#sidebar-ads a.ad-link h3 {
     font-size: 11pt;
     margin: 5px 0;
     font-weight: 500;
     line-height: 1.15em
 }
 
-#sidebar-ads a.app p {
+#sidebar-ads a.ad-link p {
     font-size: 9pt;
     line-height: 1.2em;
     color: #e0e0e0;
