@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         element.querySelector(".ad-close").addEventListener('click', function(){
             element.style.visibility = "hidden";
-            window.localStorage.setItem(element.dataset.adname, 'closed')
+            window.localStorage.setItem(element.dataset.adname, 'closed');
         })
     });
 
