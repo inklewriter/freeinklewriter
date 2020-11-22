@@ -22,7 +22,18 @@
     <%= if File.exist?("app/assets/javascripts/#{params[:controller]}/#{params[:action]}.js") 
     then javascript_include_tag "#{params[:controller]}/#{params[:action]}"
     end %>
-    
+
+    <%# adding inklewriter story reader to the controller stories and action show %>
+    <% if params[:controller] == "stories" and params[:action] == "show" %>
+    <%= javascript_include_tag 'inklewriter-read' %>  
+    <% end %>  
+
+    <%# adding inklewriter story writer to the root of site %>
+    <% if params[:controller] == "pages" and params[:action] == "index" %>
+    <%= javascript_include_tag 'inklewriter-write' %>  
+    <% end %>  
+
+
     <script>
 
         // get around console undefined bug in IE
