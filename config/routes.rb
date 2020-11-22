@@ -11,6 +11,9 @@ Rails.application.routes.draw do
   	resources :stories
   end
 
+  namespace :admin do
+    get '/', to: 'adminpages#index'
+  end
 
   match "/404", :to => "errors#not_found", :via => :all
   match "/500", :to => "errors#internal_server_error", :via => :all
