@@ -1,3 +1,39 @@
-// Place all the styles related to the admin/adminpages controller here.
+// Place all the styles related to the pages controller here.
 // They will automatically be included in application.css.
-// You can use Sass (SCSS) here: https://sass-lang.com/
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+html,body {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+    background: transparent;
+    position: relative
+}
+html {
+	
+}
+body {
+    line-height: 1;
+    
+}
+
+#index {
+
+    h1 {}
+    h2 {
+        margin: 0;
+        font-size: 1.2em;
+    }
+    table {
+        th {
+            padding: 10px;
+            text-align: center;
+        }
+        td {
+            text-align: center;
+        }
+    }
+}

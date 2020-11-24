@@ -1,2 +1,42 @@
+<div id="index">
+
 <p>Hello <%= current_user.email %></p>
 <p>You are an admin</p>
+
+	<div id="recent-stats">
+		<h1>Recent stats</h1>
+
+		<h2>New stories for the last 3 years</h2>
+		<table>
+			<tr>
+				<th></th>
+				<th>Jan</th>
+				<th>Feb</th>
+				<th>Mar</th>
+				<th>Apr</th>
+				<th>May</th>
+				<th>Jun</th>
+				<th>Jul</th>
+				<th>Aug</th>
+				<th>Sep</th>
+				<th>Oct</th>
+				<th>Nov</th>
+				<th>Dec</th>
+			</tr>
+			
+
+			<% @last_three_years.count.times do |y| %>
+				<% year = @current_year-y %>
+				<tr>
+					<td><%= year %></td>		
+				
+				<% 12.times do |m| %>
+					<td><%= @last_three_years[year.to_s][(m+1).to_s] %></td>
+				<% end %>	
+
+				</tr>
+			<% end %>
+		</table>
+	</div>
+
+</div>

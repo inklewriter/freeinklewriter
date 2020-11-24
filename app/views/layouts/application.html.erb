@@ -15,10 +15,14 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%# below stylesheet has been removed from global scope %>
+    <%# stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     <%= yield(:headcss) %>
-    
+    <%= stylesheet_link_tag    "#{params[:controller]}", media: 'all' %>
+
+
     <%= if File.exist?("app/assets/javascripts/#{params[:controller]}/#{params[:action]}.js") 
     then javascript_include_tag "#{params[:controller]}/#{params[:action]}"
     end %>
@@ -33,6 +37,10 @@
     <%= javascript_include_tag 'inklewriter-write' %>  
     <% end %>  
 
+    <%# adding inle CSS to stories and pages#index %>
+    <% if params[:controller] == "stories" or (params[:controller] == "pages" and params[:action] == "index") %>
+    <%= stylesheet_link_tag 'inklewriter' %>  
+    <% end %>  
 
     <script>
 
