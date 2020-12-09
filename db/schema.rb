@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_22_095701) do
+ActiveRecord::Schema.define(version: 2020_12_09_165106) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,6 +32,27 @@ ActiveRecord::Schema.define(version: 2020_11_22_095701) do
     t.index ["user_id"], name: "index_stories_on_user_id"
   end
 
+  create_table "story_stats", force: :cascade do |t|
+    t.integer "stitches"
+    t.integer "with_choice"
+    t.integer "with_condition"
+    t.integer "with_flag"
+    t.float "avg_words"
+    t.integer "total_words"
+    t.integer "advanced_syntax"
+    t.float "score_short"
+    t.float "score_medium"
+    t.float "score_long"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "story_id"
+    t.integer "with_end"
+    t.integer "with_image"
+    t.integer "with_divert"
+    t.integer "with_fake_choice"
+    t.index ["story_id"], name: "index_story_stats_on_story_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -48,4 +69,5 @@ ActiveRecord::Schema.define(version: 2020_11_22_095701) do
 
   add_foreign_key "admins", "users"
   add_foreign_key "stories", "users"
+  add_foreign_key "story_stats", "stories"
 end
