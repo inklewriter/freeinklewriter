@@ -20,7 +20,7 @@ module Rating
 			end
 
 			@pi_square = 2.5066282746310005024157652848110452530069867406099
-			puts "#{@s}"
+			
 		end
 
 
@@ -72,8 +72,9 @@ module Rating
 		    # 30K -> 250k
 		    # long_score = prob( @s.total_words, 200000, 80000 ) * score
 
-		    return { score_short: prob( @s.total_words, 2000, 800 ) * score, score_medium: prob( @s.total_words, 20000, 8000 ) * score, score_long: prob( @s.total_words, 200000, 80000 ) * score}
+		    # return { score_short: prob( @s.total_words, 2000, 800 ) * score, score_medium: prob( @s.total_words, 20000, 8000 ) * score, score_long: prob( @s.total_words, 200000, 80000 ) * score}
 
+		    return {score: score}
 		end
     
   	end  	
