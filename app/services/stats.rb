@@ -32,6 +32,7 @@ module Stats
     		@advancedSyntax = 0
     		@stitchesWithEnd = 0
     		@totalContentSize = 0
+    		@stitchesWithFlag = 0
    			# @useCondition = false
     		# @useFlag = false
 		end

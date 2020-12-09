@@ -54,6 +54,7 @@ class StoriesController < ApplicationController
 			@story.save
 
 			process_stats(@story)
+			process_rating(@story)
 			
 			render json: { message: "ok" }, :status => 201
 		else
@@ -99,6 +100,19 @@ class StoriesController < ApplicationController
 
 		@s.save
 
+	end
+
+	def process_rating(story_record)
+		
+		if story_record.story_stat.present? 
+			@s = @story.story_stat			
+			ratings = Rating::S_m_l_rating.new(story_record).calc
+			ratings.each do |k,v|
+				@s[k]=v
+			end
+			@s.save
+		end
+		
 	end
 
 	# The 4 methods below help to recursively build the story preview in show action
