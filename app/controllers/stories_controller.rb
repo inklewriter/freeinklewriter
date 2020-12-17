@@ -53,8 +53,8 @@ class StoriesController < ApplicationController
 			@story.title = params[:title]
 			@story.save
 
-			process_stats(@story)
-			process_rating(@story)
+			# process_stats(@story)
+			# process_rating(@story)
 			
 			render json: { message: "ok" }, :status => 201
 		else
@@ -84,36 +84,36 @@ class StoriesController < ApplicationController
 
 	private 
 
-	def process_stats(story_record)
-		if story_record.story_stat.present? 
-			@s = @story.story_stat
+	# def process_stats(story_record)
+	# 	if story_record.story_stat.present? 
+	# 		@s = @story.story_stat
 		
-		else
-			@s = @story.build_story_stat				
-		end
+	# 	else
+	# 		@s = @story.build_story_stat				
+	# 	end
 
-		stat_results = Stats::Story.new(story_record).stats	
+	# 	stat_results = Stats::Story.new(story_record).stats	
 
-		stat_results.each do |k,v|
-			@s[k]=v
-		end
+	# 	stat_results.each do |k,v|
+	# 		@s[k]=v
+	# 	end
 
-		@s.save
+	# 	@s.save
 
-	end
+	# end
 
-	def process_rating(story_record)
+	# def process_rating(story_record)
 		
-		if story_record.story_stat.present? 
-			@s = @story.story_stat			
-			ratings = Rating::S_m_l_rating.new(story_record).calc
-			ratings.each do |k,v|
-				@s[k]=v
-			end
-			@s.save
-		end
+	# 	if story_record.story_stat.present? 
+	# 		@s = @story.story_stat			
+	# 		ratings = Rating::S_m_l_rating.new(story_record).calc
+	# 		ratings.each do |k,v|
+	# 			@s[k]=v
+	# 		end
+	# 		@s.save
+	# 	end
 		
-	end
+	# end
 
 	# The 4 methods below help to recursively build the story preview in show action
 
