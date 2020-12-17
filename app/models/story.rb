@@ -1,7 +1,7 @@
 class Story < ApplicationRecord
 	after_create :assign_url_key
-	after_save :process_stats
-	after_save :process_rating
+	after_save :process_stats, if: :dataispresent
+	after_save :process_rating, if: :dataispresent
 
 
 	belongs_to :user
@@ -12,6 +12,10 @@ class Story < ApplicationRecord
 	def assign_url_key
 		self.url_key = self.id
 		self.save	
+	end
+
+	def dataispresent
+		self.data.present?
 	end
 
 	def process_stats
