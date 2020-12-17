@@ -9505,7 +9505,7 @@ var Editor = function() {
         I(),
         q()
     }
-      , z = function() {
+      , requireSave = function() {
         if (u == o)
             return;
         u == e && R(t),
@@ -9536,7 +9536,7 @@ var Editor = function() {
                     }, function() {
                         console.log("Save failed. Retrying..."),
                         R(n),
-                        z()
+                        requireSave()
                     })
                 } else
                     console.log("Skipping save since a save is already in progress (or it's already up to date).");
@@ -9553,7 +9553,7 @@ var Editor = function() {
             console.log("Newly edited file requires save since now logged in."),
             EditorAccount.closeCurrentStory(),
             U(),
-            z();
+            requireSave();
         else if (u === e) {
             var t = EditorAccount.loadCurrentStory();
             t && (u = s,
@@ -9562,9 +9562,11 @@ var Editor = function() {
             console.log("Loaded latest story."))
         }
     }
-      , V = function() {
+      , setup = function() {
         U(),
-        EditorAccount.signedIn() || u >= n && u < s && R(t)
+        EditorAccount.signedIn() || u >= n && u < s && R(t),        
+        // Allow users to click on the "saved" element to trigger a new save
+        $("#saveStateMessage").on("click",function(event){ EditorMenu.requireSave(); })
     }
       , J = function() {
         EditorAccount.signedIn() && L(function() {
@@ -9585,7 +9587,7 @@ var Editor = function() {
     }
       , K = function() {
         var e = EditorAccount.loadLocalStory();
-        e && (Editor.load(e),z())
+        e && (Editor.load(e),requireSave())
         }
       , importStory = function(){
 
@@ -9653,9 +9655,9 @@ var Editor = function() {
         inPlayMode: function() {
             return c
         },
-        requireSave: z,
+        requireSave: requireSave,
         unsavedChanges: W,
-        setup: V,
+        setup: setup,
         update: U,
         processSignedInTasks: X,
         loadLocalStory: K,
