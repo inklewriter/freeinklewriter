@@ -25,7 +25,7 @@ class Story < ApplicationRecord
 			self.story_stat[k]=v
 		end
 
-		# self.save
+		self.story_stat.save
 
 	end
 
@@ -36,7 +36,7 @@ class Story < ApplicationRecord
 			ratings.each do |k,v|
 				self.story_stat[k]=v
 			end
-			# self.save
+			self.story_stat.save
 		end
 		
 	end
