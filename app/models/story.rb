@@ -3,6 +3,7 @@ class Story < ApplicationRecord
 	after_save :process_stats, if: :data_is_present
 	after_save :process_rating, if: :data_is_present
 	before_save :sanitize_title
+	before_save :sanitize_author
 
 	belongs_to :user
 	has_one :story_stat, dependent: :destroy
@@ -50,6 +51,12 @@ class Story < ApplicationRecord
 	def sanitize_title
 		if self.title.present?
 			self.title = ActionController::Base.helpers.sanitize(self.title)
+		end
+	end
+
+	def sanitize_author
+		if self.data["editorData"]["authorName"].present?
+			self.data["editorData"]["authorName"] = ActionController::Base.helpers.sanitize(self.data["editorData"]["authorName"])
 		end
 	end
 
