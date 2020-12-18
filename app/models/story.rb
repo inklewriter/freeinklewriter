@@ -1,8 +1,8 @@
 class Story < ApplicationRecord
 	after_create :assign_url_key
-	after_save :process_stats, if: :dataispresent
-	after_save :process_rating, if: :dataispresent
-
+	after_save :process_stats, if: :data_is_present
+	after_save :process_rating, if: :data_is_present
+	before_save :sanitize_title
 
 	belongs_to :user
 	has_one :story_stat, dependent: :destroy
@@ -14,7 +14,7 @@ class Story < ApplicationRecord
 		self.save	
 	end
 
-	def dataispresent
+	def data_is_present
 		self.data.present?
 	end
 
@@ -43,6 +43,12 @@ class Story < ApplicationRecord
 			self.story_stat.save
 		end
 		
+	end
+
+	def sanitize_title
+		if self.title.present?
+			self.title = ActionController::Base.helpers.sanitize(self.title)
+		end
 	end
 
 end
