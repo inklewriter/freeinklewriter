@@ -7,6 +7,8 @@ class Story < ApplicationRecord
 	belongs_to :user
 	has_one :story_stat, dependent: :destroy
 
+	validates :data, presence: true
+
 	private
 
 	def assign_url_key
