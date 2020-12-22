@@ -1,14 +1,19 @@
 class Story < ApplicationRecord
+
 	after_create :assign_url_key
 	after_save :process_stats, if: :data_is_present
 	after_save :process_rating, if: :data_is_present
 	before_save :sanitize_title
 	before_save :sanitize_author
+	before_save :sanitize_stitches
 
 	belongs_to :user
 	has_one :story_stat, dependent: :destroy
 
 	validates :data, presence: true
+	
+
+	
 
 	private
 
@@ -58,6 +63,57 @@ class Story < ApplicationRecord
 		if self.data["editorData"]["authorName"].present?
 			self.data["editorData"]["authorName"] = ActionController::Base.helpers.sanitize(self.data["editorData"]["authorName"])
 		end
+	end
+
+	def sanitize_stitches
+		
+		if self.data.present?			
+			nh = {}
+			olds = self.data
+			
+			olds.each do |k1,v1|				
+				if k1 == "stitches"						
+					nh[k1] = {}
+
+					v1.each do |k2,v2|						
+						nh[k1][k2] = {}
+
+						v2.each do |k3,v3|							
+
+							if k3 == "content"
+								cont = []
+								v3.each do |elem|
+									if elem.is_a?String
+										st = ActionController::Base.helpers.sanitize(elem)
+										cont << st
+									elsif elem.is_a?Hash
+										sh = {}
+										elem.each do |k4,v4|
+											if k4 == "option"	
+												sh[k4] = ActionController::Base.helpers.sanitize(v4)
+											else
+												sh[k4] = v4												
+											end											
+										end											
+										cont << sh								
+									else
+										cont << elem
+									end
+								end
+								nh[k1][k2][k3] = cont
+							else
+								nh[k1][k2][k3] = v3
+							end
+
+						end
+
+					end	
+				else 
+					nh[k1] = v1					
+				end				
+			end
+		end
+		self.data = nh
 	end
 
 end
