@@ -53,6 +53,7 @@ document.addEventListener('DOMContentLoaded', function() {
         				<span class="title">${s[1]}</span>
         				<span class="author">${s[2]}</span>
         				<span class="email">${s[3]}</span>
+        				<span class="score">${s[4]}</span>
         			</p>
         			`
         		});

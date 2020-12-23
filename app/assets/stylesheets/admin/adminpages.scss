@@ -62,6 +62,7 @@ body {
     #search-results {
         span {
             display: inline-block;
+            overflow: hidden
         }
         .id {
             width: 40px;
@@ -76,7 +77,12 @@ body {
                 width: 140px;
         }
         .email {
-            width: 140px;
+            width: 220px;
+        }
+        .score {
+            width: 220px;
+            color: #c39;
+            font-weight: bold;
         }
 
     }

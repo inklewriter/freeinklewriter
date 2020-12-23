@@ -25,7 +25,7 @@ class Admin::AdminpagesController < Admin::AuthorizerController
 		if %i( minwords maxwords minday maxday minmonth maxmonth minyear maxyear).all? { |key| params[:rating_search][key].present? }
 			
 			subselection = Story.joins(:story_stat).where(created_at: Date.civil(params[:rating_search][:minyear].to_i, params[:rating_search][:minmonth].to_i, params[:rating_search][:minday].to_i)..Date.civil(params[:rating_search][:maxyear].to_i, params[:rating_search][:maxmonth].to_i, params[:rating_search][:maxday].to_i), story_stats: {total_words: params[:rating_search][:minwords].to_i..params[:rating_search][:maxwords].to_i}).order(score: :desc).first(10)
-			subselection_ids = subselection.map {|e| [e.id, e.title, e.data["editorData"]["authorName"], e.user.email]}
+			subselection_ids = subselection.map {|e| [e.id, e.title, e.data["editorData"]["authorName"], e.user.email, e.story_stat.score]}
 			if subselection_ids.present? 
 				message = "Search successful. Hourray some results have been found"
 			else
