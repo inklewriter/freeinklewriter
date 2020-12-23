@@ -3,6 +3,7 @@ class Story < ApplicationRecord
 	after_create :assign_url_key
 	after_save :process_stats, if: :data_is_present
 	after_save :process_rating, if: :data_is_present
+	
 	before_save :sanitize_title
 	before_save :sanitize_author
 	before_save :sanitize_stitches

@@ -22,18 +22,38 @@ body {
 
 #index {
 
+    padding: 10px;
+
     h1 {}
     h2 {
         margin: 0;
         font-size: 1.2em;
     }
-    table {
+    table#stats  {
         th {
             padding: 10px;
             text-align: center;
         }
         td {
             text-align: center;
+        }
+    }
+
+    table#search {
+        td:nth-child(1) {
+            padding: 10px;
+            width: 80px;
+            text-align: center;
+        }
+        td:nth-child(2) {
+            width: 200px;
+        }
+        input {
+            width: 120px;
+            align: left;
+        }
+        output {
+            width: 200px;
         }
     }
 }
