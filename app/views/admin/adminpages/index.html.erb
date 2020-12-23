@@ -47,10 +47,10 @@
 					words
 				</td>
 				<td>
-					<%= text_field_tag "minwords", nil, placeholder: "min", class: "search-elem-text" %>
+					<%= text_field_tag "minwords", 200, placeholder: "min", class: "search-elem-text" %>
 				</td>
 				<td>
-					<%= text_field_tag "maxwords", nil, placeholder: "max", class: "search-elem-text" %>
+					<%= text_field_tag "maxwords", 500, placeholder: "max", class: "search-elem-text" %>
 				</td>		 
 			</tr>
 			<tr>
@@ -89,6 +89,10 @@
 
 		
 		</table>
+
+		<div id="search-results">
+			
+		</div>
 	</div>
 
 </div>

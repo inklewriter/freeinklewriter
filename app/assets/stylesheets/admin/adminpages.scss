@@ -55,5 +55,29 @@ body {
         output {
             width: 200px;
         }
+
+
+    }
+
+    #search-results {
+        span {
+            display: inline-block;
+        }
+        .id {
+            width: 40px;
+            color: blue;
+            font-weight: bold;
+        }
+        .title {
+            width: 180px;
+            font-weight: bold;
+        }
+        .author {
+                width: 140px;
+        }
+        .email {
+            width: 140px;
+        }
+
     }
 }

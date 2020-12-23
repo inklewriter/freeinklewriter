@@ -42,8 +42,21 @@ document.addEventListener('DOMContentLoaded', function() {
 	      	})
 
       }).then(r => r.json())
-        .then(r => {
-        	console.log(r);
+        .then(r => {        	
+        	console.log(r.message);
+        	if(r["story_selection"]){
+        		document.querySelector('#search-results').innerHTML = "";
+        		r.story_selection.forEach( function(s) {
+        			document.querySelector('#search-results').innerHTML += 
+        			`<p>
+        				<span class="id">${s[0]}</span>
+        				<span class="title">${s[1]}</span>
+        				<span class="author">${s[2]}</span>
+        				<span class="email">${s[3]}</span>
+        			</p>
+        			`
+        		});
+        	};
         });
 
     };
