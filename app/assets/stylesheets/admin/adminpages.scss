@@ -60,9 +60,13 @@ body {
     }
 
     #search-results {
+        p {
+            margin: 2px 0 0 0;
+        }
         span {
             display: inline-block;
-            overflow: hidden
+            overflow: hidden;
+            padding: 0 5px;
         }
         .id {
             width: 40px;

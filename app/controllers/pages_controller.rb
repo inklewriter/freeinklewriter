@@ -8,6 +8,7 @@ class PagesController < ApplicationController
 				format.html 
 		end
     end
+    
 	def health
 		@status = {}
 		@status[:database_connected] = ::ActiveRecord::Base.connection_pool.with_connection(&:active?) rescue false
