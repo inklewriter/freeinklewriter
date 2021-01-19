@@ -29,17 +29,17 @@
 
     <%# adding inklewriter story reader to the controller stories and action show %>
     <% if params[:controller] == "stories" and params[:action] == "show" %>
-    <%= javascript_include_tag 'inklewriter-read' %>  
+        <%= javascript_include_tag 'inklewriter-read' %>  
     <% end %>  
 
     <%# adding inklewriter story writer to the root of site %>
     <% if params[:controller] == "pages" and params[:action] == "index" %>
-    <%= javascript_include_tag 'inklewriter-write' %>  
+        <%= javascript_include_tag 'inklewriter-write' %>  
     <% end %>  
 
     <%# adding inle CSS to stories and pages#index %>
     <% if params[:controller] == "stories" or (params[:controller] == "pages" and params[:action] == "index") %>
-    <%= stylesheet_link_tag 'inklewriter' %>  
+        <%= stylesheet_link_tag 'inklewriter' %>  
     <% end %>  
 
     <script>
