@@ -14,6 +14,59 @@ class Story < ApplicationRecord
 	validates :data, presence: true
 	
 
+	def sanitize_s
+		
+		if self.data.present?			
+			nh = {}
+			olds = self.data
+			
+			olds.each do |k1,v1|				
+				if k1 == "stitches"						
+					nh[k1] = {}
+
+					v1.each do |k2,v2|						
+						nh[k1][k2] = {}
+
+						v2.each do |k3,v3|							
+
+							if k3 == "content"
+								cont = []
+								v3.each do |elem|
+									if elem.is_a?String
+										st = ActionController::Base.helpers.sanitize(elem)
+										cont << st
+									elsif elem.is_a?Hash
+										sh = {}
+										elem.each do |k4,v4|
+											if k4 == "option"	
+												sh[k4] = ActionController::Base.helpers.sanitize(v4)
+											else
+												sh[k4] = v4												
+											end											
+										end											
+										cont << sh								
+									else
+										cont << elem
+									end
+								end
+								nh[k1][k2][k3] = cont
+							else
+								nh[k1][k2][k3] = v3
+							end
+
+						end
+
+					end	
+				else 
+					nh[k1] = v1					
+				end				
+			end
+			return nh
+		else
+			return {}
+		end
+		
+	end
 	
 
 	private
@@ -113,8 +166,9 @@ class Story < ApplicationRecord
 					nh[k1] = v1					
 				end				
 			end
+			self.data = nh
 		end
-		self.data = nh
+		
 	end
 
 end
