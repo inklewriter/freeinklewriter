@@ -1,9 +1,8 @@
 Rails.application.routes.draw do
   devise_for :users, controllers: { sessions:  "users/sessions", registrations:  "users/registrations", passwords: "users/passwords"}
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  root to: 'pages#index'
-
- 
+  
+  root to: 'app#index' 
 
   resources :stories
 
@@ -19,5 +18,6 @@ Rails.application.routes.draw do
   match "/500", :to => "errors#internal_server_error", :via => :all
   get 'health', to: 'pages#health'
   get 'privacy', to: 'pages#privacy'
+  get 'community', to: 'pages#community'
 
 end

@@ -1,6 +1,9 @@
 class PagesController < ApplicationController
 
-	def index
+	# static pages here
+
+	def community
+		
 	end
 
     def privacy 
@@ -8,6 +11,7 @@ class PagesController < ApplicationController
 				format.html 
 		end
     end
+
 	def health
 		@status = {}
 		@status[:database_connected] = ::ActiveRecord::Base.connection_pool.with_connection(&:active?) rescue false

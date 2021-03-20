@@ -1,0 +1,24 @@
+<div id="footer">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-4">
+				<div id="footer-logo">
+					<%= image_tag 'logo', alt: "inklewriter" %>
+				</div>
+				<p>inkleWriterFree is the free version of original <a href="https://www.inklestudios.com/">inkle studios</a> inkleWriter.</p>
+				<%= link_to "logo design by rawpixel.com / Freepik", "http://www.freepik.com" %>
+			</div>
+			<div class="col-md-4">
+				<p>Here is a second column</p>
+			</div>
+			<div class="col-md-4">
+				<p>Here is a third column</p>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<% content_for :headcss do %>
+    <%= stylesheet_link_tag "layouts/footer", media: 'all' %>
+<% end %>

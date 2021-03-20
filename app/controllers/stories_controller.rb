@@ -1,6 +1,10 @@
 class StoriesController < ApplicationController
 
-	# before_action :authenticate_user!, only: [:create, :update, :destroy] 
+	# This controller handles everything around stories
+	# Because main page lies in app#index, this controller mostly do JSON and 
+	# allow upload and download of stories and all related activity
+	
+	
 	before_action :user_logged_in, only: [:create, :update, :destroy]
 	before_action :check_story_owner, only: [:update, :destroy]
 

@@ -1,0 +1,27 @@
+#footer {
+	font-family: Times, Times New Roman, Georgia, serif;
+
+	background-color: #d5d5d5;
+	p {
+		color: #4d4d4d;
+		font-size: 1.6em;
+	}
+	a {
+		color: #4d4d4d,
+	}
+
+	#footer-logo {
+		// text-align: center;
+		img {
+			padding-top: 15px;
+			height: 80px;
+		}
+	}
+
+	#footer-logo-disclaimer {
+		a {
+			font-size: 0.8em;
+			font-style: italic;
+		}
+	}
+}

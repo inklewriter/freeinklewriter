@@ -1,0 +1,10 @@
+<div id="header">
+	<div class="container">
+	<h1><%= link_to "inkleWriter free", community_path %></h1>
+	</div>
+</div>
+
+
+<% content_for :headcss do %>
+    <%= stylesheet_link_tag    "layouts/header", media: 'all' %>
+<% end %>

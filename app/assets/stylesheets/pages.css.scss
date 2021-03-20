@@ -1,0 +1,55 @@
+// manual griding with css grids
+
+$numColumns: 12;
+$gutterWidth: 15px;
+  
+.row{
+  display: grid;
+  grid-template-columns: repeat($numColumns, 1fr); // Uniform columns. No need for rounded percentages to calculate widths.
+  grid-gap: $gutterWidth; // Actual gutter width. No need for negative margin hack.
+}
+// .show-grid [class^=col-]{
+//   padding-top: 10px;
+//   padding-bottom: 10px;
+//   background-color: #eee;
+//   background-color: rgba(86,61,124,.15);
+//   border: 1px solid #ddd;
+//   border: 1px solid rgba(86,61,124,.2);
+// }
+[class^=col-]{
+  grid-column-end: span $numColumns; //Full width fallback when no column size is define for the screen size.
+  padding: 10px;
+}
+
+// NESTED LOOP
+// Check out the compiled css. It is very repetitive, similar to Bootstrap Grid code
+// Loop through responsive breakpoints
+@each $size, $abbr in (0,xs),(768px,sm),(992px,md),(1200px,lg){
+  @media (min-width: $size){
+    // Loop through col classes
+    @for $i from 1 through $numColumns{
+      .col-#{$abbr}-#{$i}{
+        grid-column-end: span $i;
+      }
+    }
+  }
+}
+
+
+// static pages html
+
+body, html {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.container {
+	max-width: 1200px;
+	margin: 0 auto 0 auto;
+}
+
+.main-container {
+  min-height: calc(100% - 325px);
+}
