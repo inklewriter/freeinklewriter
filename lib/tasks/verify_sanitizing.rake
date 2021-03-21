@@ -1,7 +1,7 @@
 desc "Verify that sanitizing does not alter stories JSON"
 task :verify_sanitizing => :environment do
 	mismatches = []
-	  Story.all.each do |s|
+	  Story.find_each do |s|
 	    unless s.sanitize_s == s.data
 	       	mismatches << s.id
 	    end
