@@ -6,7 +6,7 @@ class Story < ApplicationRecord
 	
 	before_save :sanitize_title
 	before_save :sanitize_author
-	before_save :sanitize_stitches
+	# before_save :sanitize_stitches
 
 	belongs_to :user
 	has_one :story_stat, dependent: :destroy
