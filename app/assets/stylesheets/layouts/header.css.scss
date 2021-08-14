@@ -1,13 +1,49 @@
-#header {
+#header {	
 	font-family: Times, Times New Roman, Georgia, serif;
+	background-color: #e6e6e6;
+	padding: 15px 0;
+	position: relative;
 
-	a {
-		text-decoration: none;
-		color: black;
+	.container {
+		position: relative;
 	}
 
-	a:hover {
-		color: #ad0045;
-		transition: all 0.1s;
+	#logo {
+		display: inline-block;
+		h1 {
+			padding: 0;
+			margin: 0;
+			
+		}
+		a {
+			text-decoration: none;
+			color: hsl(0, 0%, 30%);
+		}
+		a:hover {
+			text-decoration: underline;
+			color: black;
+		}
+	}
+	
+
+	
+
+	#user-signed-in {		
+		padding-top: 12px;			
+		display: inline-block;
+		float: right;
+		p {
+			padding: 0;
+			margin: 0;
+			display: inline-block;
+			font-weight: bold;
+			font-size: 1.2em;
+		}
+
+		p:hover {
+			color: hsl(120, 100%, 40%);
+			
+		}
+		
 	}
 }

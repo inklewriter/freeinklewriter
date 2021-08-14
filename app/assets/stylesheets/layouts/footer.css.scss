@@ -1,20 +1,39 @@
 #footer {
 	font-family: Times, Times New Roman, Georgia, serif;
-
 	background-color: #d5d5d5;
+	padding: 15px 0;
 	p {
 		color: #4d4d4d;
 		font-size: 1.6em;
+		display: inline-block;
 	}
 	a {
 		color: #4d4d4d,
 	}
 
-	#footer-logo {
-		// text-align: center;
-		img {
-			padding-top: 15px;
+	#footer-logo {			
+		padding-top: 15px;
+		img {			
 			height: 80px;
+			display: block;			
+		}
+		a {
+			display: block;	
+			margin-top: 35px;
+			font-size: 0.8em;
+		}
+	}
+
+	#footer-presentation {
+		.action-link {
+			color: #ff3357;
+			font-size: 1.4em;
+			text-decoration: none;
+			display: block;
+
+		}
+		.action-link:hover {
+			color: #ff4d6c;
 		}
 	}
 

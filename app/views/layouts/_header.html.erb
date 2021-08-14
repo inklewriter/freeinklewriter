@@ -1,6 +1,15 @@
 <div id="header">
 	<div class="container">
-	<h1><%= link_to "inkleWriter free", community_path %></h1>
+		<div id="logo">
+			<h1><%= link_to "InkleWriter", community_path %></h1>
+		</div>
+
+		<% if user_signed_in? %>
+			<div id="user-signed-in">
+				<p>MyAccount</p>
+			</div>			
+		<% end %>
+		
 	</div>
 </div>
 

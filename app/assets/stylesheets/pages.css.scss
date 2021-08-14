@@ -1,3 +1,9 @@
+html {
+  margin: 0;
+  padding: 0;  
+}
+
+
 // manual griding with css grids
 
 $numColumns: 12;
@@ -49,6 +55,7 @@ body, html {
 .container {
 	max-width: 1200px;
 	margin: 0 auto 0 auto;
+  padding: 0 12px;
 }
 
 .main-container {
