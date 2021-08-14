@@ -24,7 +24,6 @@
 			color: black;
 		}
 	}
-	
 
 	
 
@@ -38,12 +37,19 @@
 			display: inline-block;
 			font-weight: bold;
 			font-size: 1.2em;
+			color: hsl(0, 0%, 30%);
 		}
 
 		p:hover {
 			color: hsl(120, 100%, 40%);
-			
+
 		}
 		
+	}
+
+	#no-user {
+				
+		display: inline-block;
+		float: right;
 	}
 }

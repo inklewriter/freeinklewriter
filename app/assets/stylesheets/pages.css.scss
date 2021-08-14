@@ -1,4 +1,5 @@
 html {
+  font-family: Times, Times New Roman, Georgia, serif;
   margin: 0;
   padding: 0;  
 }
@@ -59,5 +60,13 @@ body, html {
 }
 
 .main-container {
-  min-height: calc(100% - 325px);
+  min-height: calc(100% - 310px);
+}
+
+#community-home {
+  #hello {
+    font-size: 2em;
+    font-style: italic;
+    max-width: 800px;
+  }
 }
