@@ -1,0 +1,19 @@
+#menu {
+	
+	.container {
+		padding-top: 15px;
+		padding-bottom: 15px;
+		//border-bottom: 1px solid hsl(0, 0%, 30%);
+	}
+	
+	span {
+		font-size: 1.2em;
+		/* font-style: italic; */
+		color: hsl(0, 0%, 15%);
+		display: inline-block;
+		padding-bottom: 3px;
+		border-bottom: 1px solid hsl(0, 0%, 15%);
+		margin-right: 20px;
+		margin-bottom: 4px;
+	}
+}
