@@ -31,7 +31,7 @@
 		padding-top: 12px;			
 		display: inline-block;
 		float: right;
-		p {
+		a {
 			padding: 0;
 			margin: 0;
 			display: inline-block;
@@ -40,8 +40,8 @@
 			color: hsl(0, 0%, 30%);
 		}
 
-		p:hover {
-			color: hsl(120, 100%, 40%);
+		a:hover {
+			color: hsl(0, 0%, 50%);
 
 		}
 		

@@ -6,7 +6,7 @@
 		//border-bottom: 1px solid hsl(0, 0%, 30%);
 	}
 	
-	span {
+	a {
 		font-size: 1.2em;
 		/* font-style: italic; */
 		color: hsl(0, 0%, 15%);
@@ -15,5 +15,12 @@
 		border-bottom: 1px solid hsl(0, 0%, 15%);
 		margin-right: 20px;
 		margin-bottom: 4px;
+		text-decoration: none;
+	}
+
+	a:hover {
+		color: grey;
+		border-bottom: 1px solid grey;
+		transition: all 0.2s;
 	}
 }

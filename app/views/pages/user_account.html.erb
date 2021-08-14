@@ -13,13 +13,13 @@
 			<% @user.stories.each do |s| %>
 				<div class="row story-item">
 					<div class="col-md-5">
-						<%= s.title %>
+						<span><%= s.title %></span>
 					</div>
 					<div class="col-md-2">
-						<%= s&.story_stat&.total_words.to_s %> words
+						<span><%= s&.story_stat&.total_words.to_s %> words</span>
 					</div>
 					<div class="col-md-2">
-						NO
+						<span>story is public</span>
 					</div>
 				</div>							
 			<% end %>

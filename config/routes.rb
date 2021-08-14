@@ -20,5 +20,6 @@ Rails.application.routes.draw do
   get 'privacy', to: 'pages#privacy'
   get 'community', to: 'pages#community'
   get 'user_account', to: 'pages#user_account'
+  get 'how_it_works', to: 'pages#how_it_works'
 
 end

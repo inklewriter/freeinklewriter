@@ -73,6 +73,9 @@ body, html {
     font-size: 2em;
     font-style: italic;
     max-width: 800px;
+    a {
+      color: black;
+    }
   }
 }
 
@@ -86,4 +89,11 @@ body, html {
     
   }
   
+}
+
+#community-how-it-works {
+  .comment {
+    font-size: 1.4em;
+    font-style: italic;
+  }
 }

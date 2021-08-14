@@ -10,6 +10,9 @@ class PagesController < ApplicationController
 		@user = User.includes(:stories).find_by(id: current_user.id)
 	end
 
+	def how_it_works
+	end
+
     def privacy 
 		respond_to do |format|
 				format.html 
