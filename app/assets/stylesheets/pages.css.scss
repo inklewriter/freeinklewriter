@@ -60,7 +60,12 @@ body, html {
 }
 
 .main-container {
-  min-height: calc(100% - 310px);
+  min-height: calc(100% - 390px);
+}
+
+.user-data {
+  color: hsl(344.26, 17.391%, 54%);
+  font-style: italic;
 }
 
 #community-home {
@@ -69,4 +74,16 @@ body, html {
     font-style: italic;
     max-width: 800px;
   }
+}
+
+#community-user-account {
+  p {
+    font-size: 1.4em;
+  }
+  .story-item {
+    font-size: 1.4em;
+    word-break: break-word;
+    
+  }
+  
 }

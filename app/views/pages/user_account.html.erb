@@ -1,0 +1,34 @@
+<%= render 'layouts/header' %>
+<%= render 'layouts/menu' %>
+
+<div id="community-user-account" class="main-container">
+	<div class="container">
+		<p>Hi <span class="user-data"><%= @user.email %></span></p>
+		<% unless @user.stories.any? %>
+			<p>You are currently owning no story. Just switch to the main app and start creating your own stories !</p>
+		<% else %>
+			<p>You are currently owning <%= t('story', count: @user.stories.count) %>. Here <%= t('it_is', count: @user.stories.count) %> :</p>
+
+			
+			<% @user.stories.each do |s| %>
+				<div class="row story-item">
+					<div class="col-md-5">
+						<%= s.title %>
+					</div>
+					<div class="col-md-2">
+						<%= s&.story_stat&.total_words.to_s %> words
+					</div>
+					<div class="col-md-2">
+						NO
+					</div>
+				</div>							
+			<% end %>
+				
+				
+			
+		<% end %>
+	</div>
+</div>
+
+
+<%= render 'layouts/footer' %>

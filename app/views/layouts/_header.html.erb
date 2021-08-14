@@ -6,7 +6,7 @@
 
 		<% if user_signed_in? %>
 			<div id="user-signed-in">
-				<p>MyAccount</p>
+				<%= link_to "MyAccount", user_account_path %>
 			</div>
 		<% else %> 
 			<div id="no-user">

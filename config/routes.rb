@@ -19,5 +19,6 @@ Rails.application.routes.draw do
   get 'health', to: 'pages#health'
   get 'privacy', to: 'pages#privacy'
   get 'community', to: 'pages#community'
+  get 'user_account', to: 'pages#user_account'
 
 end

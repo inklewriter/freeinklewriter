@@ -31,3 +31,11 @@
 
 en:
   hello: "Hello world"
+  story: 
+    zero: no story
+    one: 1 story
+    other: "%{count} stories"
+  it_is: 
+    zero: it is
+    one: it is 
+    other: they are
