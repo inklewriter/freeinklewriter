@@ -5,7 +5,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable, :rememberable, :recoverable
          
   has_many :stories, dependent: :destroy
-  has_one :admin
+  has_one :admin, dependent: :destroy
 
   
   validates :email, presence: true

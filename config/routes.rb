@@ -12,6 +12,7 @@ Rails.application.routes.draw do
 
   namespace :admin do
     get '/', to: 'adminpages#index'
+    post 'score_search', to: 'adminpages#score_search'
   end
 
   match "/404", :to => "errors#not_found", :via => :all

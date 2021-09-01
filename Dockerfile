@@ -1,12 +1,13 @@
-FROM ruby:2.6-alpine
+FROM ruby:2.6.7-alpine
 
 WORKDIR /usr/src/app
 COPY Gemfile* /usr/src/app/ 
 RUN apk add --update \ 
+  build-base \
   nodejs \
   postgresql-client \
-  build-base \
   postgresql-dev \
+  shared-mime-info \
   sqlite-dev \
   tzdata \
   yarn \

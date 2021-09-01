@@ -1,13 +1,13 @@
 <div id="index">
 
-<p>Hello <%= current_user.email %></p>
-<p>You are an admin</p>
+	<p>Hello <%= current_user.email %></p>
+	<p>You are an admin</p>
 
 	<div id="recent-stats">
 		<h1>Recent stats</h1>
 
 		<h2>New stories for the last 3 years</h2>
-		<table>
+		<table id="stats">
 			<tr>
 				<th></th>
 				<th>Jan</th>
@@ -37,6 +37,62 @@
 				</tr>
 			<% end %>
 		</table>
+	</div>
+
+	<div id="score-search">
+		<h1>Score search</h1>
+		<table id="search">
+			<tr>
+				<td>
+					words
+				</td>
+				<td>
+					<%= text_field_tag "minwords", 200, placeholder: "min", class: "search-elem-text" %>
+				</td>
+				<td>
+					<%= text_field_tag "maxwords", 500, placeholder: "max", class: "search-elem-text" %>
+				</td>		 
+			</tr>
+			<tr>
+				<td>
+					date
+				</td>
+				<td>
+					<p>
+						<input class="search-elem" id="minday" type="range" value="<%= Time.now.day %>" min="1" max="31" oninput="this.nextElementSibling.value = this.value">
+						<output><%= Time.now.day %></output>
+					</p>
+					<p>
+						<input class="search-elem" id="minmonth" type="range" value="<%= Time.now.month %>" min="1" max="12" oninput="this.nextElementSibling.value = months[this.value]">
+						<output><%= Time.now.strftime("%B") %></output>
+					</p>
+					<p>
+						<input class="search-elem" id="minyear" type="range" value="<%= @last_story.created_at.year %>" min="<%= @first_story.created_at.year %>" max="<%= @last_story.created_at.year %>" oninput="this.nextElementSibling.value = this.value">
+						<output><%= Time.now.year %></output>
+					</p>
+				</td>
+				<td>
+					<p>
+						<input class="search-elem" id="maxday" type="range" value="<%= Time.now.day %>" min="1" max="31" oninput="this.nextElementSibling.value = this.value">
+						<output><%= Time.now.day %></output>
+					</p>
+					<p>
+						<input class="search-elem" id="maxmonth" type="range" value="<%= Time.now.month %>" min="1" max="12" oninput="this.nextElementSibling.value = months[this.value]">
+						<output><%= Time.now.strftime("%B") %></output>
+					</p>
+					<p>
+						<input class="search-elem" id="maxyear" type="range" value="<%= @last_story.created_at.year %>" min="<%= @first_story.created_at.year %>" max="<%= @last_story.created_at.year %>" oninput="this.nextElementSibling.value = this.value">
+						<output><%= Time.now.year %></output>
+					</p>
+				</td>
+			</tr>
+
+		
+		</table>
+
+		<div id="search-results">
+			
+		</div>
 	</div>
 
 </div>
