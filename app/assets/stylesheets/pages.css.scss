@@ -60,7 +60,7 @@ body, html {
 }
 
 .main-container {
-  min-height: calc(100% - 390px);
+  min-height: calc(100% - 378px);
 }
 
 .user-data {
@@ -72,9 +72,16 @@ body, html {
   #hello {
     font-size: 2em;
     font-style: italic;
-    max-width: 800px;
+    // max-width: 800px;
     a {
       color: black;
+    }
+  }
+  #hello-image {
+    img {
+      padding: 0 15px;
+      width: auto;
+      max-height: 220px;
     }
   }
 }

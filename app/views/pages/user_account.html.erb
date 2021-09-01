@@ -3,7 +3,11 @@
 
 <div id="community-user-account" class="main-container">
 	<div class="container">
-		<p>Hi <span class="user-data"><%= @user.email %></span></p>
+		<div class="row">
+			<div class="col-md-12">
+				<p>Hi <span class="user-data"><%= @user.email %></span></p>
+			</div>
+		</div>
 		<% unless @user.stories.any? %>
 			<p>You are currently owning no story. Just switch to the main app and start creating your own stories !</p>
 		<% else %>
