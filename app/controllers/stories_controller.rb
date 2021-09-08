@@ -1,5 +1,6 @@
 class StoriesController < ApplicationController
-
+	include Pundit
+	rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 	# This controller handles everything around stories
 	# Because main page lies in app#index, this controller mostly do JSON and 
 	# allow upload and download of stories and all related activity
@@ -11,6 +12,8 @@ class StoriesController < ApplicationController
 	def show
 		if Story.exists?(params[:id])
 			@story = Story.find(params[:id])
+			authorize @story
+
 			@data = {title: @story.title, data: @story.data, url_key: @story.id}.to_json
 			@author = @story.data["editorData"]["authorName"]
 			@title = @story.title
@@ -153,6 +156,13 @@ class StoriesController < ApplicationController
 	def story_params
     	params.require(:story).permit(:data, :title)
   	end
+
+  	def user_not_authorized(exception)
+	    policy_name = exception.policy.class.to_s.underscore
+
+	    flash[:flash_error] = t "#{policy_name}.#{exception.query}", scope: "pundit", default: :default
+	    redirect_to root_path
+	end
 
   		
   	

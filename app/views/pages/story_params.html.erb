@@ -16,8 +16,14 @@
 						<%= privacy.label(:user_private, value: priv_selector) do %>
 						<%= privacy.radio_button :user_private, priv_selector %><%= priv_selector %>
 						<% end %>
+						<% if priv_selector == "private" %>
+						(<%= privacy.label :bypass_token%>
+							<%= privacy.text_field :bypass_token %>)
+							
+						<% end %>
 					</div>
 				<% end %>
+				<p>The bypass token allows you to grant access to private stories to specific visitors</p>
 			<% end %>
 
 			<h2>License</h2>

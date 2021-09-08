@@ -35,6 +35,7 @@ en:
     story_policy: 
       story_params?: You cannot access this page
       update_story_params?: You cannot access this page
+      show?: Story is not published
     nil_class_policy: 
       story_params?: this page does not exist 
       update_story_params?: this page does not exist       

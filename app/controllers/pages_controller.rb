@@ -84,7 +84,7 @@ class PagesController < ApplicationController
 	end
 
 	def story_params_attributes
-		params.require(:story).permit(story_privacy_attributes: [:user_private, :id], license_attributes: [:name, :id])
+		params.require(:story).permit(story_privacy_attributes: [:user_private, :id, :bypass_token], license_attributes: [:name, :id])
 	end
 
 	def authenticate_user
