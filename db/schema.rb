@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_01_133914) do
+ActiveRecord::Schema.define(version: 2021_09_08_092853) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,6 +20,14 @@ ActiveRecord::Schema.define(version: 2021_09_01_133914) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_admins_on_user_id"
+  end
+
+  create_table "licenses", force: :cascade do |t|
+    t.string "name"
+    t.bigint "story_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["story_id"], name: "index_licenses_on_story_id"
   end
 
   create_table "stories", force: :cascade do |t|
@@ -33,9 +41,7 @@ ActiveRecord::Schema.define(version: 2021_09_01_133914) do
   end
 
   create_table "story_privacies", force: :cascade do |t|
-    t.boolean "user_private"
-    t.boolean "flagged_for_privacy"
-    t.boolean "admin_private"
+    t.string "user_private", default: "public"
     t.bigint "story_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -76,6 +82,7 @@ ActiveRecord::Schema.define(version: 2021_09_01_133914) do
   end
 
   add_foreign_key "admins", "users"
+  add_foreign_key "licenses", "stories"
   add_foreign_key "stories", "users"
   add_foreign_key "story_privacies", "stories"
   add_foreign_key "story_stats", "stories"

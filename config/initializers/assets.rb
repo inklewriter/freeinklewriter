@@ -40,3 +40,5 @@ Rails.application.config.assets.precompile += %w( layouts/header.css )
 Rails.application.config.assets.precompile += %w( layouts/footer.css )
 Rails.application.config.assets.precompile += %w( layouts/menu.css )
 Rails.application.config.assets.precompile += %w( admin/adminpages/index.js )
+Rails.application.config.assets.precompile += %w( pages/story_params.js )
+

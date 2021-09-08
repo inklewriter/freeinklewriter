@@ -8,6 +8,7 @@
 				<p>Hi <span class="user-data"><%= @user.email %></span></p>
 			</div>
 		</div>
+
 		<% unless @user.stories.any? %>
 			<p>You are currently owning no story. Just switch to the main app and start creating your own stories !</p>
 		<% else %>
@@ -15,17 +16,21 @@
 
 			
 			<% @user.stories.each do |s| %>
-				<div class="row story-item">
-					<div class="col-md-5">
-						<span><%= s.title %></span>
-					</div>
-					<div class="col-md-2">
-						<span><%= s&.story_stat&.total_words.to_s %> words</span>
-					</div>
-					<div class="col-md-2">
-						<span>story is public</span>
-					</div>
-				</div>							
+				<%= link_to story_params_path(s.id) do %> 
+					<div class="row story-item">
+						<div class="col-md-5">
+							<span><%= s.title %></span>
+						</div>
+						<div class="col-md-2">
+							<span><%= s&.story_stat&.total_words.to_s %> words</span>
+						</div>
+						<% if s.story_privacy.present? %>
+							<div class="col-md-2">
+								<span><%= s.story_privacy.user_private %></span>
+							</div>
+						<% end %>
+					</div>	
+				<% end %>							
 			<% end %>
 				
 				

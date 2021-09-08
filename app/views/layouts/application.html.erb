@@ -53,6 +53,9 @@
   </head>
 
   <body>
+
+    <%= render 'layouts/flash_message' unless flash.empty?  %>
+
     <%= yield %>
   </body>
 </html>

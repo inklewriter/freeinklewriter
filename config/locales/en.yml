@@ -29,8 +29,16 @@
 # To learn more, please read the Rails Internationalization guide
 # available at http://guides.rubyonrails.org/i18n.html.
 
-en:
-  hello: "Hello world"
+en:  
+  # pundit
+  pundit:
+    story_policy: 
+      story_params?: You cannot access this page
+      update_story_params?: You cannot access this page
+    nil_class_policy: 
+      story_params?: this page does not exist 
+      update_story_params?: this page does not exist       
+  #generic    
   story: 
     zero: no story
     one: 1 story
@@ -39,3 +47,10 @@ en:
     zero: it is
     one: it is 
     other: they are
+  # Activerecord
+  activerecord: 
+    attributes:
+      license:
+        name: License name  
+
+

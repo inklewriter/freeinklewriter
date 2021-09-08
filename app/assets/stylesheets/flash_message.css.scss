@@ -1,0 +1,113 @@
+#flash-message{
+    z-index: 11111;
+    top: -500px;
+    position: absolute;
+    width: 250px;
+    left: -webkit-calc(50% - 125px);
+    left: -moz-calc(50% - 125px);
+    left: calc(50% - 125px);
+    margin: 20px 0 0 0;
+    opacity: 0;   
+
+    
+
+    #image {
+        position: relative;
+        text-align: center;
+        z-index: 1112;
+        img {
+            width: 110px;
+        }
+    
+    
+    }
+    #affiche {
+
+        position: relative;
+        z-index: 1111;
+        top: -40px;
+        width: 250px;
+        height: auto;
+        border: solid 10px white;
+        border-radius: 15px 15px 15px 15px ;
+        text-align: center;
+        background-color: white;
+        
+        -webkit-box-shadow: 14px 17px 44px -21px rgba(0,0,0,0.49);
+        -moz-box-shadow: 14px 17px 44px -21px rgba(0,0,0,0.49);
+        box-shadow: 14px 17px 44px -21px rgba(0,0,0,0.49);
+
+        #message {
+            padding: 0 10px 0 10px;
+           h1 {
+            font-size: 2em;
+            color: #2a2a2a;
+            font-weight: 600;
+            padding: 25px 0 0 0;
+            }
+            h2 {
+            padding: 0 0 10px 0;
+            font-size: 1.4em;
+            color: #496262;
+            font-weight: 400;
+            } 
+        }
+        
+
+        
+
+        #check {
+            
+            border-radius: 0 0 12px 12px;
+            img {
+            width: 60px;
+            margin: 20px;
+            }
+        
+        }
+    }
+
+    
+}
+
+.anim_longue {
+    -webkit-animation: flashanim 2.8s ; 
+    -moz-animation:    flashanim 2.8s ; 
+    -o-animation:      flashanim 2.8s ; 
+    animation:         flashanim 2.8s ;
+    }
+
+.anim_courte {
+    -webkit-animation: flashanim 2.3s ; 
+    -moz-animation:    flashanim 2.3s ; 
+    -o-animation:      flashanim 2.3s ; 
+    animation:         flashanim 2.3s ;    
+    }
+
+
+@keyframes flashanim {
+    0%   {
+        top: 0px;
+        opacity: 0;                
+    }
+    15% {
+        opacity: 1;
+    }
+    
+    80% {
+        top: 35px;
+        opacity: 1;                
+     }
+    92% {
+        top: 35px;
+        opacity: 1;
+        
+    }
+    99% {
+        top: 35px;
+        opacity: 1;
+    }
+    100% {
+        top: -200px;
+    } 
+}

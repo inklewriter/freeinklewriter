@@ -1,7 +1,11 @@
 <div id="header">
 	<div class="container">
 		<div id="logo">
-			<h1><%= link_to "InkleWriter", community_path %></h1>
+			<h1><%= link_to "InkleWriter", community_path %></h1>			
+		</div>
+
+		<div id="to-app">
+			<%= link_to  "To App ⮞", root_path %>
 		</div>
 
 		<% if user_signed_in? %>

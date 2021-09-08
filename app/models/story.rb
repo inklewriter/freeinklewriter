@@ -12,6 +12,9 @@ class Story < ApplicationRecord
 	belongs_to :user
 	has_one :story_stat, dependent: :destroy
 	has_one :story_privacy, dependent: :destroy
+	has_one :license, dependent: :destroy
+
+	accepts_nested_attributes_for :story_privacy, :license
 
 	validates :data, presence: true
 	
@@ -79,7 +82,7 @@ class Story < ApplicationRecord
 	end
 
 	def generate_privacy
-		self.build_story_privacy(user_private: false, flagged_for_privacy:false, admin_private: false)
+		self.build_story_privacy(user_private: "public")
 		self.story_privacy.save
 	end
 

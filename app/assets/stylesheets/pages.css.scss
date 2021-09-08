@@ -104,3 +104,27 @@ body, html {
     font-style: italic;
   }
 }
+
+#community-story-params {
+  #license-list {
+    margin: 20px 0;
+  }
+  .single_license {
+    display: inline-block;
+    // border: 1px solid grey;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
+    background-color: #bf4042;
+  }
+
+  .single_license:hover {
+    transition: all 0.3s;
+    background-color: #d65c5e;
+  }
+
+  .submit-button {
+    margin: 20px 0;
+  }
+}

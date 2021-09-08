@@ -1,0 +1,44 @@
+<% if flash.present? %>
+	<% case flash.first[0] %>
+	<%# GENERIC messages, actual flash message is never used %>
+	<% when "flash_error" %>
+		
+		<div id="flash-message" class="anim_longue">
+		<div id="image">
+			<%= image_tag "red-cloud.svg" %>
+		</div>
+		<div id="affiche">
+			<div id="message">
+				<h1>Error</h1>
+				<h2><%= flash.first[1] %></h2>
+				<!-- <h2>Contactez l'equipe Roofseeds si cette erreur se répète</h2> -->
+			</div>
+			<div id="check" style="background-color: rgb(213, 138, 141);">
+				<%= image_tag "white-cross.svg" %>
+			</div>
+		</div>
+		</div>
+
+
+	<% when "flash_success" %>
+
+		<div id="flash-message" class="anim_courte">
+			<div id="image">
+				<%= image_tag "check-circle.svg" %>				
+			</div>
+			<div id="affiche">
+				<div id="message">
+					<h1>Success</h1>
+					<h2><%= flash.first[1] %></h2>
+				</div>
+				<div id="check" style="background-color: #00e691;">
+					<%= image_tag "white-check.svg" %>
+				</div>
+			</div>
+		</div>		
+
+
+	
+
+	<% end %>
+<% end %>

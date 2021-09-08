@@ -1,0 +1,62 @@
+<%= render 'layouts/header' %>
+<%= render 'layouts/menu' %>
+
+<div id="community-story-params" class="main-container">
+	<div class="container">
+		<h1><%= @story.title.first(100) %></h1>
+
+		
+		<%= form_with model: @story, url: update_story_params_path(@story.id), method: "PATCH", local: true do |f| %>
+			
+			<h2>Privacy</h2>
+
+			<%= f.fields_for :story_privacy do |privacy| %>
+				<% PRIVACY_SELECTORS.each do |priv_selector| %> 
+					<div>
+						<%= privacy.label(:user_private, value: priv_selector) do %>
+						<%= privacy.radio_button :user_private, priv_selector %><%= priv_selector %>
+						<% end %>
+					</div>
+				<% end %>
+			<% end %>
+
+			<h2>License</h2>
+
+			<div id= "license-list">
+				<div class="single_license" data-license-name="CC-BY-SA">
+					<p>CC-BY-SA</p>
+					<p>image here</p>
+					<p>bla blabla</p>
+				</div>
+				<div class="single_license" data-license-name="CC-ND">
+					<p>CC-ND</p>
+					<p>image here</p>
+					<p>bla blabla</p>
+				</div>
+				<div class="single_license" data-license-name="CC-NC">
+					<p>CC-NC</p>
+					<p>image here</p>
+					<p>bla blabla</p>
+				</div>
+				<div class="single_license" data-license-name="CC-NC-ND">
+					<p>CC-NC-ND</p>
+					<p>image here</p>
+					<p>bla blabla</p>
+				</div>				
+			</div>
+
+			<%= f.fields_for :license do |lic| %>
+				<%= lic.label :name %>
+				<%= lic.text_field :name %>
+			<% end %>
+
+			<div class="submit-button">
+				<%= submit_tag "submit" %>
+			</div>
+				
+		<% end %>
+	</div>
+	
+</div>
+
+<%= render 'layouts/footer' %>

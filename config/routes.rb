@@ -22,5 +22,7 @@ Rails.application.routes.draw do
   get 'community', to: 'pages#community'
   get 'user_account', to: 'pages#user_account'
   get 'how_it_works', to: 'pages#how_it_works'
+  get 'story_params/:id', to: 'pages#story_params', as: "story_params"
+  patch 'update_story_params/:id', to: 'pages#update_story_params', as: "update_story_params"
 
 end
