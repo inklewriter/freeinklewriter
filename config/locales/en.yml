@@ -31,14 +31,23 @@
 
 en:  
   # pundit
+
+
   pundit:
     story_policy: 
       story_params?: You cannot access this page
       update_story_params?: You cannot access this page
       show?: Story is not published
+      update?: It seems this story isn't yours
+      destroy?: It seems this story isn't yours
     nil_class_policy: 
       story_params?: this page does not exist 
-      update_story_params?: this page does not exist       
+      update_story_params?: this page does not exist 
+      show?: This page does not exist   
+      update?: This page does not exist
+      destroy?: This page does not exist
+
+
   #generic    
   story: 
     zero: no story

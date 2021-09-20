@@ -19,19 +19,20 @@
 				<%= link_to story_params_path(s.id) do %> 
 					<div class="row story-item">
 						<div class="col-md-5">
-							<span><%= s.title %></span>
+							<span class="story-name"><%= s.title %></span>
 						</div>
 						<div class="col-md-2">
-							<span><%= s&.story_stat&.total_words.to_s %> words</span>
+							<span class="story-detail"><%= s&.story_stat&.total_words.to_s %> words</span>
 						</div>
 						<% if s.story_privacy.present? %>
-							<div class="col-md-2">
-								<span><%= s.story_privacy.user_private %></span>
+							<div class="col-md-3">
+								<span class="story-detail"><%= s.story_privacy.user_private %></span>
 							</div>
 						<% end %>
 					</div>	
 				<% end %>							
 			<% end %>
+			
 				
 				
 			

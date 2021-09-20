@@ -1,6 +1,5 @@
 class PagesController < ApplicationController
-	include Pundit
-	rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+	
 	before_action :authenticate_user, only: ["user_account", "story_params", "update_story_params"]
 	before_action :set_user, only: ["user_account", "story_params", "update_story_params"]  
 	before_action :set_story, only: ["story_params", "update_story_params"]
@@ -94,10 +93,5 @@ class PagesController < ApplicationController
 		end
 	end
 
-	def user_not_authorized(exception)
-	    policy_name = exception.policy.class.to_s.underscore
-
-	    flash[:flash_error] = t "#{policy_name}.#{exception.query}", scope: "pundit", default: :default
-	    redirect_to community_path
-	end
+	
 end

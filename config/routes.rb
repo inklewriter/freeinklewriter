@@ -4,7 +4,11 @@ Rails.application.routes.draw do
   
   root to: 'app#index' 
 
-  resources :stories
+  resources :stories do
+    member do
+      get ':bypass_token', to: 'stories#show'
+    end
+  end
 
   resources :users do
   	resources :stories
@@ -15,8 +19,9 @@ Rails.application.routes.draw do
     post 'score_search', to: 'adminpages#score_search'
   end
 
-  match "/404", :to => "errors#not_found", :via => :all
-  match "/500", :to => "errors#internal_server_error", :via => :all
+  match "/404", to: "errors#not_found", via: :all
+  match "/500", to: "errors#internal_server_error", via: :all
+
   get 'health', to: 'pages#health'
   get 'privacy', to: 'pages#privacy'
   get 'community', to: 'pages#community'

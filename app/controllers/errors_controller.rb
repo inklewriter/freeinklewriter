@@ -3,11 +3,17 @@ class ErrorsController < ApplicationController
 	# handling custom errors
 
 	def not_found
-    render(:status => 404)
+    respond_to do |format|
+      format.html {render status: 404}
+      format.json {render json: {}, status: 400}
+    end
   end
 
   def internal_server_error
-    render(:status => 500)
+    respond_to do |format|
+      format.html {render status: 500}
+      format.json {render json: {}, status: 500}
+     end 
   end
 
 end

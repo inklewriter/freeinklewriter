@@ -17,7 +17,7 @@ class Story < ApplicationRecord
 	accepts_nested_attributes_for :story_privacy, :license
 
 	validates :data, presence: true
-	
+	validates :title, presence: true
 
 	def sanitize_s
 		

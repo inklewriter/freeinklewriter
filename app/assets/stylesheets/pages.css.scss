@@ -90,10 +90,44 @@ body, html {
   p {
     font-size: 1.4em;
   }
+  a {
+    text-decoration: none;
+    color: black; 
+  }
+
+  a:hover {
+    color: hsl(359, 60%, 50%);
+    
+  }
+
+  .row {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
   .story-item {
-    font-size: 1.4em;
+    padding-top: 15px !important;
+    
+    [class^="col-"] {
+      padding: 0 !important;
+      margin: 0 !important;
+    }
     word-break: break-word;
     
+    .story-name {
+      font-size: 1.6em;      
+      border-bottom: 1px solid black;
+    }
+    .story-name:hover {
+      border-bottom: 1px solid hsl(359, 60%, 50%);
+    }
+
+    .story-detail {
+      font-size: 1.2em;
+      
+      position: relative;
+      top: 8px;
+    }
   }
   
 }
