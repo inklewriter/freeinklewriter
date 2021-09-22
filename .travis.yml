@@ -19,13 +19,18 @@ env:
     - POSTGRES_USER=postgres
     - POSTGRES_PASSWORD=anything
     - SECRET_KEY_BASE=development_secret
-
+   
+   # for docker
+   - COMMIT=${TRAVIS_COMMIT::8}
+   
 before_install:
   # make sure postgres is initialised
   - sudo sed -i -e '/local.*peer/s/postgres/all/' -e 's/peer\|md5/trust/g' /etc/postgresql/*/main/pg_hba.conf
   - sudo service postgresql restart
   - sleep 1
   - psql -c 'create database inklewriter_test' -U postgres
+  # install curl for webhooks
+  - sudo apt-get -y install
 
 script:
   - RAILS_ENV=test bundle exec rake --trace db:migrate
@@ -36,11 +41,22 @@ script:
   - docker-compose up -d || travis_terminate 1
   - docker-compose stop
   - >
-      if [ "$TRAVIS_BRANCH" == "master" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
+      if [[ "$TRAVIS_PULL_REQUEST" == "false" ]]; then
           echo "$DOCKER_PASS" | docker login -u=albancrommer --password-stdin;
-          TAG=latest ;
-          docker tag albancrommer/inklewriter albancrommer/inklewriter:$TAG;
-          docker push albancrommer/inklewriter:$TAG;
-          docker push albancrommer/inklewriter;
+          case "$TRAVIS_BRANCH" in 
+            "master")
+              TAG="latest"
+            "dev")
+              TAG="dev"
+              CD="stageme.inklewriter.com"
+          esac
+          if [[ -n "$TAG" ]]; then
+            docker tag albancrommer/inklewriter albancrommer/inklewriter:$COMMIT;
+            docker tag albancrommer/inklewriter albancrommer/inklewriter:$TAG;
+            docker push albancrommer/inklewriter;
+          fi
+          if [[ -n "$CD" ]]; then 
+            curl -X POST -H "Content-Length: 0"  -H "Token: $CD_TOKEN" "https://${CD}/webhooks"
+          fi
       fi
 
