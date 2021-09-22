@@ -46,9 +46,11 @@ script:
           case "$TRAVIS_BRANCH" in 
             "master")
               TAG="latest"
+              ;;
             "dev")
               TAG="dev"
               CD="stageme.inklewriter.com"
+              ;;
           esac
           if [[ -n "$TAG" ]]; then
             docker tag albancrommer/inklewriter albancrommer/inklewriter:$COMMIT;
