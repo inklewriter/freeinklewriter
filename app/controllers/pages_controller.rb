@@ -79,6 +79,7 @@ class PagesController < ApplicationController
 			@story = Story.find(params[:id])
 		else
 			flash[:flash_error] = "story doesn't exist"
+			redirect_to request.referer ||root_path 
 		end
 	end
 
