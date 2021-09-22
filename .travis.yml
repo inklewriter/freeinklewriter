@@ -41,7 +41,7 @@ script:
   - docker-compose up -d || travis_terminate 1
   - docker-compose stop
   - >
-      if [[ "$TRAVIS_PULL_REQUEST" == "false" ]]; then
+      if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
           echo "$DOCKER_PASS" | docker login -u=albancrommer --password-stdin;
           case "$TRAVIS_BRANCH" in 
             "master")
