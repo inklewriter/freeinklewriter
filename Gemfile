@@ -51,7 +51,7 @@ gem "pundit"
 
 gem "airbrake"
 
-gem 'rack-attack'
+# gem 'rack-attack'
 
 
 group :development, :test do
