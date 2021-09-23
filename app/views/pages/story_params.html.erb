@@ -9,28 +9,29 @@
 		<%= form_with model: @story, url: update_story_params_path(@story.id), method: "PATCH", local: true do |f| %>
 			
 			<h2>Privacy</h2>
-
-			<%= f.fields_for :story_privacy do |privacy| %>
-				<% PRIVACY_SELECTORS.each do |priv_selector| %> 
-					<div>
-						<%= privacy.label(:user_private, value: priv_selector) do %>
-						<%= privacy.radio_button :user_private, priv_selector %><%= priv_selector %>
-						<% end %>
-						<% if priv_selector == "private" %>
-							<% bypass_tok = @story&.story_privacy&.bypass_token || "not set yet " %>
-							( your bypass token is <%= bypass_tok %>)
-							<%# privacy.label :bypass_token%>
-							<%# privacy.text_field :bypass_token %>
-							
-						<% end %>
-					</div>
+			<div id="privacy-form">
+				<%= f.fields_for :story_privacy do |privacy| %>
+					<% PRIVACY_SELECTORS.each do |priv_selector| %> 
+						<div>
+							<%= privacy.label(:user_private, value: priv_selector) do %>
+							<%= privacy.radio_button :user_private, priv_selector %><%= priv_selector %>
+							<% end %>
+							<% if priv_selector == "private" %>
+								<% bypass_tok = @story&.story_privacy&.bypass_token || "not set yet " %>
+								( your bypass token is <%= bypass_tok %>)
+								<%# privacy.label :bypass_token%>
+								<%# privacy.text_field :bypass_token %>
+								
+							<% end %>
+						</div>
+					<% end %>
+					<p>The bypass token allows you to grant access to private stories to specific visitors. 
+					<% if @story.story_privacy.bypass_token.present? %>	
+						For this specific story, please use link : <a href="<%= request.base_url %>/stories/<%= @story.id%>/<%= @story.story_privacy.bypass_token %>"><%= request.base_url %>/stories/<%= @story.id%>/<%= @story.story_privacy.bypass_token %></a>
+					<% end %>
+						</p>
 				<% end %>
-				<p>The bypass token allows you to grant access to private stories to specific visitors. 
-				<% if @story.story_privacy.bypass_token.present? %>	
-					For this specific story, please use link : <a href="<%= request.base_url %>/stories/<%= @story.id%>/<%= @story.story_privacy.bypass_token %>"><%= request.base_url %>/stories/<%= @story.id%>/<%= @story.story_privacy.bypass_token %></a>
-				<% end %>
-					</p>
-			<% end %>
+			</div>
 
 			<h2>License</h2>
 
@@ -63,8 +64,8 @@
 
 			<div id="license-value">
 				<%= f.fields_for :license do |lic| %>
-					<%= lic.label :name %>
-					<%= lic.text_field :name %>
+					<%= lic.label :license_name %>
+					<%= lic.text_field :license_name %>
 				<% end %>
 			</div>
 			

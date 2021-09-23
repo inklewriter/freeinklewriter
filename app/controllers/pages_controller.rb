@@ -60,6 +60,7 @@ class PagesController < ApplicationController
 			flash[:flash_success] = "story parameters saved"
 			redirect_to user_account_path
 		else
+			flash[:flash_error] = @story.errors.first[1] 
 			render "story_params"
 		end
 	end
@@ -84,7 +85,7 @@ class PagesController < ApplicationController
 	end
 
 	def story_params_attributes
-		params.require(:story).permit(story_privacy_attributes: [:user_private, :id, :bypass_token], license_attributes: [:name, :id])
+		params.require(:story).permit(story_privacy_attributes: [:user_private, :id, :bypass_token], license_attributes: [:license_name, :id])
 	end
 
 	def authenticate_user

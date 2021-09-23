@@ -11,7 +11,7 @@ class StoryPrivacy < ApplicationRecord
     unless self.bypass_token.present?
       chain = 'abcdefghijklmnopqrstuvwxyz0123456789'
       numberdigits = 15
-
+      token = ''
       begin
         token = ''
         numberdigits.times do

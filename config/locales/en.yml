@@ -61,6 +61,17 @@ en:
   activerecord: 
     attributes:
       license:
-        name: License name  
+        license_name: License name  
 
 
+  activerecord:
+    errors:
+      models:
+        story_privacy:
+          attributes:
+            user_private:
+              inclusion: "privacy values don't seem correct"
+        license:
+          attributes:
+            license_name:
+              too_long: "license name cannot exceed %{count} characters"

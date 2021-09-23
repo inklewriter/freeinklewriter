@@ -150,6 +150,12 @@ body, html {
     margin: 30px 0 0 0;
   }
 
+  #privacy-form {
+    .field_with_errors {
+        display:  inline-block;
+    }
+  }
+
   input[type=submit] {
     font-size: 1em;
     margin: 20px 0;

@@ -5,6 +5,7 @@ class Story < ApplicationRecord
 	after_save :process_stats, if: :data_is_present
 	after_save :process_rating, if: :data_is_present
 	
+	before_validation :set_a_default_title
 	before_save :sanitize_title
 	before_save :sanitize_author
 	# before_save :sanitize_stitches
@@ -115,6 +116,10 @@ class Story < ApplicationRecord
 			self.story_stat.save
 		end
 		
+	end
+
+	def set_a_default_title
+		self.title = "Untitled Story" unless self.title.present?
 	end
 
 	def sanitize_title

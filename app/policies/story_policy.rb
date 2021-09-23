@@ -12,7 +12,7 @@ class StoryPolicy < ApplicationPolicy
 			if record.story_privacy.user_private == "public" || record.story_privacy.user_private == "public and searchable"
 				true
 			elsif record.story_privacy.user_private == "private" 
-				if record.user.id == user.id
+				if user.present? && record.user.id == user.id
 					true 
 				else 
 					false 
