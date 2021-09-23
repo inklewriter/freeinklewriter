@@ -58,6 +58,8 @@ script:
             docker push albancrommer/inklewriter;
           fi
           if [[ -n "$CD" ]]; then 
-            curl -X POST -H "Content-Length: 0"  -H "Token: $CD_TOKEN" "https://${CD}/webhooks"
+            URL="https://$CD/webhooks"
+            echo "Requesting deployment for branch '$TRAVIS_BRANCH' on '$URL'"
+            curl -X POST -H "Content-Length: 0"  -H "Token: $CD_TOKEN" "$URL"
           fi
       fi
