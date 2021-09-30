@@ -145,10 +145,6 @@ body, html {
     margin: 20px 0;
   }
 
-  #license-value{
-    display: inline-block;
-    margin: 30px 0 0 0;
-  }
 
   #privacy-form {
     .field_with_errors {
@@ -157,9 +153,23 @@ body, html {
   }
 
   input[type=submit] {
-    font-size: 1em;
-    margin: 20px 0;
-    padding: 5px;
+     background: #8d8;
+    border-radius: 23px;
+    border: 1px solid #40cb3c;
+    color: #042;
+    display: block;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 8px;
+    width: 61%;
+  }
+  input[type=text]{
+    display: block;
+    padding: 8px;
+    font-size: 1.61em;
+    margin-top: 8px;
+    border-radius: 8px;
+    color: #444;
   }
   .single_license {
     vertical-align: top;
@@ -196,8 +206,13 @@ body, html {
     /* width: 140px; */
     padding: 20px 50px;
   }
-
-  .submit-button {
-    margin: 20px 0;
+  
+  .well{
+    background: #d6d6d6;
+    color:#444;
+  }
+  .mute{
+    color:#666;
+    font-weight: normal;
   }
 }
