@@ -105,13 +105,15 @@ body, html {
     margin: 0 !important;
   }
 
+  .story-item-header {
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+  }    
+
   .story-item {
-    padding-top: 15px !important;
-    
-    [class^="col-"] {
-      padding: 0 !important;
-      margin: 0 !important;
-    }
+    padding-top: 5px !important;
+    text-align: center;
     word-break: break-word;
     
     .story-name {
