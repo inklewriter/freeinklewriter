@@ -12,7 +12,7 @@ class StoriesController < ApplicationController
 			@story =  Story.find(params[:id])			
 
 			if @story.story_privacy.present? && @story.story_privacy.bypass_token.present? && 
-				params[:bypass_token].present? and params[:bypass_token].to_s == @story.story_privacy.bypass_token
+				params[:bypass_token].present? && params[:bypass_token].to_s == @story.story_privacy.bypass_token
 				skip_authorization
 			else
 				authorize @story
