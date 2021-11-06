@@ -12,6 +12,8 @@ class StoryPolicy < ApplicationPolicy
 			if record.story_privacy.user_private == "public" || record.story_privacy.user_private == "public and searchable"
 				true
 			elsif record.story_privacy.user_private == "private" 
+				# token based validation is implemented in controller. 
+				# Authorization is skipped if provided token matches recorded token
 				if user.present? && record.user.id == user.id
 					true 
 				else 
