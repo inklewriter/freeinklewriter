@@ -86,7 +86,12 @@ body, html {
   }
 }
 
-#community-user-account {
+#community-my-stories {
+
+  #stories {
+    margin: 0 0 20px 0;
+  }
+
   p {
     font-size: 1.4em;
   }
@@ -129,6 +134,12 @@ body, html {
       
       position: relative;
       top: 8px;
+    }
+  }
+
+  @media all and (min-width: 0px) and (max-width: 991px) {
+    .story-item-header{
+      display: none;
     }
   }
   
