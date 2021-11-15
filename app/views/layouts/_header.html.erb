@@ -3,14 +3,16 @@
 		<div id="logo">
 			<h1><%= link_to "InkleWriter", community_path %></h1>			
 		</div>
-
+		
+<!-- 
 		<div id="to-app">
 			<%= link_to  "To App ⮞", root_path %>
 		</div>
+		 -->
 
 		<% if user_signed_in? %>
 			<div id="user-signed-in">
-				<%= link_to "my stories", my_stories_path %>
+				Hello <%= @user.email %>
 			</div>
 		<% else %> 
 			<div id="no-user">

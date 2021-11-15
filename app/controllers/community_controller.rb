@@ -1,7 +1,7 @@
 class CommunityController < ApplicationController
 	
 	before_action :authenticate_user, only: ["my_stories", "story_params", "update_story_params"]
-	before_action :set_user, only: ["my_stories", "story_params", "update_story_params"]  
+	before_action :set_user#, only: ["my_stories", "story_params", "update_story_params"]  
 	before_action :set_story, only: ["story_params", "update_story_params"]
 	# static pages here
 

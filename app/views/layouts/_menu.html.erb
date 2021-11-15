@@ -1,7 +1,10 @@
 <div id="menu">
 	<div class="container">
 		<div id="menu-items">
-			<%= link_to "home", community_path %>
+			<% if user_signed_in? %>
+				<%= link_to "write a story", root_path %>
+				<%= link_to "my stories", my_stories_path %>
+			<% end %>
 			<%= link_to "how it works", how_it_works_path %>
 		</div>
 	</div>
