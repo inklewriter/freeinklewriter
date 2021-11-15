@@ -2,17 +2,19 @@
 
 
     <div id="main_viewport">
+
         <div id="branding">
+
             <img id="red" src="/img/red.png" />
-            <div id="shelf"></div>
-            <a href="http://www.inklestudios.com/inklewriter"><img src="/img/inklewriter_logo-free.png" alt="inklewriter" id="logo" /></a>
+
+            <div id="shelf">                
+            </div>
+
+            <a href="http://www.inklestudios.com/inklewriter"><img src="/img/inklewriter_logo-free.png" alt="inklewriter" id="logo" />
+            </a>
             
-            <div id="right-shelf-container">
-            
-                <div id="saveStateMessage">
-                    
-                    
-                    
+            <div id="right-shelf-container">            
+                <div id="saveStateMessage">                   
                 </div>
             </div>
             
@@ -27,7 +29,8 @@ $(document).ready(function() {
     
     // The story data
     var storyData = <%= @data.html_safe %>;
-    
+    var storyLicense = <%= @story.license.license_name.to_s if @story.license.present? %>;    
+
     // Start from beginning
     StoryModel.importStory(storyData.title, storyData.data);
     var initialStitches = Player.getSavedGame();

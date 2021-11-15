@@ -18,14 +18,14 @@
 							<% end %>
 							<% if priv_selector == "private" %>
 								<% bypass_tok = @story&.story_privacy&.bypass_token || "not set yet " %>
-								( your bypass token is <%= bypass_tok %>)
+								( your password is <b><%= bypass_tok %></b>)
 								<%# privacy.label :bypass_token%>
 								<%# privacy.text_field :bypass_token %>
 								
 							<% end %>
 						</div>
 					<% end %>
-					<p>The bypass token allows you to grant access to private stories to specific visitors. 
+					<p>The password allows you to grant access to private stories to specific visitors. 
 					<% if @story.story_privacy.bypass_token.present? %>	
 						For this specific story, please use link : <a href="<%= request.base_url %>/stories/<%= @story.id%>/<%= @story.story_privacy.bypass_token %>"><%= request.base_url %>/stories/<%= @story.id%>/<%= @story.story_privacy.bypass_token %></a>
 					<% end %>

@@ -50,7 +50,7 @@
 						<% end %>
 						<% if s.story_privacy.present? %>
 							<div class="col-md-2">
-								<span class="story-detail"><%= s.license.license_name %></span>
+								<span class="story-detail"><%= s.license.license_name if s.license.license_name.present? %></span>
 							</div>
 						<% end %>
 						<div class="col-md-1">
