@@ -154,6 +154,11 @@ body, html {
 
 #community-story-params {
   font-size: 1.2em;
+  h2{
+    display: inline-block;
+    border-bottom: 10px solid hsl(78.98, 56.25%, 60%);
+    line-height: 0.35;    
+  }
 
   #license-list {
     margin: 20px 0;
@@ -167,10 +172,12 @@ body, html {
 
   input[type=submit] {
     margin: 10px 0px;
-    background: hsl(120, 55.556%, 70%);
+    //background: hsl(120, 55.556%, 70%);
+    background-color: hsl(78.98, 56.25%, 60%);
     border-radius: 23px;
     // border: 1px solid #40cb3c;
-    border: 1px solid hsl(120, 55.556%, 70%);
+    // border: 1px solid hsl(120, 55.556%, 70%);
+    border: 1px solid transparent;
     color: #042;    
     font-size: 18px;
     // font-weight: bold;
@@ -179,7 +186,7 @@ body, html {
   }
 
   input[type=submit]:hover {
-    background: hsl(120, 55.556%, 75%);
+    background-color: hsl(120, 55.556%, 75%);
   }
 
   input[type=text]{
@@ -197,6 +204,8 @@ body, html {
     background-color: hsl(0, 0%, 95%);
     border-radius: 4px;
     padding: 5px 10px;
+    -webkit-box-shadow: 6px 6px 9px -6px rgba(0,0,0,0.3); 
+    box-shadow: 6px 6px 9px -6px rgba(0,0,0,0.3);
 
     h3{
       font-size: 1em;

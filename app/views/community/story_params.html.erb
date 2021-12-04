@@ -63,14 +63,14 @@
 
   <%= form_with model: @story, url: update_story_params_path(@story.id), method: "PATCH", local: true do |f| %>
 
-	  <h2>Licence</h2>
+	  <h2>License</h2>
 
 			
 
       <h3>Click on a block below to select its license.</h3>
 
 			<div id= "license-list">
-				
+
 				<div class="single_license" data-license-name="CC-BY-SA 4.0">
 					<p>CC BY-SA 4.0</p>
 					<%= image_tag "ccheart_red.svg" %>
