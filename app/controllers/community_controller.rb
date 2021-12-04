@@ -45,7 +45,7 @@ class CommunityController < ApplicationController
 
 		if @story.update(story_params_attributes)
 			flash[:flash_success] = "story parameters saved"
-			redirect_to user_account_path
+			redirect_to my_stories_path
 		else
 			flash[:flash_error] = @story.errors.first[1] 
 			render "story_params"

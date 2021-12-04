@@ -3,127 +3,133 @@
 
 <div id="community-story-params" class="main-container">
   <div class="container">
+
     <h1><span class="mute">Story</span class="mute"> <%= @story.title.first(100) %></h1>
-	<div class="row">
-      <div class="col-sm-5">
+
 		<h2>Privacy policy</h2>
+
+		
 		<%= form_with model: @story, url: update_story_params_path(@story.id), method: "PATCH", local: true do |f| %>
 
 			<div id="privacy-form">
+
 				<%= f.fields_for :story_privacy do |privacy| %>
-					<% PRIVACY_SELECTORS.each do |priv_selector| %> 
+					<% PRIVACY_SELECTORS.each do |priv_selector| %>
+
 						<div>
 							<%= privacy.label(:user_private, value: priv_selector) do %>
-							<%= privacy.radio_button :user_private, priv_selector %><%= priv_selector %>
+								<%= privacy.radio_button :user_private, priv_selector %><%= priv_selector %>
 							<% end %>
+
 							<% if priv_selector == "private" %>
 								<% bypass_tok = @story&.story_privacy&.bypass_token || "not set yet " %>
 								( your password is <b><%= bypass_tok %></b>)
 								<%# privacy.label :bypass_token%>
-								<%# privacy.text_field :bypass_token %>
-								
+								<%# privacy.text_field :bypass_token %>								
 							<% end %>
 						</div>
+
 					<% end %>
+
 					<p>The password allows you to grant access to private stories to specific visitors. 
-					<% if @story.story_privacy.bypass_token.present? %>	
-						For this specific story, please use link : <a href="<%= request.base_url %>/stories/<%= @story.id%>/<%= @story.story_privacy.bypass_token %>"><%= request.base_url %>/stories/<%= @story.id%>/<%= @story.story_privacy.bypass_token %></a>
-					<% end %>
-						</p>
+						<% if @story.story_privacy.bypass_token.present? %>	
+							For this specific story, please use link : <a href="<%= request.base_url %>/stories/<%= @story.id%>/<%= @story.story_privacy.bypass_token %>"><%= request.base_url %>/stories/<%= @story.id%>/<%= @story.story_privacy.bypass_token %></a>
+						<% end %>
+					</p>
+
 				<% end %>
+
 			</div>
-			<div class="submit-button">
-				<%= submit_tag "Save" %>
-			</div>
-      </div> <!-- col5 -->
+
 			
-      <div class="col-sm-1">
-      </div> <!-- col1 -->
+		<%= f.submit "Save" %>
+		<% end %>	     
 
-        <div class="col-sm-6 well">
-                    <h3>How do privacy policies work? </h3>
-                    <p>They define how your interactive story can be accessed by other people. </p>
-        <ul>
-        <li> <b>private</b> - Your story can only be read by you or people with a special link containing a "bypass token" - an elaborated word for "password".
-        <li> <b>public</b> - This is the default. Your story can be read by anyone but it should not be indexed, searched, nor promoted.
-        <li> <b>public and searchable </b>- Your story can appear in a search engine made by our team with the objective of promoting works created in Inklewriter.
-        </ul>
-      </div><!-- col6 -->
+		<div class="section-explanation">
+        
+	    <h3>How do privacy policies work? </h3>
+	    <p>They define how your interactive story can be accessed by other people. </p>
 
-    </div> <!-- row -->
+	    <ul>
+	    	<li> <b>private</b> - Your story can only be read by you or people with a special link containing a "bypass token" - an elaborated word for "password".
+	    	<li> <b>public</b> - This is the default. Your story can be read by anyone but it should not be indexed, searched, nor promoted.
+	    	<li> <b>public and searchable </b>- Your story can appear in a search engine made by our team with the objective of promoting works created in Inklewriter.
+	    </ul>
+      
+    </div>  
 
-   <div class="row">
-   &nbsp;
-   </div> <!-- row -->
+   
 
-	<div class="row">
 
-      <div class="col-sm-5">
-          <h2>Licence</h2>
-			<div id="license-value">
-				<%= f.fields_for :license do |lic| %>
-					<b><%= lic.label :license_name %></b>
-					<%= lic.text_field :license_name %>
-				<% end %>
-			</div>
-          <h3>Click on a block below to select its license.</h3>
+  <%= form_with model: @story, url: update_story_params_path(@story.id), method: "PATCH", local: true do |f| %>
+
+	  <h2>Licence</h2>
+
+			
+
+      <h3>Click on a block below to select its license.</h3>
 
 			<div id= "license-list">
+				
 				<div class="single_license" data-license-name="CC-BY-SA 4.0">
 					<p>CC BY-SA 4.0</p>
 					<%= image_tag "ccheart_red.svg" %>
 					<p>Attribution ShareAlike <br>4.0 Generic </p>
 					<%= link_to "Licence Summary ", "https://creativecommons.org/licenses/by-sa/4.0/", target: "_blank", "rel": "noopener noreferrer" %>
 				</div>
+
 				<div class="single_license" data-license-name="CC BY-ND 4.0">
 					<p>CC BY-ND 4.0</p>
 					<%= image_tag "ccheart_red.svg" %>
 					<p>Attribution NoDerivatives <br>4.0 Generic </p>
 					<%= link_to "Licence Summary ", "https://creativecommons.org/licenses/by-nd/4.0/", target: "_blank", "rel": "noopener noreferrer" %>
 				</div>
+
 				<div class="single_license" data-license-name="CC-NC 4.0">
 					<p>CC BY-NC 4.0</p>
 					<%= image_tag "ccheart_red.svg" %>
 					<p>Attribution NonCommercial <br>4.0 Generic ()</p>
 					<%= link_to "Licence Summary ", "https://creativecommons.org/licenses/by-nc/4.0/", target: "_blank", "rel": "noopener noreferrer" %>
 				</div>
+
 				<div class="single_license" data-license-name="CC-NC-ND 4.0">
 					<p>CC BY-NC-ND 4.0</p>
 					<%= image_tag "ccheart_red.svg" %>
 					<p>Attribution NonCommercial NoDerivatives <br>4.0 Generic</p>
 					<%= link_to "Licence Summary ", "https://creativecommons.org/licenses/by-nc-nd/4.0/", target: "_blank", "rel": "noopener noreferrer" %>
-				</div>				
-			</div>
-			<div class="submit-button">
-				<%= submit_tag "Save" %>
-			</div>
-			
-		<% end %>
-      </div><!-- col5 -->
+				</div>	
 
-      <div class="col-sm-1">
-      </div><!-- col1 -->
-				
-      <div class="col-sm-6 well">
-        <h3>What is the interest of a license? Why should I select one? </h3>
-        <p>Inklewriter sets no license on your work by default. </p>
-        <p>Yet without one, there is no strict way to know how others should respect your work on the Internet.</p>
-        <p>We recommand you to choose a licence especially if you agree to make your story searchable.</p>
-        <p>By defining one, you specify the conditions you intend your work to be shared and distributed. </p>
-        <h3>Why do you recommand Creative Commons Licenses?</h3>
-        <p>
-          You are free to use other licenses but we recommand the Creative Commons 4.0 (CC 4.0) ones. 
-        <p>
-          We think CC 4.0 licenses have many advantages: 
-      </p>
-<ul>
-<li>
-          They are by design made for works of art in the Internet age. 
-<li>
-          They come from the free software community who have has a strong experience about licenses and their many subtleties.
-<li>
-          They have been perfected over many years and have very high chances of being accepted by courts of justice should you ever have to face such a situation.
-</ul>
+			</div>		
+
+			<div id="license-value">
+				<%= f.fields_for :license do |lic| %>
+					<b><%= lic.label :license_name %></b>
+					<%= lic.text_field :license_name %>
+				<% end %>
+			</div>	
+
+			<%= f.submit "Save" %>
+
+	<% end %>			
+      
+
+  <div class="section-explanation">
+      
+      <h3>What is the interest of a license? Why should I select one? </h3>
+      <p>Inklewriter sets no license on your work by default. </p>
+      <p>Yet without one, there is no strict way to know how others should respect your work on the Internet.</p>
+      <p>We recommand you to choose a licence especially if you agree to make your story searchable.</p>
+      <p>By defining one, you specify the conditions you intend your work to be shared and distributed. </p>
+      <h3>Why do you recommand Creative Commons Licenses?</h3>
+      <p>You are free to use other licenses but we recommand the Creative Commons 4.0 (CC 4.0) ones.</p>
+      <p>We think CC 4.0 licenses have many advantages:</p>
+
+			<ul>
+				<li>They are by design made for works of art in the Internet age.</li>
+				<li>They come from the free software community who have has a strong experience about licenses and their many subtleties.</li>
+				<li>They have been perfected over many years and have very high chances of being accepted by courts of justice should you ever have to face such a situation.</li>
+			</ul>
+
         </p>
         <p>But feel free to use any license to your liking. </p>
         <p>For example, if you intend to give up copyright and put your work into the worldwide public domain with no conditions, you can use the <a href="https://creativecommons.org/choose/zero/" target="_blank">CC0 license</a>.</p>
@@ -135,16 +141,13 @@
         Please refer to the <a href="https://creativecommons.org/licenses/" target="_blank" class="link">official CC 4.0 Documentation</a> for full details but here's a brief summary of these options.
         </p>
         <ul>
-        <li> <b>BY</b> – Credit must be given to the creator
-        <li> <b>NC (Non Commercial) </b>– Only noncommercial uses of the work are permitted
-        <li> <b>SA (Share Alike) </b>– Adaptations must be shared under the same terms
-        <li> <b>ND (No Derivatives) </b>– No derivatives or adaptations of the work are permitted
+	        <li> <b>BY</b> – Credit must be given to the creator</li>
+	        <li> <b>NC (Non Commercial) </b>– Only noncommercial uses of the work are permitted</li>
+	        <li> <b>SA (Share Alike) </b>– Adaptations must be shared under the same terms</li>
+	        <li> <b>ND (No Derivatives) </b>– No derivatives or adaptations of the work are permitted</li>
         </ul>
-      </div><!-- col6 -->
-   </div> <!-- row -->
-   <div class="row">
-   &nbsp;
-   </div> <!-- row -->
+  
+  </div></li> 
 
 </div>
 
