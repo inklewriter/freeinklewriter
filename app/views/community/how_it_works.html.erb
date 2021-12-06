@@ -13,14 +13,14 @@
     </div> <!-- end row -->
 
 
-    <div id="getting-started" class="row">
+    <div id="getting-started">
 
-      <div class="col-md-12">
+      <div>
 
         <h2>Getting started</h2>
 
         <div class="image-wrapper">
-          <img class="full-width-banner round-corners" src="/img/community-getting-started/splash.jpg"/>
+          <%=  image_tag 'splash.jpg', class: "round-corners", style: "max-width: 709px;" %>
         </div>
 
         <p>It couldn’t be easier to start writing. When you first launch the <strong>inklewriter</strong> website, you’ll be offered the option of taking the tutorial, or starting a new story. If you click new you can get writing straight away.</p>
@@ -28,7 +28,7 @@
         <h2>Write, and add options</h2>
 
         <div class="image-wrapper">
-          <img class="full-width-banner round-corners" src="/img/community-getting-started/options.jpg"/>
+          <%=  image_tag 'options.jpg', class: "round-corners", style: "max-width: 698px;" %>          
         </div>
 
         <p>You’ll write your story onto the scraps of paper in the middle of the <strong>inklewriter</strong> workbench. When you want to add choices, just click the Add Option button, and type in the name of the choice. Each choice has an arrow you can click to follow that path.</p>
@@ -38,19 +38,19 @@
         <p>There are lots of ways to find your way around in <strong>inklewriter</strong>. First, you can use the rewind buttons in the top right of every page of your story. Clicking rewind will roll the story back to that point, so you can add new options or take different choices.</p>
 
         <div class="image-wrapper">
-          <img class="round-corners" src="/img/community-getting-started/rewind.jpg"/>
+          <%=  image_tag 'rewind.jpg', class: "round-corners", style: "max-width: 260px;" %>          
         </div>
 
         <p>You can also open the <strong>contents</strong> panel using the button in the top right. This lists every paragraph of text you’ve written. Click on one to jump straight there.</p>
 
         <div class="image-wrapper">
-          <img class="round-corners" src="/img/community-getting-started/contents.jpg"/>
+          <%=  image_tag 'contents.jpg', class: "round-corners", style: "max-width: 404px;" %>          
         </div>
 
         <h2>How do I join different paths back together again?</h2>
 
         <div class="image-wrapper">
-          <img class="full-width-banner round-corners" src="/img/community-getting-started/join.jpg"/>
+          <%=  image_tag 'join.jpg', class: "round-corners", style: "max-width: 927px;" %>          
         </div>
 
         <p>Once your story has branched, you’ll often want to to bring the different branches back together again. This is done using the “join” button below a section of text. Clicking this button brings up the content panel, for you to select which paragraph to join to.</p>
@@ -58,7 +58,7 @@
         <h2>How do I read my story?</h2>
 
         <div class="image-wrapper">
-          <img class="full-width-banner round-corners" src="/img/community-getting-started/read.jpg"/>
+          <%=  image_tag 'read.jpg', class: "round-corners", style: "max-width: 870px;" %>          
         </div>
 
         <p>Read your story by clicking the “read” button in the toolbar. The story will automatically start from wherever you working in the story, but you can use the rewind buttons to roll back to whatever point you like.</p>
@@ -72,7 +72,7 @@
         <h2>Sharing stories in inklewriter</h2>
 
         <div class="image-wrapper">
-          <img class="full-width-banner round-corners" src="/img/community-getting-started/share.jpg"/>
+          <%=  image_tag 'share.jpg', class: "round-corners", style: "max-width: 676px;" %>          
         </div>      
 
         <p>By signing in, you’ll be able to work on as many stories as you like, and switch between them as easily as you would in a word-processor. Better still, every story you write will get its own web-page with a link you can share, so other people can read what you’ve written.</p>
@@ -84,12 +84,13 @@
         <p>First, make sure the cursor is in the correct paragraph. Then click the image widget in the bottom left:</p>
 
         <div class="image-wrapper">
-          <img class="round-corners" src="/img/community-getting-started/image-widget.jpg"/>
+          <%=  image_tag 'image-widget.jpg', class: "round-corners", style: "max-width: 79px;" %>          
         </div>
+
         <p>A dialogue box will appear. You can’t upload images to <strong>inklewriter</strong> directly; you have to use images which are already on the internet. Find one – using <a href="https://images.google.com/">Google Images</a>, for instance – and then copy the link of that image, and paste it in. If <strong>inklewriter</strong> can use the image, a little thumbnail of it will appear.</p>
 
         <div class="image-wrapper">
-          <img class="round-corners" src="/img/community-getting-started/choose-image.jpg"/>
+          <%=  image_tag 'choose-image.jpg', class: "round-corners", style: "max-width: 300px;" %>          
         </div>
 
         <p>Please remember, a lot of images on the internet are copyrighted!</p>
@@ -97,7 +98,7 @@
         <h2>How do I use logic?</h2>
 
         <div class="image-wrapper">
-          <img class="round-corners" src="/img/community-getting-started/if-widget.jpg"/>
+          <%=  image_tag 'if-widget.jpg', class: "round-corners", style: "max-width: 78px;" %>          
         </div>  
 
         <p>Take a look at <a href="/2012/06/08/learning-logic-with-sherlock-holmes.html">this blog post</a> about our <a href="http://writer.inklestudios.com/stories/musgraveritual">Sherlock Holmes example story</a>.</p>
@@ -106,27 +107,27 @@
 
         <p>You can! Just type the name of the link in square brackets, like this:</p>
 
-            <pre>[http://www.inklestudios.com]</pre>
+            <p class="pre">[http://www.inklestudios.com]</p>
 
         <p>If you want the link to appear as text (like <a href="/">this one</a> is), then add a vertical bar, and the text you want, like this:</p>
 
-        <pre>[http://www.inklestudios.com|inkle's website]</pre>
+        <p class="pre">[http://www.inklestudios.com|inkle's website]</p>
 
         <h2>Are there ways to vary what’s written?</h2>
 
         <p>Lots and lots! There’s the whole section on logic you could read. But you can also make text vary randomly by putting it inside curly braces, separated by vertical bars, and starting with a tilda: <span style="font-size: 24pt;">~</span>. This tells <strong>inklewriter</strong> to go into “shuffle” mode. So for example, if you write:</p>
 
-        <pre>The sky was {~clear|cloudy|dark|very far away} and the moon was {~full|gibbous|new}.</pre>
+        <p class="pre">The sky was {~clear|cloudy|dark|very far away} and the moon was {~full|gibbous|new}.</p>
 
         <p>Then your reader will see a different description every time:- sometimes cloudy with a full moon, sometimes clear with a new moon!</p>
 
         <p>You can also print out the value of any counters you’re using, either as a number or as words. Try:
 
-        <pre>You have [value:letters] more letters to post, one to No. [number:houseNumber] over the road.</pre>
+        <p class="pre">You have [value:letters] more letters to post, one to No. [number:houseNumber] over the road.</p>
 
         <p>which will show your player something like:</p>        
 
-        <pre class="inklewriter-excerpt">You have fifteen more letters to post, one to No. 22 over the road.</pre> 
+        <p class="inklewriter-excerpt pre">You have fifteen more letters to post, one to No. 22 over the road.</p> 
 
         <h2>Try it out!</h2>
       </div> <!-- end getting started -->

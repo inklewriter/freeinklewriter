@@ -155,6 +155,7 @@ body, html {
 
   .image-wrapper{
     text-align: center;
+    width: 100%;
   }
 
 
@@ -165,9 +166,9 @@ body, html {
 
   img {
     // display: block;
-    margin: 0 auto;
-    max-width: 100%;
-    // width: 100%;
+    // margin: 0 auto;
+    // max-width: 100%;
+    width: 100%;
 
   }
 
@@ -186,11 +187,11 @@ body, html {
     font-size: 1.4em;
     // font-style: italic;
   }
-  pre {
-    display: block;
+  .pre {
+    display: inline-block;
     padding: 9.5px;
     margin: 0 0 10px;
-    font-size: 13px;
+    font-size: 1em;
     line-height: 1.42857143;
     color: #333;
     word-break: break-all;
@@ -198,6 +199,8 @@ body, html {
     background-color: #f5f5f5;
     border: 1px solid #ccc;
     border-radius: 4px;
+    max-width: 700px;
+    width: auto;
   }
   
 
