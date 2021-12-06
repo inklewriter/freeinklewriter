@@ -146,9 +146,65 @@ body, html {
 }
 
 #community-how-it-works {
+
+  #getting-started{
+    // width: 576px;
+    // margin: auto;
+    
+  }
+
+  .image-wrapper{
+    text-align: center;
+  }
+
+
   .comment {
     font-size: 1.4em;
     font-style: italic;
+  }
+
+  img {
+    // display: block;
+    margin: 0 auto;
+    max-width: 100%;
+    // width: 100%;
+
+  }
+
+  .round-corners {
+    border-radius: 15px;
+  }
+
+  h2 {
+    font-size: 1.6em;
+  }
+  p {
+    display: block;
+    margin: 10px 0 !important;
+    // line-height: 1.6em;
+    margin: 0 0 10px;
+    font-size: 1.4em;
+    // font-style: italic;
+  }
+  pre {
+    display: block;
+    padding: 9.5px;
+    margin: 0 0 10px;
+    font-size: 13px;
+    line-height: 1.42857143;
+    color: #333;
+    word-break: break-all;
+    word-wrap: break-word;
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+
+  .inklewriter-excerpt {
+      font-family: Baskerville, Times, serif;
+      color: #666;
+      padding: 20px;
   }
 }
 
