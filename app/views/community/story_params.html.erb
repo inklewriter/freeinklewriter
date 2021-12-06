@@ -33,7 +33,7 @@
 
 					<p>The password allows you to grant access to private stories to specific visitors. 
 						<% if @story.story_privacy.bypass_token.present? %>	
-							For this specific story, please use link : <a href="<%= request.base_url %>/stories/<%= @story.id%>/<%= @story.story_privacy.bypass_token %>"><%= request.base_url %>/stories/<%= @story.id%>/<%= @story.story_privacy.bypass_token %></a>
+							For this specific story, please use link : <a href="<%= request.base_url %>/stories/<%= @story.id%>?bypass_token=<%= @story.story_privacy.bypass_token %>"><%= request.base_url %>/stories/<%= @story.id%>?bypass_token=<%= @story.story_privacy.bypass_token %></a>
 						<% end %>
 					</p>
 
@@ -45,16 +45,21 @@
 		<%= f.submit "Save" %>
 		<% end %>	     
 
-		<div class="section-explanation">
+		<div class="section-explanation row">
         
-	    <h3>How do privacy policies work? </h3>
-	    <p>They define how your interactive story can be accessed by other people. </p>
+      <div class="image col-md-1">
+      	<%= image_tag "quill-question.svg" %>
+      </div>
+      <div class="col-md-11"> 
+		    <h3>How do privacy policies work? </h3>
+		    <p>They define how your interactive story can be accessed by other people. </p>
 
-	    <ul>
-	    	<li> <b>private</b> - Your story can only be read by you or people with a special link containing a "bypass token" - an elaborated word for "password".
-	    	<li> <b>public</b> - This is the default. Your story can be read by anyone but it should not be indexed, searched, nor promoted.
-	    	<li> <b>public and searchable </b>- Your story can appear in a search engine made by our team with the objective of promoting works created in Inklewriter.
-	    </ul>
+		    <ul>
+		    	<li> <b>private</b> - Your story can only be read by you or people with a special link containing a "bypass token" - an elaborated word for "password".
+		    	<li> <b>public</b> - This is the default. Your story can be read by anyone but it should not be indexed, searched, nor promoted.
+		    	<li> <b>public and searchable </b>- Your story can appear in a search engine made by our team with the objective of promoting works created in Inklewriter.
+		    </ul>
+	    </div> 
       
     </div>  
 
@@ -113,8 +118,14 @@
 	<% end %>			
       
 
-  <div class="section-explanation">
+  <div class="section-explanation row">
       
+        
+    <div class="image col-md-1">
+    	<%= image_tag "quill-question.svg" %>
+    </div>
+    
+    <div class="col-md-11"> 
       <h3>What is the interest of a license? Why should I select one? </h3>
       <p>Inklewriter sets no license on your work by default. </p>
       <p>Yet without one, there is no strict way to know how others should respect your work on the Internet.</p>
@@ -130,7 +141,7 @@
 				<li>They have been perfected over many years and have very high chances of being accepted by courts of justice should you ever have to face such a situation.</li>
 			</ul>
 
-        </p>
+        
         <p>But feel free to use any license to your liking. </p>
         <p>For example, if you intend to give up copyright and put your work into the worldwide public domain with no conditions, you can use the <a href="https://creativecommons.org/choose/zero/" target="_blank">CC0 license</a>.</p>
         <h3>Which license should I choose?</h3>
@@ -146,8 +157,10 @@
 	        <li> <b>SA (Share Alike) </b>– Adaptations must be shared under the same terms</li>
 	        <li> <b>ND (No Derivatives) </b>– No derivatives or adaptations of the work are permitted</li>
         </ul>
+      </div>
+    </div>    
   
-  </div></li> 
+  </div>
 
 </div>
 
