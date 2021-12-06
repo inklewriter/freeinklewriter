@@ -9487,9 +9487,9 @@ var Editor = function() {
         EditorAccount.signedIn() && F("import", e, EditorMenu.importStory, "Import a story from another instance"),
         u != o ? (F("tutorial", e, EditorMenu.loadTutorial, "Load the tutorial"),
         EditorAccount.signedIn() ? u > t && F("share", e, EditorMenu.showShareDialogue, "Share your story") : F("share", e, EditorAccount.signIn, "Sign in to share your story")) : F("restart tutorial", e, EditorMenu.loadTutorial, "Restart the tutorial"),
-        u != o && F("?", e, function() {
-            window.open("http://www.inklestudios.com/inklewriter/getting-started")
-        }, "Getting Started")
+        u != o && F("community", e, function() {
+            window.open("/community")
+        }, "Community and story parameters")
     }
       , R = function(a) {
         u = a;
