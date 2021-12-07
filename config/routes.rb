@@ -6,7 +6,8 @@ Rails.application.routes.draw do
 
   resources :stories do
     member do
-      get ':bypass_token', to: 'stories#show'
+      get 'query_bp', to: 'stories#query_bp'
+      # get ':bypass_token', to: 'stories#show'
     end
   end
 

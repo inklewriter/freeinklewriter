@@ -29,7 +29,7 @@ $(document).ready(function() {
     
     // The story data
     var storyData = <%= @data.html_safe %>;
-    var storyLicense = <%= @story.license.license_name.to_s if @story.license.present? %>;    
+    var storyLicense = "<%= @story.license.license_name.to_s if @story.license.present? %>";    
 
     // Start from beginning
     StoryModel.importStory(storyData.title, storyData.data);
