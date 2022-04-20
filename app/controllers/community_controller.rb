@@ -1,7 +1,7 @@
 class CommunityController < ApplicationController
 	
-	before_action :authenticate_user, only: ["user_account", "story_params", "update_story_params"]
-	before_action :set_user, only: ["user_account", "story_params", "update_story_params"]  
+	before_action :authenticate_user, only: ["my_stories", "story_params", "update_story_params"]
+	before_action :set_user#, only: ["my_stories", "story_params", "update_story_params"]  
 	before_action :set_story, only: ["story_params", "update_story_params"]
 	# static pages here
 
@@ -19,7 +19,7 @@ class CommunityController < ApplicationController
 
 	# with authentication and validation
 
-	def user_account
+	def my_stories
 		
 	end
 
@@ -45,7 +45,7 @@ class CommunityController < ApplicationController
 
 		if @story.update(story_params_attributes)
 			flash[:flash_success] = "story parameters saved"
-			redirect_to user_account_path
+			redirect_to my_stories_path
 		else
 			flash[:flash_error] = @story.errors.first[1] 
 			render "story_params"

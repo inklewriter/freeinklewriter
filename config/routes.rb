@@ -6,7 +6,8 @@ Rails.application.routes.draw do
 
   resources :stories do
     member do
-      get ':bypass_token', to: 'stories#show'
+      get 'query_bp', to: 'stories#query_bp'
+      # get ':bypass_token', to: 'stories#show'
     end
   end
 
@@ -25,7 +26,7 @@ Rails.application.routes.draw do
   get 'health', to: 'misc#health'
   get 'privacy', to: 'community#privacy'
   get 'community', to: 'community#community'
-  get 'user_account', to: 'community#user_account'
+  get 'my_stories', to: 'community#my_stories'
   get 'how_it_works', to: 'community#how_it_works'
   get 'story_params/:id', to: 'community#story_params', as: "story_params"
   patch 'update_story_params/:id', to: 'community#update_story_params', as: "update_story_params"

@@ -4,7 +4,7 @@ class StoriesController < ApplicationController
 	# Because main page lies in app#index, this controller mostly do JSON and 
 	# allow upload and download of stories and all related activity	
 	
-	before_action :user_logged_in, only: [:create, :update, :destroy]	
+	before_action :user_logged_in, only: [:create, :update, :destroy, :query_bp]	
 
 	def show
 		if Story.exists?(params[:id])
@@ -89,6 +89,24 @@ class StoriesController < ApplicationController
 		else
 			render json: {}, :status => 400
 		end	
+	end
+
+	def query_bp
+		if Story.exists?(params[:id])
+			s = Story.find(params[:id])
+
+			if s.story_privacy.present? && s.story_privacy.bypass_token.present?
+				if current_user.admin.present? || (s.user.id == current_user.id)
+					render json: {message: s.story_privacy.bypass_token}, status: 200
+				else
+					render json: {message: "unauthorized"}, status: 401
+				end
+			else
+				render json: { message: "not privacy token found" }, status: 405
+			end
+		else
+			render json: {message: "not found"}, status: 404
+		end
 	end
 
 	private 
