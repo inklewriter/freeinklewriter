@@ -29,8 +29,8 @@ gem "pundit"
 
 # Health & security
 gem "airbrake"
-# gem 'rack-attack'
 gem "health_check"
+# gem 'rack-attack'
 
 # Emails
 gem 'premailer-rails'
