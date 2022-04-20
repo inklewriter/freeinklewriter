@@ -51,6 +51,10 @@ GEM
     archive-zip (0.12.0)
       io-like (~> 0.3.0)
     arel (9.0.0)
+    babel-source (5.8.35)
+    babel-transpiler (0.7.0)
+      babel-source (>= 4.0, < 6)
+      execjs (~> 2.0)
     bcrypt (3.1.16)
     bindex (0.8.1)
     bootsnap (1.4.9)
@@ -190,13 +194,13 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
+    terser (1.1.8)
+      execjs (>= 0.3.0, < 3)
     thor (1.1.0)
     thread_safe (0.3.6)
     tilt (2.0.10)
     tzinfo (1.2.9)
       thread_safe (~> 0.1)
-    uglifier (4.2.0)
-      execjs (>= 0.3.0, < 3)
     warden (1.2.9)
       rack (>= 2.0.9)
     web-console (3.7.0)
@@ -215,12 +219,14 @@ PLATFORMS
 
 DEPENDENCIES
   airbrake
+  babel-transpiler
   bcrypt (~> 3.1.7)
   bootsnap (>= 1.1.0)
   byebug
   capybara (>= 2.15)
   chromedriver-helper
   devise
+  execjs
   health_check
   listen (>= 3.0.5, < 3.2)
   pg
@@ -233,8 +239,8 @@ DEPENDENCIES
   spring
   spring-watcher-listen (~> 2.0.0)
   sprockets (= 3.7.2)
+  terser
   tzinfo-data
-  uglifier (>= 1.3.0)
   web-console (>= 3.3.0)
 
 RUBY VERSION
