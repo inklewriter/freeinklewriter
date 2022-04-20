@@ -9,7 +9,7 @@ gem 'sprockets', '3.7.2'
 gem 'puma'
 
 # CSS
-gem 'sass-rails', '>= 5.0'
+gem 'sass-rails'
 
 # JS
 gem 'babel-transpiler'
@@ -24,37 +24,27 @@ gem 'pg'
 gem 'devise'
 gem 'bcrypt'
 
+# Auhtorization
+gem "pundit"
+
+# Health & security
+gem "airbrake"
+# gem 'rack-attack'
+gem "health_check"
+
+# Emails
+gem 'premailer-rails'
+
+
+# Functionnal 
+
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # gem 'jbuilder', '~> 2.5'
-# Use Redis adapter to run Action Cable in production
-
-# Use ActiveModel has_secure_password
-
-
-# Use ActiveStorage variant
-# gem 'mini_magick', '~> 4.8'
-
-# Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 
-
 # gem 'devise-jwt'
-
-
-# premailer allows to define email styling in a CSS file and automatically inlines it when email is sent
-gem 'premailer-rails'
-
-gem "health_check"
-
-gem "pundit"
-
-gem "airbrake"
-
-# gem 'rack-attack'
-
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
