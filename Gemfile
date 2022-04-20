@@ -8,6 +8,9 @@ gem 'rails', '5.2.4.6'
 gem 'sprockets'
 gem 'puma'
 
+# Compression of assets
+gem 'sprockets-exporters_pack'
+
 # CSS
 gem 'sass-rails'
 
