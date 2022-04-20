@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '>2.6.0'
+ruby '3.0.3'
 
 # Gems are not versionned, please make sure Gemfile.lock is never wiped
 # Or the current gem version used will be lost
