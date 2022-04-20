@@ -22,6 +22,9 @@ gem 'babel-transpiler'
 gem 'execjs'
 gem 'terser'
 
+# JS Bundler (ESBUILD)
+gem 'jsbundling-rails'
+
 # DB
 gem 'pg'
 # gem 'redis'
@@ -50,6 +53,12 @@ gem 'premailer-rails'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 
+# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
+gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+# foreman can be installed manually
+gem 'foreman'
+
+
 # gem 'devise-jwt'
 
 group :development, :test do
@@ -72,6 +81,3 @@ group :test do
   gem 'selenium-webdriver'
   # Easy installation and use of chromedriver to run system tests with Chrome
 end
-
-# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
