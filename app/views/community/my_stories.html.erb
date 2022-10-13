@@ -56,7 +56,7 @@
 						</div>
 						
 						<div class="col-md-2">
-							<span class="story-detail"><%= s.license.license_name if s.license.license_name.present? %></span>
+							<span class="story-detail"><%= s&.license&.license_name %></span>
 						</div>					
 
 						<div class="col-md-1">
