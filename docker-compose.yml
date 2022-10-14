@@ -15,7 +15,7 @@ services:
   app:
     env_file: .env
     build: .
-    image: albancrommer/inklewriter:latest
+    image: albancrommer/inklewriter:dev
     volumes:
         - .:/usr/src/app
     ports:
