@@ -1,5 +1,4 @@
-FROM ruby:3.0.4-alpine
-
+FROM ruby:3.0.4-slim-bullseye
 WORKDIR /usr/src/app
 COPY Gemfile* /usr/src/app/ 
 RUN apk add --update \ 
