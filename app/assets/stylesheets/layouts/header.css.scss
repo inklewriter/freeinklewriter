@@ -1,7 +1,7 @@
 #header {	
-	font-family: Times, Times New Roman, Georgia, serif;
-	background-color: #e6e6e6;
-	padding: 15px 0;
+	font-family: Baskerville, "Hoefler Text", Georgia, "Times New Roman", serif;
+	background-color: #A92C27;
+	padding: 7px 0;
 	position: relative;
 
 	.container {
@@ -13,15 +13,14 @@
 		h1 {
 			padding: 0;
 			margin: 0;
-			
+            font-weight: normal;
 		}
 		a {
+			color: #f8f8f8;
 			text-decoration: none;
-			color: hsl(0, 0%, 30%);
 		}
 		a:hover {
-			text-decoration: underline;
-			color: black;
+            text-shadow: 0 0 2px white;
 		}
 	}
 
@@ -49,17 +48,18 @@
 		padding-top: 12px;			
 		display: inline-block;
 		float: right;
+        color: #f8f8f8;
 		a {
 			padding: 0;
 			margin: 0;
 			display: inline-block;
 			font-weight: bold;
 			font-size: 1.2em;
-			color: hsl(0, 0%, 30%);
 		}
 
 		a:hover {
-			color: hsl(0, 0%, 50%);
+			text-decoration: none;
+            text-shadow: 0 0 2px white;
 
 		}
 		

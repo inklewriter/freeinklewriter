@@ -1,15 +1,15 @@
 #footer {
-	font-family: Times, Times New Roman, Georgia, serif;
-	background-color: #d5d5d5;
+	font-family: Baskerville, "Hoefler Text", Georgia, "Times New Roman", serif;
+	background-color: #A92C27;
 	padding: 15px 0;
 	font-size: 0.9em;
 	p {
-		color: #4d4d4d;
+		color: #f8f8f8;
 		font-size: 1.6em;
 		display: inline-block;
 	}
 	a {
-		color: #4d4d4d,
+		color: #f8f8f8;
 	}
 
 	#footer-logo {			
@@ -27,14 +27,14 @@
 
 	#footer-presentation {
 		.action-link {
-			color: #ff3357;
+    		color: #f8f8f8;
 			font-size: 1.4em;
 			text-decoration: none;
 			display: block;
 
 		}
 		.action-link:hover {
-			color: #ff4d6c;
+            text-shadow: 0 0 2px white;
 		}
 	}
 
