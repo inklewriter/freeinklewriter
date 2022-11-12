@@ -4794,6 +4794,265 @@ Array.prototype.indexOf || (Array.prototype.indexOf = function(e) {
     return -1
 }
 );
+
+        
+getFirstBrowserLanguage = function () {
+    var nav = window.navigator,
+    browserLanguagePropertyKeys = ['language', 'browserLanguage', 'systemLanguage', 'userLanguage'],
+    i,
+    language;
+
+    // support for HTML 5.1 "navigator.languages"
+    if (Array.isArray(nav.languages)) {
+      for (i = 0; i < nav.languages.length; i++) {
+        language = nav.languages[i];
+        if (language && language.length) {
+          return language;
+        }
+      }
+    }
+
+    // support for other well known properties in browsers
+    for (i = 0; i < browserLanguagePropertyKeys.length; i++) {
+      language = nav[browserLanguagePropertyKeys[i]];
+      if (language && language.length) {
+        return language;
+      }
+    }
+
+    return null;
+  };
+/**
+ * @file jquery.tr.js
+ * @brief Support for internationalization.
+ * @author Jonathan Giroux (Bloutiouf)
+ * @site https://github.com/Bloutiouf/jquery.tr
+ * @version 1.1
+ * @license MIT license <http://www.opensource.org/licenses/MIT>
+ * 
+ * jquery.tr is a jQuery plugin which enables you to translate text on the
+ * client side.
+ * 
+ * Features:
+ * - uses a predefined dictionary.
+ * - translates into languages with several plurals.
+ * - replaces parameters in translations.
+ * - uses cookie information if jQuery.cookie is available.
+ * - designed to be used by CouchApps.
+ */
+
+(function($) {
+
+	// configuration, feel free to edit the following lines
+
+	/**
+	 * Language at the start of the application.
+	 * If you use the jQuery's Cookie plugin, then the language will be stored
+	 * in a cookie.
+	 */
+	var language = 'en';
+
+	/**
+	 * Name of cookie storing language. Change it if it conflicts.
+	 * If you don't use the jQuery's Cookie plugin, it doesn't matter.
+	 */
+	var cookieName = 'language';
+
+	// end of configuration
+
+	/**
+	 * Intern dictionary.
+	 */
+	var dictionary;
+
+	/**
+	 * Standard replace function.
+	 */
+	var replace = function(str, opt) {
+		var args = (typeof opt === 'object' && opt != null) ? opt : arguments;
+		return str.replace(/&(\w+)/g, function(match, n) {
+			var value = args[n];
+			if (value === undefined) {
+				return match;
+			}
+			return value;
+		});
+	};
+
+	/**
+	 * Default translator in case of error or unavailability...
+	 */
+	var lambda = function(key, opt) {
+		var args = (typeof opt === 'object' && opt != null) ? opt : arguments;
+		return replace(key, args);
+	};
+
+	// load language from cookie
+	if ($.cookie) {
+		language = $.cookie(cookieName) || language;
+	}
+
+    // Store missing keys for translation purpose
+    var missing_keys = [];
+
+	$.tr = {
+      
+        missing_keys: missing_keys,
+      
+		/**
+		 * @name $.tr.dictionary
+		 * @brief Get the current dictionary.
+		 * @returns object dictionary.
+		 * 
+		 * Example: Gets the current dictionary.
+		 * @code
+		 * var dict = $.tr.dictionary();
+		 * @endcode
+		 */
+		/**
+		 * @name $.tr.dictionary
+		 * @brief Set the current dictionary.
+		 * @param object newDictionary new dictionary.
+		 * 
+		 * Example: Sets the current dictionary.
+		 * @code
+		 * $.tr.dictionary(dict);
+		 * @endcode
+		 */
+		dictionary : function(newDictionary) {
+			if (newDictionary !== undefined) {
+				dictionary = newDictionary;
+			}
+			return dictionary;
+		},
+
+		/**
+		 * @name $.tr.language
+		 * @brief Get the current language.
+		 * @returns string language.
+		 * 
+		 * Example: Gets the current language.
+		 * @code
+		 * var lg = $.tr.language();
+		 * @endcode
+		 */
+		/**
+		 * @name $.tr.language
+		 * @brief Set the current language.
+		 * @param string newLanguage new language.
+		 * @param bool useCookie optional if true and cookie plugin is
+		 * available, do nothing (allows to use a default language)
+		 * @returns string language.
+		 * 
+		 * Example: Sets the current language.
+		 * @code
+		 * $.tr.language('fr');
+		 * @endcode
+		 */
+		language : function(newLanguage, useCookie) {
+			if (newLanguage !== undefined) {
+				if (useCookie && $.cookie) {
+					var cookieLanguage = $.cookie(cookieName);
+					if (cookieLanguage) {
+						return cookieLanguage;	
+					}
+				}
+				language = newLanguage;
+				if ($.cookie) {
+					$.cookie(cookieName, language);
+				}
+			}
+			return language;
+		},
+
+		/**
+		 * @name $.tr.translator
+		 * @brief Get a translator function.
+		 * @param object customDictionary optional associative array replacing the
+		 * library dictionary.
+		 * @param mixed ... list of keys to traverse the dictionary.
+		 * @returns function
+		 */
+		translator : function(customDictionary) {
+			
+			// varargs
+			var args = $.makeArray(arguments);
+			
+			// which dictionary to use
+			var dict = dictionary;
+			if (typeof customDictionary == 'object') {
+				args.shift();
+				dict = customDictionary;
+			}
+
+			// if the chosen dictionary is not available...
+			if (!dict) {
+				return lambda;
+			}
+			
+			// parse through the hierarchy
+			var langSet = dict;
+			for (var i in args) {
+				langSet = langSet[args[i]];
+				if (!langSet) {
+					return lambda;
+				}
+			}
+
+			// dictionary for the chosen language
+			var lang = langSet[language];
+
+			// if lang is an associative map encoded as a string, parse the map
+			if (typeof lang == 'function') {
+				lang = lang();
+			}
+
+			// if the chosen language is not available...
+			if (!lang) {
+				return lambda;
+			}
+
+			// time to get the real translator
+			return function(key, opt) {
+				var value = lang[key];
+                if ( ! value && -1 === missing_keys.indexOf(key)){
+                  missing_keys.push(key)
+                }
+				var args = (typeof opt === 'object' && opt != null) ? opt : arguments;
+				if (typeof value === 'string') {
+					return replace(value, args);
+				} else if (typeof value === 'function') {
+					return value(args, replace);
+				} else if (typeof value === 'number') {
+					return value;
+				} else {
+					return replace(key, args);
+				}
+			};
+		}
+
+	};
+
+})(jQuery);
+
+var browser_language = getFirstBrowserLanguage();
+$.tr.language(browser_language, true);
+var tr = $.tr.translator();
+$.ajax(
+  {
+    dataType: "json",
+    url: '/js/dictionary.'+browser_language+".json",
+    async: false,
+    success: function(data) {
+      $.tr.dictionary(data);
+      tr = $.tr.translator();
+    },
+    error: function(a,b){
+      console.log("Failed to load dictionary",a,b)
+    }
+  }
+);
+
 var hasStorage = function() {
     try {
         return localStorage.setItem("inklewriter_storage_feature_detect", "feature_test"),
@@ -4900,8 +5159,8 @@ var Bind = function(e) {
   , StoryModel = function() {};
 StoryModel.loading = !1,
 StoryModel.watchRefCounts = !1,
-StoryModel._defaultStoryName = "Untitled Story",
-StoryModel._defaultAuthorName = "Anonymous",
+StoryModel._defaultStoryName = tr("Untitled Story"),
+StoryModel._defaultAuthorName = tr("Anonymous"),
 StoryModel._storyName = StoryModel._defaultStoryName,
 StoryModel._authorName = StoryModel._defaultAuthorName,
 StoryModel.stitches = [],
@@ -6236,7 +6495,7 @@ var GraphNode = function(e, t, n, r) {
     this.jqStitchNode.find(".important").append(o)),
     o.css("font-size", Math.round(e.fontHeight) - 1 + "pt"),
     s.inThisKnot || (s.preKnot ? this.jqStitchNode.addClass("prenode") : this.jqStitchNode.addClass("postnode"),
-    this.jqStitchNode.attr("tooltip", "Proceed to this section")),
+    this.jqStitchNode.attr("tooltip", tr("Proceed to this section"))),
     s.label && this.jqStitchNode.prepend('<div class="nodeLabel">' + s.label + "</div>");
     var u = function(e) {
         stitchInFlow(e.stitch.stitch) ? e.jqStitchNode.addClass("selected") : e.jqStitchNode.removeClass("selected")
@@ -6524,7 +6783,7 @@ var Editor = function() {
                     r.append(" " + i.numLooseEnds + " loose " + u + "(");
                     var a = "";
                     i.looseEnds.each(function() {
-                        var t = $("<span optIdx = " + o + " class='shortcut' tooltip='Write from here'></span>");
+                        var t = $("<span optIdx = " + o + " class='shortcut' tooltip='"+ tr("Write from here")+"'></span>");
                         this.text() !== "" ? t.text(a + this.text()) : t.text(a + "..."),
                         t.bind("click tap", function() {
                             var t = i.looseEnds[$(this).attr("optIdx")];
@@ -6543,7 +6802,7 @@ var Editor = function() {
                 }
             }
             if (i.deadEnd) {
-                var f = $("<span class='shortcut' tooltip='Continue from here'>End.</span>");
+                var f = $("<span class='shortcut' tooltip='"+ tr("Continue from here") +"'>End.</span>");
                 f.bind("click tap", function() {
                     $("#graphContainer").remove(),
                     j(e),
@@ -6688,7 +6947,7 @@ var Editor = function() {
         this.jqStitchBox.data("stitchBox", this),
         r.setUpFlagBox(),
         e ? (r.setUpPageButton(),
-        e._backlinks.length > 1 && this.jqStitchBox.prepend("<div class='backlinks'>" + e._backlinks.length + " links in</div>"),
+        e._backlinks.length > 1 && this.jqStitchBox.prepend("<div class='backlinks'>" + tr("&count links in", {count:e._backlinks.length}) + "</div>"),
         e.runOn() && r.displayEllipsisSymbol(!0),
         r.displayImage(e.image())) : (this.jqStitchBox.find(".pageBox").hide(),
         r.jqImageRegion.hide())
@@ -6749,13 +7008,13 @@ var Editor = function() {
         var t = this
           , r = this.jqStitchBox.find(".unjoinButton");
         if (e && r.length == 0) {
-            var i = $('<div class="unjoinButton" tooltip="Unlink these two paragraphs">Unlink</div>')
+            var i = $('<div class="unjoinButton" tooltip="' + tr("Unlink these two paragraphs") + '>' + tr("Unlink") + '</div>')
               , s = this.ownerChunk.stitchBoxes.prev(t);
             this != this.ownerChunk.stitchBoxes.first() ? i.addClass("directlinked") : (i.addClass("optionlinked"),
             s = n.prev(this.ownerChunk).stitchBoxes.last()),
             this.jqStitchBox.append(i),
             i.bind("click tap", function() {
-                if (!confirm("Unlink these two paragraphs? This will create a new loose end here. Unattached paragraphs will still appear in the contents list."))
+                if (!confirm(tr("Unlink these two paragraphs? This will create a new loose end here. Unattached paragraphs will still appear in the contents list.")))
                     return !1;
                 var e = null
                   , r = null;
@@ -6865,7 +7124,7 @@ var Editor = function() {
             )
         }
           , s = function() {
-            return "<div class='icon'></div><span class='entertext add'>Add marker</span>"
+            return "<div class='icon'></div><span class='entertext add'>" + tr("Add marker") + "</span>"
         }
           , o = function(t) {
             var n = $("<li class='flag'><div class='remove icon'></div><span class='entertext'>" + t + "</span></li>");
@@ -6948,7 +7207,7 @@ var Editor = function() {
         if (e.stitch.pageNumberLabel() > 0) {
             var n = !1
               , r = e.stitch.pageLabelText()
-              , s = $("<div><div class='page_button minus' tooltip='Remove this label'></div><div class='page_label' contenteditable='true'> " + r + "</div></div>")
+              , s = $("<div><div class='page_button minus' tooltip='"+tr("Remove this label")+"'></div><div class='page_label' contenteditable='true'> " + r + "</div></div>")
               , o = s.find(".page_label");
             o.bind("keydown", function(e) {
                 e.which == 13 && e.preventDefault()
@@ -7071,7 +7330,7 @@ var Editor = function() {
     };
     d.prototype.addRewindButton = function() {
         var e = this;
-        this.jqRewindButton = $('<div class="rewindButton noText" tooltip="Rewind to here"></div>'),
+        this.jqRewindButton = $('<div class="rewindButton noText" tooltip="'+tr("Rewind to here")+'"></div>'),
         this.stitchBoxes.first().jqStitchBox.append(this.jqRewindButton),
         this.jqRewindButton.bind("mousedown", function() {
             H(e)
@@ -7462,12 +7721,12 @@ var Editor = function() {
     }
       , w = {}
       , E = function() {
-        w.boldWidget = new S("bold","boldType","Bold"),
-        w.italicWidget = new S("italic","italicType","Italic"),
-        w.runOnWidget = new S("runOn","appendEllipsis","Run paragraphs together"),
-        w.pageNumberWidget = new S("newSection","pageNumber","Insert new section"),
-        t.conditionals && (w.addConditionalToWhatever = new S("addCondition","conditionalElement","Insert a condition to test")),
-        t.images && (w.imageWidget = new S("insertImage","insertImage","Insert an image"))
+        w.boldWidget = new S("bold","boldType",tr("Bold")),
+        w.italicWidget = new S("italic","italicType",tr("Italic")),
+        w.runOnWidget = new S("runOn","appendEllipsis",tr("Run paragraphs together")),
+        w.pageNumberWidget = new S("newSection","pageNumber",tr("Insert new section")),
+        t.conditionals && (w.addConditionalToWhatever = new S("addCondition","conditionalElement",tr("Insert a condition to test"))),
+        t.images && (w.imageWidget = new S("insertImage","insertImage",tr("Insert an image")))
     }
       , S = function(e, t, n) {
         jqWidgetElement = $('<div class="widget" id=' + e + ' tooltip="' + n + '"></div>'),
@@ -7521,8 +7780,8 @@ var Editor = function() {
             i.stitch || i.createStitch();
             var e = i.stitch.image()
               , t = new Dialogue({
-                title: "Choose Image",
-                message: "Please enter the web address of your image."
+                title: tr("Choose Image"),
+                message: tr("Please enter the web address of your image.")
             });
             t.$.append("<img id='imagepreview'/>");
             var n = t.$.find("img")
@@ -7563,7 +7822,7 @@ var Editor = function() {
                     }
                 }, 0)
             }),
-            t.addButton("Cancel")
+            t.addButton(tr("Cancel"))
         }
     }
     ,
@@ -7586,8 +7845,8 @@ var Editor = function() {
         this.stitch = e;
         var r = "";
         this.unused = !e.pageNumber(),
-        this.unused && (r += '<div class="deleteButton stitchButton" tooltip="Delete this paragraph"></div>'),
-        r += '<div class="rewindStitchListButton stitchButton" tooltip="Rewind to here"></div>',
+        this.unused && (r += '<div class="deleteButton stitchButton" tooltip="' + tr("Delete this paragraph") + '></div>'),
+        r += '<div class="rewindStitchListButton stitchButton" tooltip="'+tr("Rewind to here")+'"></div>',
         r += "<span id='content'>" + b(e.text()) + "</span>";
         var o = "";
         for (var u = 0; u < e.numberOfFlags(); ++u)
@@ -7625,13 +7884,13 @@ var Editor = function() {
                 h = h.divertStitch;
             p ? this.enableJoin() : this.jqStitchRow.addClass("disabled")
         } else
-            this.unused || (l ? (this.jqStitchRow.attr("tooltip", "Edit this paragraph"),
+            this.unused || (l ? (this.jqStitchRow.attr("tooltip", tr("Edit this paragraph")),
             this.jqStitchRow.bind("click tap", function(e) {
                 var n = at(t.stitch);
                 return n && n.jqStitchBoxText.focus(),
                 k.update(),
                 !1
-            })) : (this.jqStitchRow.attr("tooltip", "Jump to this paragraph"),
+            })) : (this.jqStitchRow.attr("tooltip", tr("Jump to this paragraph")),
             this.jqStitchRow.bind("click tap", function(t) {
                 return searchForStitch(e)
             }))),
@@ -7705,7 +7964,7 @@ var Editor = function() {
         this.pNumLabel = t,
         n && t != r && r > 0 && k.closedPages.add(t);
         var s = e.pageLabelText();
-        k.closedPages.contains(t) ? (this.jqStitchRow = $('<tr class="page"><td><div class="collapser"><div class="tri_button">' + trisymbol + "</div> " + s + '<div class="important inline"></div></div><div class="searchButton stitchButton" tooltip="Jump to this section"></div></td></tr>'),
+        k.closedPages.contains(t) ? (this.jqStitchRow = $('<tr class="page"><td><div class="collapser"><div class="tri_button">' + trisymbol + "</div> " + s + '<div class="important inline"></div></div><div class="searchButton stitchButton" tooltip="'+tr("Jump to this section")+'"></div></td></tr>'),
         this.jqStitchRow.bind("click tap", function() {
             k.closedPages.remove(i.pNumLabel),
             k.update(!1, !0)
@@ -7761,7 +8020,7 @@ var Editor = function() {
         k.searching = null,
         k.jqHeader = $(".header");
         if (t.find) {
-            var e = $('<div id="find_box" tooltip="search the story"><span class="icon search"></span><div contenteditable="true" id="searchTerm"/></div>');
+            var e = $('<div id="find_box" tooltip="' + tr("search the story") + '"><span class="icon search"></span><div contenteditable="true" id="searchTerm"/></div>');
             k.jqHeader.prepend(e),
             e.hide();
             var n = e.find(".icon")
@@ -8001,7 +8260,7 @@ var Editor = function() {
         Editor.joiningMode = !0,
         k.broughtInAutomatically = !k.expanded,
         k.expand(),
-        Editor.joinButton.text("Choose the paragraph you want next by clicking it in the contents."),
+        Editor.joinButton.text(tr("Choose the paragraph you want next by clicking it in the contents.")),
         Editor.joinButton.addClass("larger"),
         Editor.joinButton.unbind("click tap"),
         Editor.joinButton.bind("click tap", function() {
@@ -8020,7 +8279,7 @@ var Editor = function() {
     }
       , R = function() {
         return Editor.joiningMode && (Editor.joiningMode = !1,
-        Editor.joinButton.text("Join to an existing paragraph"),
+        Editor.joinButton.text(tr("Join to an existing paragraph")),
         Editor.joinButton.unbind("click tap"),
         $("#read_area").find(".instructionArrow").remove(),
         Editor.joinButton.bind("click tap", q),
@@ -8046,7 +8305,7 @@ var Editor = function() {
         var r = n.last()
           , i = r.joinStitchBoxToStitch(e, t);
         t._stitchBox.jqStitchBox.find(".backlinks").remove(),
-        t._backlinks.length > 1 && t._stitchBox.jqStitchBox.prepend("<div class='backlinks'>" + t._backlinks.length + " links in</div>"),
+        t._backlinks.length > 1 && t._stitchBox.jqStitchBox.prepend("<div class='backlinks'>" + tr("&count links in", {count:e._backlinks.length}) + "</div>"),
         i.stitch && i.setUpPageButton(),
         p(),
         EditorMenu.requireSave(),
@@ -8055,7 +8314,7 @@ var Editor = function() {
         k.update()
     }
       , W = function() {
-        return "<div class='conditionalText' tooltip='Edit logic'><div class='collapser'></div><div class='message'></div></div>"
+        return "<div class='conditionalText' tooltip='" + tr("Edit logic") + "'><div class='collapser'></div><div class='message'></div></div>"
     }
       , X = function(e, t, n) {
         e.jqCondElement = t.find(".conditionalText"),
@@ -8069,7 +8328,7 @@ var Editor = function() {
         e.jqCondElement.addClass("active"),
         e.jqCondElement.find(".message").html(" " + J(e, r) + " ")) : (n.removeClass("conditionalised"),
         e.jqCondElement.removeClass("active"),
-        e.jqCondElement.find(".message").text(" Add conditions ")) : (e.jqCondElement.hide(),
+        e.jqCondElement.find(".message").text(tr(" Add conditions "))) : (e.jqCondElement.hide(),
         n.removeClass("conditionalised"))
     }
       , J = function(e, t) {
@@ -8167,7 +8426,7 @@ var Editor = function() {
         };
         for (var l = 0; l < Z(n, i); l++)
             a.append(f(nt(n, i, l)));
-        var c = $("<div class='flag_name newFlag'><div class='add entertext'><div class='flag_button plus'></div><span id='actualFlag'>Add marker</span></div></div>");
+        var c = $("<div class='flag_name newFlag'><div class='add entertext'><div class='flag_button plus'></div><span id='actualFlag'>" + tr("Add marker") + "</span></div></div>");
         return a.append(c),
         c.bind("click tap", function() {
             u(c.find("#actualFlag"), c, "")
@@ -8206,7 +8465,7 @@ var Editor = function() {
         s.originalText = t,
         $("#read_area").append("<div class='eventAbsorber'></div>");
         var o = $("#read_area").find(".eventAbsorber")
-          , u = t == "" ? "Add marker" : "Edit marker";
+          , u = t == "" ? tr("Add marker") : tr("Edit marker");
         this.jqPopup = $('<div id="flagEntryPopup"><div class="title">' + u + '</div><div class="entry" contentEditable="true"></div><div class="suggestions"></div><div class="nubbin"></div></div>'),
         $("#read_area").append(this.jqPopup),
         this.jqSuggestions = this.jqPopup.find(".suggestions"),
@@ -8281,7 +8540,7 @@ var Editor = function() {
                     ),
                     s.jqSuggestions.append(s.suggestionSet[t].lineObject.jqLine)
             } else
-                s.jqSuggestions.append('<div class="hint"><p>Enter a name for a new marker.</p><p>You will then be able to test for this marker later on in the story.</p></div>')
+                s.jqSuggestions.append('<div class="hint"><p>' + tr("Enter a name for a new marker.") + '</p><p>' + tr("You will then be able to test for this marker later on in the story.") + '</p></div>')
         };
         this.jqPopupEntry.bind("keydown", function(e) {
             e.which == 27 && (s.jqPopupEntry.text(""),
@@ -8469,7 +8728,7 @@ var Editor = function() {
             e.which === 27 ? $(this).text(StoryModel.authorName()) : $(this).blur(),
             !1) : !0
         });
-        var n = $('<div id="editor_container">                                        <div id="widgets"></div>                                        <div id="read_area"  class="full-screen">' + e + "<br>" + t + '<div class="options"></div>                                                 <div class="button stitchLinkButton newJoinButton" tooltip="Join this paragraph to another">                                                initial text goes unseen                                            </div>                                            <div class="button stitchLinkButton newOptionButton" tooltip="Add a new option to this paragraph (shift-return)">                                                Add option                                            </div>                                            <div id="paddingDiv"></div>                                        </div>                                        <div id="stitch_list_area"  class="collapsed">                                            <div class="header"><span class="text">Contents</span>                                            <div class="wc"></div>                                            </div>                                            <div id="stitch_list_scrolling">                                            <table id="stitch_list">                                            </div>                                            </table>                                        </div>                                    </div>');
+        var n = $('<div id="editor_container">  <div id="widgets"></div>  <div id="read_area"  class="full-screen">' + e + "<br>" + t + '<div class="options"></div>  <div class="button stitchLinkButton newJoinButton" tooltip="' + tr("Join this paragraph to another") + '">  initial text goes unseen  </div>  <div class="button stitchLinkButton newOptionButton" tooltip="' + tr("Add a new option to this paragraph (shift-return)") + '">  ' + tr("Add option") + '  </div>  <div id="paddingDiv"></div>  </div>  <div id="stitch_list_area"  class="collapsed">  <div class="header"><span class="text">' + tr("Contents") + '</span>  <div class="wc"></div>  </div>  <div id="stitch_list_scrolling">  <table id="stitch_list">  </div>  </table>  </div>  </div>');
         $("#main_viewport").append(n),
         E(),
         k.setup(),
@@ -8764,7 +9023,7 @@ var Editor = function() {
         var t = e.addField("Email")
           , n = e.addSecureField("Password");
         t.focus();
-        var r = e.addButton("Cancel");
+        var r = e.addButton(tr("Cancel"));
         e.addButton("Register", function() {
             var r = this;
             v(t.value()) ? m(n.value()) ? (e.setMessage("Creating account..."),
@@ -8777,7 +9036,7 @@ var Editor = function() {
                         title: "Thank you",
                         message: "We hope you enjoy writing in inklewriter!"
                     });
-                    t.addButton("Okay"),
+                    t.addButton(tr("Okay")),
                     EditorMenu.processSignedInTasks()
                 },
                 failure: function(t) {
@@ -8794,7 +9053,7 @@ var Editor = function() {
                 title: "Cookies Are Disabled!",
                 message: "We've detected that cookies are disabled for your browser. To sign in, you will need to enable cookies, either in general, or for this site specifically."
             })
-              , n = t.addButton("Okay");
+              , n = t.addButton(tr("Okay"));
             return
         }
         var r = new Dialogue({
@@ -8807,7 +9066,7 @@ var Editor = function() {
         var i = r.addField("Email")
           , o = r.addSecureField("Password");
         i.focus();
-        var n = r.addButton("Cancel");
+        var n = r.addButton(tr("Cancel"));
         r.addButton("Sign in", function() {
             var t = this;
             v(i.value()) ? m(o.value()) ? (r.setMessage("Signing in..."),
@@ -9002,7 +9261,7 @@ var Editor = function() {
               In case you subscribed with a <b>username@inklewriter</b> email address, you will have to create a new account and reimport your stories."
         });
         var emailField = dialogue.addField("Your email");
-        dialogue.addButton("Cancel");
+        dialogue.addButton(tr("Cancel"));
         var validate_button = dialogue.addButton("Submit", function() {
           if (!(emailField.value())) {
               dialogue.setMessage("Please provide your email");
@@ -9179,14 +9438,14 @@ var Editor = function() {
                 var e = $(this).closest("li")
                   , t = e.data("storyId")
                   , n = EditorAccount.allStories()[t]
-                  , o = "Untitled";
+                  , o = tr("Untitled");
                 n && (o = n.title);
                 var u = new Dialogue({
-                    title: "Delete story",
-                    message: "Are you sure you wish to delete the story " + o + "?"
+                    title: tr("Delete story"),
+                    message: tr("Are you sure you wish to delete the story ") + o + "?"
                 });
-                u.addButton("Cancel"),
-                u.addButton("Delete", function() {
+                u.addButton(tr("Cancel")),
+                u.addButton(tr("Delete"), function() {
                     EditorAccount.currentStoryId() == t && x(),
                     EditorAccount.deleteStory(t),
                     r.find("li").remove(),
@@ -9197,7 +9456,7 @@ var Editor = function() {
             })
         };
         i(),
-        t.addButton("Cancel");
+        t.addButton(tr("Cancel"));
         var s = t.addButton(n, function() {
             var n = r.find(".selected")
               , i = n.data("storyId");
@@ -9210,8 +9469,8 @@ var Editor = function() {
       , C = function() {
         var e = function() {
             var e = OpenStory({
-                title: "Open",
-                message: "Choose the story to open",
+                title: tr("Open"),
+                message: tr("Choose the story to open"),
                 hasDelete: !0,
                 choose: function(e) {
                     u = s,
@@ -9224,11 +9483,11 @@ var Editor = function() {
         };
         if (u >= n && u < s) {
             var t = new Dialogue({
-                title: "Unsaved changes",
-                message: "Saving is in progress. Are you sure you wish to continue and open a different story anyway?"
+                title: tr("Unsaved changes"),
+                message: tr("Saving is in progress. Are you sure you wish to continue and open a different story anyway?")
             });
-            t.addButton("Cancel"),
-            t.addButton("Continue...", function() {
+            t.addButton(tr("Cancel")),
+            t.addButton(tr("Continue..."), function() {
                 t.close(),
                 e()
             })
@@ -9296,28 +9555,28 @@ var Editor = function() {
       , L = function(e) {
         if (u == t) {
             var n = new Dialogue({
-                title: "Save changes?",
-                message: "Would you like to log in and save changes to your work in progress before continuing?"
+                title: tr("Save changes?"),
+                message: tr("Would you like to log in and save changes to your work in progress before continuing?")
             });
-            n.addButton("Don't save", function() {
+            n.addButton(tr("Don't save"), function() {
                 n.close(),
                 e()
             }),
-            n.addButton("Cancel"),
-            n.addButton("Save", function() {
+            n.addButton(tr("Cancel")),
+            n.addButton(tr("Save"), function() {
                 n.close(),
                 EditorAccount.signIn()
             })
         } else if (u >= r && u < s) {
             var n = new Dialogue({
-                title: "Unsaved changes",
-                message: "Saving is in progress. Are you sure you wish to continue anyway?"
+                title: tr("Unsaved changes"),
+                message: tr("Saving is in progress. Are you sure you wish to continue anyway?")
             });
-            n.addButton("Continue", function() {
+            n.addButton(tr("Continue"), function() {
                 n.close(),
                 e()
             }),
-            n.addButton("Cancel")
+            n.addButton(tr("Cancel"))
         } else
             e()
     }
@@ -9332,8 +9591,8 @@ var Editor = function() {
       , O = function() {
         var e = $("#libraryButton");
         Editor.toggleLibrary() ? (e.addClass("toggledto"),
-        e.attr("tooltip", "Close the contents list")) : (e.removeClass("toggledto"),
-        e.attr("tooltip", "Open the contents list"))
+        e.attr("tooltip", tr("Close the contents list"))) : (e.removeClass("toggledto"),
+        e.attr("tooltip", tr("Open the contents list")))
     }
       , M = function() {
         Editor.launchGraph()
@@ -9348,18 +9607,18 @@ var Editor = function() {
         const inkURL = htmlURL + ".ink";
         
         const content = `
-        <p><a href="${htmlURL}" target="_blank">Play the story in a browser</a>.</p>
+        <p><a href="${htmlURL}" target="_blank">${tr("Play the story in a browser")}</a>.</p>
         <input type="text" onClick="this.select();" class="selectInput" value="${htmlURL}" />
-        <p><a href="${jsonURL}" target="_blank">Get the story in JSON format.</a></p>
+        <p><a href="${jsonURL}" target="_blank">${tr("Get the story in JSON format")}</a></p>
         <input type="text" onClick="this.select();" class="selectInput" value="${jsonURL}" />
-        <p><a href="${inkURL}" target="_blank">Get the story in Inklestudio's Ink format.</a></p>
+        <p><a href="${inkURL}" target="_blank">${tr("Get the story in Inklestudio's Ink format")}</a></p>
         <input type="text" onClick="this.select();" class="selectInput" value="${inkURL}" />
         <br><br>
         `;
         var shareDialogue = new Dialogue({
-            title: "Share '" + StoryModel.storyName() + "'",
+            title: tr("Share '&name'",{name:StoryModel.storyName() }),
             message: content,
-            footer: "Caution, the JSON format exported here is not usable in Ink."
+            footer: tr("Caution! the JSON format exported here is not usable in Ink.")
 //            footer: "<br/>Choose the <b>Release</b> option below to publish your story online at <a href='http://www.textadventures.co.uk'><b>textadventures.co.uk</b></a>."
         })
         
@@ -9372,7 +9631,7 @@ var Editor = function() {
             margin: "0px 0px 20px"
         }),
 
-        shareDialogue.addButton("Okay");
+        shareDialogue.addButton(tr("Okay"));
         /*
         e.addButton("Release", function() {
             window.open("http://textadventures.co.uk/create/submitlink/?url=http%3A%2F%2Fwriter.inklestudios.com%2Fstories%2F" + EditorAccount.currentStoryId())
@@ -9388,8 +9647,8 @@ var Editor = function() {
             allowCheckpoints: StoryModel.allowCheckpoints
         }
           , t = new Dialogue({
-            title: "Settings",
-            message: "Scale of the editor:"
+            title: tr("Settings"),
+            message: tr("Scale of the editor:")
         })
           , n = $('<div class="optionSet"></div>');
         t.addContent(n);
@@ -9409,7 +9668,7 @@ var Editor = function() {
             })
         };
         i(),
-        t.addContent("<p>Read settings:</p>");
+        t.addContent("<p>" + tr("Read settings:") + "</p>");
         var s = $("<div class='optionSet'></div>");
         t.addContent(s);
         var o = function(t, n, i) {
@@ -9420,8 +9679,8 @@ var Editor = function() {
                 StoryModel[i] = $(this).is(":checked")
             })
         };
-        o("mirroring", "display option once chosen", "optionMirroring"),
-        o("checkpoints", "provide more rewind points", "allowCheckpoints"),
+        o("mirroring", tr("display option once chosen"), "optionMirroring"),
+        o("checkpoints", tr("provide more rewind points"), "allowCheckpoints"),
         t.addButton("Okay", function() {
             EditorMenu.requireSave(),
             t.close()
@@ -9470,34 +9729,34 @@ var Editor = function() {
       , I = function() {
         var e = $("#account_container #editMenu");
         j(e),
-        c || (Editor.settings.graphing && F("map", e, EditorMenu.launchMapView, "Open the map"),
-        Editor.toggleLibrary(!0) ? F("<span id='libraryButton' class='toggledto'>contents</span>", e, EditorMenu.toggleLibraryView, "Close contents list") : F("<span id='libraryButton'>contents</span>", e, EditorMenu.toggleLibraryView, "Open contents list")),
-        c ? (F("write", e, EditorMenu.enterEditMode, "Write your story"),
+        c || (Editor.settings.graphing && F(tr("map"), e, EditorMenu.launchMapView, tr("Open the map")),
+        Editor.toggleLibrary(!0) ? F("<span id='libraryButton' class='toggledto'>" + tr("contents") + "</span>", e, EditorMenu.toggleLibraryView, tr("Close contents list")) : F("<span id='libraryButton'>" + tr("contents") + "</span>", e, EditorMenu.toggleLibraryView, tr("Open contents list"))),
+        c ? (F(tr("write"), e, EditorMenu.enterEditMode, tr("Write your story")),
         F("<span class='toggledto'>read</span>", e)) : (F("<span class='toggledto'>write</span>", e),
-        F("read", e, EditorMenu.enterPlayMode, "Read your story")),
-        $.browser.msie && parseInt($.browser.version, 10) <= 8 || F("<span style='font-size:24px;'>&#9881;</span>", e, EditorMenu.showSettingsDialogue, "Settings"),
+        F(tr("read"), e, EditorMenu.enterPlayMode, tr("Read your story"))),
+        $.browser.msie && parseInt($.browser.version, 10) <= 8 || F("<span style='font-size:24px;'>&#9881;</span>", e, EditorMenu.showSettingsDialogue, tr("Settings")),
         R(u)
     }
       , q = function() {
         var e = $("#account_container #fileMenu");
         j(e),
-        EditorAccount.signedIn() ? F("sign out", e, J, "Sign out") : F("sign in", e, EditorAccount.signIn, "Sign in to your account"),
-        F("new", e, EditorMenu.createNew, "Start a new story"),
-        EditorAccount.signedIn() && F("open", e, EditorMenu.open, "Open one of your saved stories"),
-        EditorAccount.signedIn() && F("import", e, EditorMenu.importStory, "Import a story from another instance"),
-        u != o ? (F("tutorial", e, EditorMenu.loadTutorial, "Load the tutorial"),
-        EditorAccount.signedIn() ? u > t && F("share", e, EditorMenu.showShareDialogue, "Share your story") : F("share", e, EditorAccount.signIn, "Sign in to share your story")) : F("restart tutorial", e, EditorMenu.loadTutorial, "Restart the tutorial"),
-        u != o && F("community", e, function() {
+        EditorAccount.signedIn() ? F(tr("sign out"), e, J, tr("Sign out")) : F(tr("sign in"), e, EditorAccount.signIn, tr("Sign in to your account")),
+        F(tr("new"), e, EditorMenu.createNew, tr("Start a new story")),
+        EditorAccount.signedIn() && F(tr("open"), e, EditorMenu.open, tr("Open one of your saved stories")),
+        EditorAccount.signedIn() && F(tr("import"), e, EditorMenu.importStory, tr("Import a story from another instance")),
+        u != o ? (F(tr("tutorial"), e, EditorMenu.loadTutorial, tr("Load the tutorial")),
+        EditorAccount.signedIn() ? u > t && F(tr("share"), e, EditorMenu.showShareDialogue, tr("Share your story")) : F(tr("share"), e, EditorAccount.signIn, tr("Sign in to share your story"))) : F(tr("restart tutorial"), e, EditorMenu.loadTutorial, tr("Restart the tutorial")),
+        u != o && F(tr("community"), e, function() {
             window.open("/community")
-        }, "Community and story parameters")
+        }, tr("Community and story parameters"))
     }
       , R = function(a) {
         u = a;
         var f = $("#saveStateMessage");
-        a === t ? f.text("Sign in to save") : a >= n && a <= r ? f.text("Saving soon...") : a === i ? f.text("Saving...") : a === s ? f.text("Saved.") : a == e ? f.text("") : a == o ? f.text("Tutorial in progress...") : f.text("Error. Save state unknown."),
-        EditorAccount.username() && f.prepend("Logged in as " + EditorAccount.username() + " -- "),
+        a === t ? f.text(tr("Sign in to save")) : a >= n && a <= r ? f.text(tr("Saving soon...")) : a === i ? f.text(tr("Saving...")) : a === s ? f.text(tr("Saved.")) : a == e ? f.text("") : a == o ? f.text(tr("Tutorial in progress...")) : f.text(tr("Error. Save state unknown.")),
+        EditorAccount.username() && f.prepend( tr("Logged in as &name -- ",{name: EditorAccount.username()})),
         !EditorAccount.signedIn() || a === o || a === s || a === e ? window.onbeforeunload = null : window.onbeforeunload = function() {
-            var e = "inklewriter has unsaved changes";
+            var e = tr("inklewriter has unsaved changes");
             return e
         }
     }
@@ -9571,11 +9830,11 @@ var Editor = function() {
       , J = function() {
         EditorAccount.signedIn() && L(function() {
             var t = new Dialogue({
-                title: "Sign out",
-                message: "Are you sure you wish to sign out " + EditorAccount.username() + "?"
+                title: tr("Sign out"),
+                message: tr("Are you sure you wish to sign out &name ?",{name:EditorAccount.username() }) 
             });
-            t.addButton("Cancel"),
-            t.addButton("Sign out", function() {
+            t.addButton(tr("Cancel")),
+            t.addButton(tr("Sign out"), function() {
                 EditorAccount.signOut(),
                 Editor.loadDefaultStory(),
                 R(e),
@@ -9593,16 +9852,16 @@ var Editor = function() {
 
         // Copy from N
         var t = new Dialogue({
-            title: "Import",
-            message: "Paste your story to import in JSON format.",
-            footer: "After import, your story will be added to your account. Use the <b>Open</b> button to select it from the list and edit it.",
+            title: tr("Import"),
+            message: tr("Paste your story to import in JSON format."),
+            footer: tr("After import, your story will be added to your account. Use the <b>Open</b> button to select it from the list and edit it."),
         })
-          , n = "Import story"
+          , n = tr("Import story")
           , r = $('<form><textarea rows=20 cols=45></textarea></form>');
 
         t.addContent(r);
-        t.addButton("Cancel");
-        t.addButton("Import story", function() {
+        t.addButton(tr("Cancel"));
+        t.addButton(tr("Import story"), function() {
 
             // Based on saveStoryData
             var story = $(".dialogue textarea").val();
@@ -9610,7 +9869,7 @@ var Editor = function() {
               JSON.parse(story); 
             } catch(e){
               console.log("Invalid JSON format:",e);
-              alert("Oops, your JSON format is invalid!");
+              alert(tr("Oops, your JSON format is invalid!"));
             }
             $.ajax({
                 type: "POST",
@@ -9625,7 +9884,7 @@ var Editor = function() {
                 },
                 error: function(t, n, r) {
                     e++
-                    alert("Could not save new story. Try again ?")
+                    alert(tr("Could not save new story. Try again ?"))
                 }
             }).done(function(e) {
                 console.log("Sending (importing) done."),
@@ -9686,7 +9945,7 @@ var Editor = function() {
                 i.flagsCollected.push(this.prevChunk.flagsCollected[s]);
         if (!r) {
             t ? this.jqPlayChunk.html("<div class='the_end'>End</div>") : (n(),
-            this.jqPlayChunk.html("This page intentionally left blank.<br>(<a href='javascript:EditorMenu.enterEditMode();'>Continue the story from here</a>.)")),
+            this.jqPlayChunk.html(tr("This page intentionally left blank.") + " <br>(<a href='javascript:EditorMenu.enterEditMode();'>"+tr("Continue the story from here")+"</a>.)")),
             $("#read_area").append(this.jqPlayChunk);
             return
         }
@@ -9725,7 +9984,7 @@ var Editor = function() {
         this.jqPlayChunk.append(this.jqTextBlock),
         $("#read_area").append(this.jqPlayChunk),
         this.createOptionBlock(),
-        this.jqRewindButton = $('<div class="rewindButton" tooltip="Rewind to here"></div>'),
+        this.jqRewindButton = $('<div class="rewindButton" tooltip="'+ tr("Rewind to here") + '></div>'),
         this.jqPlayChunk.append(this.jqRewindButton),
         this.jqRewindButton.bind("mousedown tap", function() {
             i.rewindToHere(),
@@ -9734,7 +9993,7 @@ var Editor = function() {
         this.jqRewindButton.hide(),
         e.length >= 1 ? (b(this.jqPlayChunk),
         t && this.jqRewindButton.addClass("noText")) : (this.jqRewindButton.addClass("initial"),
-        t && this.jqRewindButton.text("Start again"))
+        t && this.jqRewindButton.text(tr("Start again")))
     };
     r.prototype.remove = function() {
         this.jqPlayChunk.remove()
@@ -9749,7 +10008,7 @@ var Editor = function() {
             this.jqTextBlock.find(".back_to_top").bind("click tap", function() {
                 b(e.first().jqPlayChunk)
             }),
-            $("#read_area").append("<div id='madeby'>Text &copy; the author. <a href='http://www.inklestudios.com/inklewriter'><strong>inklewriter</strong></a> &copy; <a href='http://www.inklestudios.com'><strong>inkle</strong></a></div>")) : this.jqTextBlock.append('<br>(<a href="javascript:EditorMenu.enterEditMode();">Go back to Write mode to continue</a>.)</div>');
+            $("#read_area").append("<div id='madeby'>Text &copy; the author. <a href='http://www.inklestudios.com/inklewriter'><strong>inklewriter</strong></a> &copy; <a href='http://www.inklestudios.com'><strong>inkle</strong></a></div>")) : this.jqTextBlock.append('<br>(<a href="javascript:EditorMenu.enterEditMode();">' + tr("Go back to Write mode to continue") + '</a>.)</div>');
         else {
             var i = this.stitches.last().options;
             for (var o = 0; o < i.length; o++) {
@@ -9792,7 +10051,7 @@ var Editor = function() {
             y(),
             o(n)
         }) : (this.jqPlayOption.addClass("disabled"),
-        n.writeModeOnly ? this.jqPlayOption.attr("tooltip", "Switch to write mode to continue.") : this.jqPlayOption.attr("tooltip", "This option has been disallowed by conditions."))
+        n.writeModeOnly ? this.jqPlayOption.attr("tooltip", tr("Switch to write mode to continue.")) : this.jqPlayOption.attr("tooltip", tr("This option has been disallowed by conditions.")))
     }
       , o = function(t) {
         t.text() != "..." && StoryModel.optionMirroring && e.last().jqPlayChunk.prepend('<div class="option_chosen">' + p(t.text()) + "</div>")
@@ -9899,7 +10158,7 @@ var Editor = function() {
         for (i = 0; i < e.length; i++)
             n += e[i].wordCount;
         n <= 100 ? n = n - n % 10 + 10 : n = n - n % 100 + 100,
-        $("#wordcount").text("About " + commadString(n) + " words")
+        $("#wordcount").text(tr("About &count words",{count: commadString(n) }))
     }
       , b = function(e) {
         var n = $(e);
@@ -10004,6 +10263,7 @@ var Editor = function() {
         }
     }
 }()
+  // The long tutorial
   , tutorialStory = {
     name: "A Tutorial Story",
     story: {
