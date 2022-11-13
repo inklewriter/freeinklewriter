@@ -5046,7 +5046,7 @@ if( -1 !== available_languages.indexOf(browser_language)){
   $.ajax(
     {
       dataType: "json",
-      url: '/js/dictionary.'+browser_language+".json",
+      url: '/translations/dictionary.'+browser_language+".json",
       async: false,
       success: function(data) {
         $.tr.dictionary(data);
@@ -9022,65 +9022,65 @@ var Editor = function() {
       , S = function() {
         s && s.close(!0);
         var e = new Dialogue({
-            title: "Create new account",
-            message: "Please enter your email address, and your desired password.",
-            footer: "<a href='javascript:EditorAccount.popupLoginHelp()'>Don't have an email address?</a>\n"
+            title: tr("Create new account"),
+            message: tr("Please enter your email address, and your desired password."),
+            footer: "<a href='javascript:EditorAccount.popupLoginHelp()'>" + tr("Don't have an email address?") + "</a>\n"
         });
         s = e;
-        var t = e.addField("Email")
-          , n = e.addSecureField("Password");
+        var t = e.addField(tr("Email"))
+          , n = e.addSecureField(tr("Password"));
         t.focus();
         var r = e.addButton(tr("Cancel"));
-        e.addButton("Register", function() {
+        e.addButton(tr("Register"), function() {
             var r = this;
-            v(t.value()) ? m(n.value()) ? (e.setMessage("Creating account..."),
+            v(t.value()) ? m(n.value()) ? (e.setMessage(tr("Creating account...")),
             r.disable(),
             E(t.value(), n.value(), {
                 success: function() {
                     EditorMenu.update(),
                     e.close();
                     var t = new Dialogue({
-                        title: "Thank you",
-                        message: "We hope you enjoy writing in inklewriter!"
+                        title: tr("Thank you"),
+                        message: tr("We hope you enjoy writing in inklewriter!")
                     });
                     t.addButton(tr("Okay")),
                     EditorMenu.processSignedInTasks()
                 },
                 failure: function(t) {
-                    e.setMessage("Sorry, " + t.replace("username", "email") + " (<a href='http://writer.inklestudios.com/users/password/new'>Reset?<a>)"),
+                    e.setMessage("Sorry, " + t.replace("username", "email") + " (<a href='http://inklewriter.com/users/password/new'>Reset?<a>)"),
                     r.enable()
                 }
-            })) : e.setMessage("Please enter a valid password - must be at least 6 characters long!") : e.setMessage("Please enter a valid email address!")
+            })) : e.setMessage(tr("Please enter a valid password - must be at least 6 characters long!")) : e.setMessage(tr("Please enter a valid email address!"))
         })
     }
       , x = function(e) {
         s && s.close(!0);
         if (!navigator.cookieEnabled) {
             var t = new Dialogue({
-                title: "Cookies Are Disabled!",
-                message: "We've detected that cookies are disabled for your browser. To sign in, you will need to enable cookies, either in general, or for this site specifically."
+                title: tr("Cookies Are Disabled!"),
+                message: tr("We've detected that cookies are disabled for your browser. To sign in, you will need to enable cookies, either in general, or for this site specifically.")
             })
               , n = t.addButton(tr("Okay"));
             return
         }
         var r = new Dialogue({
-            title: "Sign in",
-            message: "Welcome! Please enter your sign in details.",
-            footer: "<br><a href='javascript:EditorAccount.popupPasswordRecovery()' style='' class='aside_help'>Forgotten password?</a>\n"
+            title: tr("Sign in"),
+            message: tr("Welcome! Please enter your sign in details."),
+            footer: "<br><a href='javascript:EditorAccount.popupPasswordRecovery()' style='' class='aside_help'>" + tr("Forgotten password?") + "</a>\n"
         });
         s = r,
-        r.addContent("(or <a href='javascript:EditorAccount.openRegisterDialogue()'>Create New Account</a>)");
-        var i = r.addField("Email")
-          , o = r.addSecureField("Password");
+        r.addContent("(" + tr("or") + "<a href='javascript:EditorAccount.openRegisterDialogue()'>" + tr("Create New Account") + "</a>)");
+        var i = r.addField(tr("Email"))
+          , o = r.addSecureField(tr("Password"));
         i.focus();
         var n = r.addButton(tr("Cancel"));
-        r.addButton("Sign in", function() {
+        r.addButton(tr("Sign in"), function() {
             var t = this;
-            v(i.value()) ? m(o.value()) ? (r.setMessage("Signing in..."),
+            v(i.value()) ? m(o.value()) ? (r.setMessage(tr("Signing in...")),
             t.disable(),
             w(i.value(), o.value(), {
                 success: function() {
-                    r.setMessage("Success!"),
+                    r.setMessage(tr("Success!")),
                     EditorMenu.processSignedInTasks(),
                     r.close(),
                     e && e()
@@ -9090,18 +9090,18 @@ var Editor = function() {
                 },
                 failure: function(e) {
                     t.enable(),
-                    e === "invalid login parameters" ? r.setMessage("Could not sign you in. Please check your email and password...") : r.setMessage("Sorry, " + e)
+                    e === "invalid login parameters" ? r.setMessage(tr("Could not sign you in. Please check your email and password...")) : r.setMessage(tr("Sorry, &error",{error:e}))
                 }
-            })) : r.setMessage("Please check that you've entered your password correctly!") : r.setMessage("Please enter a valid email address!")
+            })) : r.setMessage(tr("Please check that you've entered your password correctly!")) : r.setMessage(tr("Please enter a valid email address!"))
         })
     }
       , T = function() {
         var e = new Dialogue({
-            title: "No Email?",
-            message: "Don't worry! You can still sign up for <b>inklewriter</b>: just choose a username and enter <b>username@inklewriter</b> in the email box.</p><p>You'll still be able to share your stories, but don't forget your password, as we won't be able to send a reminder."
+            title: tr("No Email?"),
+            message: tr("Don't worry! You can still sign up for <b>inklewriter</b>: just choose a username and enter <b>username@inklewriter</b> in the email box.") + "</p><p>" + tr("You'll still be able to share your stories, but don't forget your password, as we won't be able to send a reminder.")
         });
         s = e;
-        var t = e.addButton("Okay", function() {
+        var t = e.addButton(tr("Okay"), function() {
             e.close(!0)
         })
     }
@@ -9139,13 +9139,13 @@ var Editor = function() {
       , O = function() {
         if (C())
             if (EditorMenu.unsavedChanges()) {
-                var e = navigator.cookieEnabled ? "<p>You have been disconnected from inklewriter, perhaps because of an extended period of inactivity.</p> <p>Please sign in again to save your unsaved changes.</p>" : "<p>You have been disconnected from inklewriter because your browser has cookies disabled. Please enable cookies for this site to sign in</p>";
+                var e = navigator.cookieEnabled ? "<p>" + tr("You have been disconnected from inklewriter, perhaps because of an extended period of inactivity.") + "</p><p>" + tr("Please sign in again to save your unsaved changes.") + "</p>" : "<p>" + tr("You have been disconnected from inklewriter because your browser has cookies disabled. Please enable cookies for this site to sign in") + "</p>";
                 //_gaq.push(["_trackEvent", "Lost Connection to Server", "Signed out"]);
                 var t = new Dialogue({
-                    title: "Signed out",
+                    title: tr("Signed out"),
                     message: e
                 });
-                t.addButton("Sign in", function() {
+                t.addButton(tr("Sign in"), function() {
                     EditorMenu.requireSave(),
                     i.stories.local = i.stories[i.currentStoryId],
                     i.currentStoryId = "local",
@@ -9160,10 +9160,10 @@ var Editor = function() {
                 })
             } else {
                 var t = new Dialogue({
-                    title: "Disconnected",
-                    message: "You have been disconnected from inklewriter, perhaps because of an extended period of inactivity."
+                    title: tr("Disconnected"),
+                    message: tr("You have been disconnected from inklewriter, perhaps because of an extended period of inactivity.")
                 });
-                t.addButton("Okay", function() {
+                t.addButton(tr("Okay"), function() {
                     c(),
                     window.location = r
                 })
@@ -9263,22 +9263,22 @@ var Editor = function() {
     },
       popupPasswordRecovery = function() {
         var dialogue = new Dialogue({
-            title: "Forgotten your password?",
-            message: "Don't worry! We will send you a link with instructions on how to reset it. \
-              In case you subscribed with a <b>username@inklewriter</b> email address, you will have to create a new account and reimport your stories."
+            title: tr("Forgotten your password?"),
+            message: tr("Don't worry! We will send you a link with instructions on how to reset it. ") +
+              tr("In case you subscribed with a <b>username@inklewriter</b> email address, you will have to create a new account and reimport your stories.")
         });
-        var emailField = dialogue.addField("Your email");
-        dialogue.addButton(tr("Cancel"));
-        var validate_button = dialogue.addButton("Submit", function() {
+        var emailField = dialogue.addField(tr("Your email"));
+        dialogue.addButton(tr(tr("Cancel")));
+        var validate_button = dialogue.addButton(tr("Submit"), function() {
           if (!(emailField.value())) {
-              dialogue.setMessage("Please provide your email");
+              dialogue.setMessage(tr("Please provide your email"));
               return;
           }
           validate_button.disable();
           var data = {
             "utf8" : "✓", 
             "user" : 
-              {"email" : emailField.value(), "commit" : "Send me reset password instructions"}
+              {"email" : emailField.value(), "commit" : tr("Send me reset password instructions")}
           };
           $.ajax({
               type: "POST",
@@ -9289,22 +9289,22 @@ var Editor = function() {
               success: function(jqXHR, textStatus, errorThrown) {
                 
                   if ( "errors" in jqXHR ) {
-                    errMsg = "The email you provided is not in the database or is invalid.";
+                    errMsg = tr("The email you provided is not in the database or is invalid.");
                     dialogue.setMessage(errMsg);
                     validate_button.enable();
                     return;
                   }
                   dialogue.close();
                   var okayDialogue = new Dialogue({
-                      title: "Check your email",
-                      message: "We have sent you the informations and a confirmation link."
+                      title: tr("Check your email"),
+                      message: tr("We have sent you the informations and a confirmation link.")
                   });
-                  okayDialogue.addButton("Okay", function() {
+                  okayDialogue.addButton(tr("Okay"), function() {
                       okayDialogue.close()
                   })              },
               error: function(jqXHR, textStatus, errorThrown, data) {
                   console.log( jqXHR, textStatus, errorThrown, data)
-                  alert("An error occured... Something might be wrong with the server.");
+                  alert(tr("An error occured... Something might be wrong with the server."));
                   validate_button.enable();
               }
           });
@@ -11745,7 +11745,31 @@ var Editor = function() {
       , o = function() {
         t = $("<div class='eventAbsorber'></div>"),
         $("body").append(t),
-        n = $("<div class='splash'><div id='bg'></div>                             <div id='content'>                                 <div id='header'>                                    <p id='welcome-message'>Welcome to</p>                                    <img draggable=false id='splash-logo' src='/img/splash-logo-free.png'></img>                                </div>                                 <div id='menu'>                                    <p style='padding-top: 10px; color: red; font-weight: bold;'>Inklewriter is now free and not beta any more! More on this soon! <!-- <a style='color: red;' href='https://www.inklestudios.com/inklewriter/shutdown'>Read more about how and when</a>. --></p>                                    <ul>                                        <li><div class='button' id='tutorial'>get started</div>                                        <li><div class='button' id='new'>new</div></li>                                        <li><div class='button' id='sign-in'>sign in</div></li>                                    </ul>                                    <img draggable=false id='splash-splats' src='/img/splash-splats.png'></img>                                </div>                             </div>                         </div>"),
+        n = $("\
+          <div class='splash'>\n\
+            <div id='bg'></div>\n\
+            <div id='content'>\n\
+              <div id='header'>\n\
+                <p id='welcome-message'>" + tr("Welcome to") + "</p>\n\
+                <img draggable=false id='splash-logo' src='/img/splash-logo-free.png'></img>\n\
+              </div>\n\
+              <div id='menu'>\n\
+                <p style='padding-top: 10px; color: red; font-weight: bold;'>" + tr("Inklewriter is free software thanks to Inklestudio!")  + "</p>\n\
+                <ul>\n\
+                  <li>\n\
+                  <div class='button' id='tutorial'>" + tr("get started") + "</div>\n\
+                  </li>\n\
+                  <li>\n\
+                  <div class='button' id='new'>" + tr("new account") + "</div>\n\
+                  </li>\n\
+                  <li>\n\
+                  <div class='button' id='sign-in'>" + tr("sign in") + "</div>\n\
+                  </li>\n\
+                </ul>\n\
+                <img draggable=false id='splash-splats' src='/img/splash-splats.png'></img>\n\
+              </div>\n\
+            </div>\n\
+          </div>"),
         $("body").append(n),
         n.focus(),
         jqContent = n.find("#content"),
