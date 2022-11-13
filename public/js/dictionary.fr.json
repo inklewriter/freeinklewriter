@@ -52,7 +52,7 @@
     ,"Jump to this paragraph": "Aller à ce paragraphe"
     ,"Jump to this section": "Aller à cette section"
     ,"Load the tutorial": "Charger le tutoriel"
-    ,"Logged in as &name --": "Loggé en tant que &name --"
+    ,"Logged in as &name -- ": "Loggé en tant que &name -- "
     ,"map": "carte"
     ,"new": "nouveau"
     ,"Okay": "OK"
@@ -116,5 +116,8 @@
     ,"This page intentionally left blank.": "Page volontairement laissée blanche."
     ,"tooltip": "indice"
     ,"Unlink these two paragraphs": "Dissocier ces deux paragraphes"
+    ,"Github": "Github"
+    ,"Privacy": "Vie privée"
+    ,"Untitled Story": "Sans titre"
   }   
 }

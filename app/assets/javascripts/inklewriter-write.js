@@ -5035,23 +5035,30 @@ getFirstBrowserLanguage = function () {
 
 })(jQuery);
 
+// Translation logic
+var available_languages = ["fr"]
 var browser_language = getFirstBrowserLanguage();
-$.tr.language(browser_language, true);
 var tr = $.tr.translator();
-$.ajax(
-  {
-    dataType: "json",
-    url: '/js/dictionary.'+browser_language+".json",
-    async: false,
-    success: function(data) {
-      $.tr.dictionary(data);
-      tr = $.tr.translator();
-    },
-    error: function(a,b){
-      console.log("Failed to load dictionary",a,b)
+document.tr = tr
+// Only available translations are loaded
+if( -1 !== available_languages.indexOf(browser_language)){
+  $.tr.language(browser_language, true);  
+  $.ajax(
+    {
+      dataType: "json",
+      url: '/js/dictionary.'+browser_language+".json",
+      async: false,
+      success: function(data) {
+        $.tr.dictionary(data);
+        tr = $.tr.translator();
+      },
+      error: function(a,b){
+        console.log("Failed to load dictionary",a,b)
+      }
     }
-  }
-);
+  );
+
+}
 
 var hasStorage = function() {
     try {
@@ -9754,7 +9761,10 @@ var Editor = function() {
         u = a;
         var f = $("#saveStateMessage");
         a === t ? f.text(tr("Sign in to save")) : a >= n && a <= r ? f.text(tr("Saving soon...")) : a === i ? f.text(tr("Saving...")) : a === s ? f.text(tr("Saved.")) : a == e ? f.text("") : a == o ? f.text(tr("Tutorial in progress...")) : f.text(tr("Error. Save state unknown.")),
-        EditorAccount.username() && f.prepend( tr("Logged in as &name -- ",{name: EditorAccount.username()})),
+        EditorAccount.username() && 
+          f.prepend( 
+            tr("Logged in as &name -- ",{name: EditorAccount.username()})
+            ),
         !EditorAccount.signedIn() || a === o || a === s || a === e ? window.onbeforeunload = null : window.onbeforeunload = function() {
             var e = tr("inklewriter has unsaved changes");
             return e
