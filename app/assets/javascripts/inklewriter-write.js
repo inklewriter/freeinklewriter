@@ -9085,7 +9085,7 @@ var Editor = function() {
             footer: "<br><a href='javascript:EditorAccount.popupPasswordRecovery()' style='' class='aside_help'>" + tr("Forgotten password?") + "</a>\n"
         });
         s = r,
-        r.addContent("(" + tr("or") + "<a href='javascript:EditorAccount.openRegisterDialogue()'>" + tr("Create New Account") + "</a>)");
+        r.addContent("(" + tr("or") + " <a href='javascript:EditorAccount.openRegisterDialogue()'>" + tr("Create New Account") + "</a>)");
         var i = r.addField(tr("Email"))
           , o = r.addSecureField(tr("Password"));
         i.focus();
