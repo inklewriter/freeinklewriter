@@ -8735,7 +8735,23 @@ var Editor = function() {
             e.which === 27 ? $(this).text(StoryModel.authorName()) : $(this).blur(),
             !1) : !0
         });
-        var n = $('<div id="editor_container">  <div id="widgets"></div>  <div id="read_area"  class="full-screen">' + e + "<br>" + t + '<div class="options"></div>  <div class="button stitchLinkButton newJoinButton" tooltip="' + tr("Join this paragraph to another") + '">  initial text goes unseen  </div>  <div class="button stitchLinkButton newOptionButton" tooltip="' + tr("Add a new option to this paragraph (shift-return)") + '">  ' + tr("Add option") + '  </div>  <div id="paddingDiv"></div>  </div>  <div id="stitch_list_area"  class="collapsed">  <div class="header"><span class="text">' + tr("Contents") + '</span>  <div class="wc"></div>  </div>  <div id="stitch_list_scrolling">  <table id="stitch_list">  </div>  </table>  </div>  </div>');
+        var n = $('\
+        <div id="editor_container">  \n\
+          <div id="widgets"></div>  \n\
+          <div id="read_area"  class="full-screen">' + e + "<br>" + t + 
+            '<div class="options"></div>  \n\
+            <div class="button stitchLinkButton newJoinButton" tooltip="' + tr("Join this paragraph to another") + '">  initial text goes unseen  </div>  \n\
+            <div class="button stitchLinkButton newOptionButton" tooltip="' + tr("Add a new option to this paragraph (shift-return)") + '">  ' + tr("Add option") + '  </div>  \n\
+            <div id="paddingDiv"></div>  \n\
+          </div>  \n\
+          <div id="stitch_list_area"  class="collapsed">\n\
+            <div class="header"><span class="text">' + tr("Contents") + '</span>  \n\
+            <div class="wc"></div>  \n\
+            </div>  \n\
+            <div id="stitch_list_scrolling">  <table id="stitch_list">  </div>  </table>  \n\
+          </div>  \n\
+        </div>\n\
+        ');
         $("#main_viewport").append(n),
         E(),
         k.setup(),
@@ -9739,7 +9755,7 @@ var Editor = function() {
         c || (Editor.settings.graphing && F(tr("map"), e, EditorMenu.launchMapView, tr("Open the map")),
         Editor.toggleLibrary(!0) ? F("<span id='libraryButton' class='toggledto'>" + tr("contents") + "</span>", e, EditorMenu.toggleLibraryView, tr("Close contents list")) : F("<span id='libraryButton'>" + tr("contents") + "</span>", e, EditorMenu.toggleLibraryView, tr("Open contents list"))),
         c ? (F(tr("write"), e, EditorMenu.enterEditMode, tr("Write your story")),
-        F("<span class='toggledto'>read</span>", e)) : (F("<span class='toggledto'>write</span>", e),
+        F("<span class='toggledto'>read</span>", e)) : (F("<span class='toggledto'>" + tr("write") + "</span>", e),
         F(tr("read"), e, EditorMenu.enterPlayMode, tr("Read your story"))),
         $.browser.msie && parseInt($.browser.version, 10) <= 8 || F("<span style='font-size:24px;'>&#9881;</span>", e, EditorMenu.showSettingsDialogue, tr("Settings")),
         R(u)
