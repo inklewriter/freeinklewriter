@@ -1,10 +1,9 @@
 {
-    "fr": {
-        "a": "",
+    "de": {
         "About &count words": "Ungefähr &count Wörter",
         "Add a new option to this paragraph (shift-return)": "Fügen Sie diesem Absatz eine neue Option hinzu (shift-return)",
         "Add conditions": "Bedingungen hinzufügen",
-        "Add marker": "Markierung hinzufügen",
+        "Add a marker": "Markierung hinzufügen",
         "Add option": "Option hinzufügen",
         "After import, your story will be added to your account. Use the <b>Open</b> button to select it from the list and edit it.": "Nach dem Import wird Ihr Beitrag zu Ihrem Konto hinzugefügt. Verwenden Sie die Schaltfläche <b>Öffnen</b>, um sie in der Liste auszuwählen und zu bearbeiten.",
         "An error occured... Something might be wrong with the server.": "Ein Fehler ist aufgetreten … Möglicherweise stimmt etwas mit dem Server nicht.",
