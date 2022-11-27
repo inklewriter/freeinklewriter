@@ -6809,7 +6809,7 @@ var Editor = function() {
                 }
             }
             if (i.deadEnd) {
-                var f = $("<span class='shortcut' tooltip='"+ tr("Continue from here") +"'>End.</span>");
+                var f = $("<span class='shortcut' tooltip='"+ tr("Continue…om here") +"'>End.</span>");
                 f.bind("click tap", function() {
                     $("#graphContainer").remove(),
                     j(e),
@@ -7021,7 +7021,7 @@ var Editor = function() {
             s = n.prev(this.ownerChunk).stitchBoxes.last()),
             this.jqStitchBox.append(i),
             i.bind("click tap", function() {
-                if (!confirm(tr("Unlink these two paragraphs? This will create a new loose end here. Unattached paragraphs will still appear in the contents list.")))
+                if (!confirm(tr("Unlink these two paragraphs? This will create a new loose end here. Unattached paragraphs will still appear in the content list.")))
                     return !1;
                 var e = null
                   , r = null;
@@ -7131,7 +7131,7 @@ var Editor = function() {
             )
         }
           , s = function() {
-            return "<div class='icon'></div><span class='entertext add'>" + tr("Add marker") + "</span>"
+            return "<div class='icon'></div><span class='entertext add'>" + tr("Add a marker") + "</span>"
         }
           , o = function(t) {
             var n = $("<li class='flag'><div class='remove icon'></div><span class='entertext'>" + t + "</span></li>");
@@ -7788,7 +7788,7 @@ var Editor = function() {
             var e = i.stitch.image()
               , t = new Dialogue({
                 title: tr("Choose Image"),
-                message: tr("Please enter the web address of your image.")
+                message: tr("Please enter the URL of your image.")
             });
             t.$.append("<img id='imagepreview'/>");
             var n = t.$.find("img")
@@ -8321,7 +8321,7 @@ var Editor = function() {
         k.update()
     }
       , W = function() {
-        return "<div class='conditionalText' tooltip='" + tr("Edit logic") + "'><div class='collapser'></div><div class='message'></div></div>"
+        return "<div class='conditionalText' tooltip='" + tr("Edit the logic") + "'><div class='collapser'></div><div class='message'></div></div>"
     }
       , X = function(e, t, n) {
         e.jqCondElement = t.find(".conditionalText"),
@@ -8433,7 +8433,7 @@ var Editor = function() {
         };
         for (var l = 0; l < Z(n, i); l++)
             a.append(f(nt(n, i, l)));
-        var c = $("<div class='flag_name newFlag'><div class='add entertext'><div class='flag_button plus'></div><span id='actualFlag'>" + tr("Add marker") + "</span></div></div>");
+        var c = $("<div class='flag_name newFlag'><div class='add entertext'><div class='flag_button plus'></div><span id='actualFlag'>" + tr("Add a marker") + "</span></div></div>");
         return a.append(c),
         c.bind("click tap", function() {
             u(c.find("#actualFlag"), c, "")
@@ -8472,7 +8472,7 @@ var Editor = function() {
         s.originalText = t,
         $("#read_area").append("<div class='eventAbsorber'></div>");
         var o = $("#read_area").find(".eventAbsorber")
-          , u = t == "" ? tr("Add marker") : tr("Edit marker");
+          , u = t == "" ? tr("Add a marker") : tr("Edit a marker");
         this.jqPopup = $('<div id="flagEntryPopup"><div class="title">' + u + '</div><div class="entry" contentEditable="true"></div><div class="suggestions"></div><div class="nubbin"></div></div>'),
         $("#read_area").append(this.jqPopup),
         this.jqSuggestions = this.jqPopup.find(".suggestions"),
@@ -8547,7 +8547,7 @@ var Editor = function() {
                     ),
                     s.jqSuggestions.append(s.suggestionSet[t].lineObject.jqLine)
             } else
-                s.jqSuggestions.append('<div class="hint"><p>' + tr("Enter a name for a new marker.") + '</p><p>' + tr("You will then be able to test for this marker later on in the story.") + '</p></div>')
+                s.jqSuggestions.append('<div class="hint"><p>' + tr("Enter a name for a new marker.") + '</p><p>' + tr("You will then be able to find later uses of this marker in the story.") + '</p></div>')
         };
         this.jqPopupEntry.bind("keydown", function(e) {
             e.which == 27 && (s.jqPopupEntry.text(""),
@@ -8740,8 +8740,8 @@ var Editor = function() {
           <div id="widgets"></div>  \n\
           <div id="read_area"  class="full-screen">' + e + "<br>" + t + 
             '<div class="options"></div>  \n\
-            <div class="button stitchLinkButton newJoinButton" tooltip="' + tr("Join this paragraph to another") + '">  initial text goes unseen  </div>  \n\
-            <div class="button stitchLinkButton newOptionButton" tooltip="' + tr("Add a new option to this paragraph (shift-return)") + '">  ' + tr("Add option") + '  </div>  \n\
+            <div class="button stitchLinkButton newJoinButton" tooltip="' + tr("Join this paragraph up with another") + '">  initial text goes unseen  </div>  \n\
+            <div class="button stitchLinkButton newOptionButton" tooltip="' + tr("Add a new option to this paragraph (shift-return)") + '">  ' + tr("Add an option") + '  </div>  \n\
             <div id="paddingDiv"></div>  \n\
           </div>  \n\
           <div id="stitch_list_area"  class="collapsed">\n\
@@ -9039,17 +9039,17 @@ var Editor = function() {
         s && s.close(!0);
         var e = new Dialogue({
             title: tr("Create new account"),
-            message: tr("Please enter your email address, and your desired password."),
-            footer: "<a href='javascript:EditorAccount.popupLoginHelp()'>" + tr("Don't have an email address?") + "</a>\n"
+            message: tr("Please enter your e-mail address, and your desired password."),
+            footer: "<a href='javascript:EditorAccount.popupLoginHelp()'>" + tr("No e-mail address?") + "</a>\n"
         });
         s = e;
-        var t = e.addField(tr("Email"))
+        var t = e.addField(tr("E-mail"))
           , n = e.addSecureField(tr("Password"));
         t.focus();
         var r = e.addButton(tr("Cancel"));
         e.addButton(tr("Register"), function() {
             var r = this;
-            v(t.value()) ? m(n.value()) ? (e.setMessage(tr("Creating account...")),
+            v(t.value()) ? m(n.value()) ? (e.setMessage(tr("Creating account…")),
             r.disable(),
             E(t.value(), n.value(), {
                 success: function() {
@@ -9057,46 +9057,46 @@ var Editor = function() {
                     e.close();
                     var t = new Dialogue({
                         title: tr("Thank you"),
-                        message: tr("We hope you enjoy writing in inklewriter!")
+                        message: tr("Hope you enjoy writing in Inklewriter.")
                     });
-                    t.addButton(tr("Okay")),
+                    t.addButton(tr("OK")),
                     EditorMenu.processSignedInTasks()
                 },
                 failure: function(t) {
                     e.setMessage("Sorry, " + t.replace("username", "email") + " (<a href='http://inklewriter.com/users/password/new'>Reset?<a>)"),
                     r.enable()
                 }
-            })) : e.setMessage(tr("Please enter a valid password - must be at least 6 characters long!")) : e.setMessage(tr("Please enter a valid email address!"))
+            })) : e.setMessage(tr("Please enter a password that is at least 6 characters.")) : e.setMessage(tr("Please enter a valid e-mail address!"))
         })
     }
       , x = function(e) {
         s && s.close(!0);
         if (!navigator.cookieEnabled) {
             var t = new Dialogue({
-                title: tr("Cookies Are Disabled!"),
-                message: tr("We've detected that cookies are disabled for your browser. To sign in, you will need to enable cookies, either in general, or for this site specifically.")
+                title: tr("Cookies are turned off!"),
+                message: tr("Turn on cookies in general, or for this site to sign in.")
             })
-              , n = t.addButton(tr("Okay"));
+              , n = t.addButton(tr("OK"));
             return
         }
         var r = new Dialogue({
             title: tr("Sign in"),
-            message: tr("Welcome! Please enter your sign in details."),
+            message: tr("Welcome. Please enter your username and password."),
             footer: "<br><a href='javascript:EditorAccount.popupPasswordRecovery()' style='' class='aside_help'>" + tr("Forgotten password?") + "</a>\n"
         });
         s = r,
         r.addContent("(" + tr("or") + " <a href='javascript:EditorAccount.openRegisterDialogue()'>" + tr("Create New Account") + "</a>)");
-        var i = r.addField(tr("Email"))
+        var i = r.addField(tr("E-mail"))
           , o = r.addSecureField(tr("Password"));
         i.focus();
         var n = r.addButton(tr("Cancel"));
         r.addButton(tr("Sign in"), function() {
             var t = this;
-            v(i.value()) ? m(o.value()) ? (r.setMessage(tr("Signing in...")),
+            v(i.value()) ? m(o.value()) ? (r.setMessage(tr("Signing in…")),
             t.disable(),
             w(i.value(), o.value(), {
                 success: function() {
-                    r.setMessage(tr("Success!")),
+                    r.setMessage(tr("Success.")),
                     EditorMenu.processSignedInTasks(),
                     r.close(),
                     e && e()
@@ -9106,18 +9106,18 @@ var Editor = function() {
                 },
                 failure: function(e) {
                     t.enable(),
-                    e === "invalid login parameters" ? r.setMessage(tr("Could not sign you in. Please check your email and password...")) : r.setMessage(tr("Sorry, &error",{error:e}))
+                    e === "invalid login parameters" ? r.setMessage(tr("Could not sign in. Please check your username (e-mail address) and password…")) : r.setMessage(tr("Sorry, an Sorry, &errorerror occurred.",{error:e}))
                 }
-            })) : r.setMessage(tr("Please check that you've entered your password correctly!")) : r.setMessage(tr("Please enter a valid email address!"))
+            })) : r.setMessage(tr("Please check your password is entered correctly.")) : r.setMessage(tr("Please enter a valid e-mail address!"))
         })
     }
       , T = function() {
         var e = new Dialogue({
-            title: tr("No Email?"),
-            message: tr("Don't worry! You can still sign up for <b>inklewriter</b>: just choose a username and enter <b>username@inklewriter</b> in the email box.") + "</p><p>" + tr("You'll still be able to share your stories, but don't forget your password, as we won't be able to send a reminder.")
+            title: tr("No E-mail?"),
+            message: tr("Don't worry! You can still sign up for <b>inklewriter</b>: just choose a username and enter <b>username@inklewriter</b> in the email box.") + "</p><p>" + tr("You will still be able to share your stories, but if you forget your password sending you a reminder is impossible.")
         });
         s = e;
-        var t = e.addButton(tr("Okay"), function() {
+        var t = e.addButton(tr("OK"), function() {
             e.close(!0)
         })
     }
@@ -9155,7 +9155,7 @@ var Editor = function() {
       , O = function() {
         if (C())
             if (EditorMenu.unsavedChanges()) {
-                var e = navigator.cookieEnabled ? "<p>" + tr("You have been disconnected from inklewriter, perhaps because of an extended period of inactivity.") + "</p><p>" + tr("Please sign in again to save your unsaved changes.") + "</p>" : "<p>" + tr("You have been disconnected from inklewriter because your browser has cookies disabled. Please enable cookies for this site to sign in") + "</p>";
+                var e = navigator.cookieEnabled ? "<p>" + tr("You have been disconnected from Inklewriter, perhaps because of an extended period of inactivity.") + "</p><p>" + tr("Please sign in again to save your unsaved changes.") + "</p>" : "<p>" + tr("Turn on cookies in your web browser to reconnect to Inklewriter.") + "</p>";
                 //_gaq.push(["_trackEvent", "Lost Connection to Server", "Signed out"]);
                 var t = new Dialogue({
                     title: tr("Signed out"),
@@ -9177,9 +9177,9 @@ var Editor = function() {
             } else {
                 var t = new Dialogue({
                     title: tr("Disconnected"),
-                    message: tr("You have been disconnected from inklewriter, perhaps because of an extended period of inactivity.")
+                    message: tr("You have been disconnected from Inklewriter, perhaps because of an extended period of inactivity.")
                 });
-                t.addButton(tr("Okay"), function() {
+                t.addButton(tr("OK"), function() {
                     c(),
                     window.location = r
                 })
@@ -9279,22 +9279,22 @@ var Editor = function() {
     },
       popupPasswordRecovery = function() {
         var dialogue = new Dialogue({
-            title: tr("Forgotten your password?"),
-            message: tr("Don't worry! We will send you a link with instructions on how to reset it. ") +
+            title: tr("Forgot your password?"),
+            message: tr("Instructions with a link to reset it will be e-mailed to you. ") +
               tr("In case you subscribed with a <b>username@inklewriter</b> email address, you will have to create a new account and reimport your stories.")
         });
-        var emailField = dialogue.addField(tr("Your email"));
+        var emailField = dialogue.addField(tr("Your e-mail address"));
         dialogue.addButton(tr(tr("Cancel")));
         var validate_button = dialogue.addButton(tr("Submit"), function() {
           if (!(emailField.value())) {
-              dialogue.setMessage(tr("Please provide your email"));
+              dialogue.setMessage(tr("Please provide your e-mail address"));
               return;
           }
           validate_button.disable();
           var data = {
             "utf8" : "✓", 
             "user" : 
-              {"email" : emailField.value(), "commit" : tr("Send me reset password instructions")}
+              {"email" : emailField.value(), "commit" : tr("Send me instructions to reset my password")}
           };
           $.ajax({
               type: "POST",
@@ -9305,22 +9305,22 @@ var Editor = function() {
               success: function(jqXHR, textStatus, errorThrown) {
                 
                   if ( "errors" in jqXHR ) {
-                    errMsg = tr("The email you provided is not in the database or is invalid.");
+                    errMsg = tr("The e-mail address you provided is not in the database or invalid.");
                     dialogue.setMessage(errMsg);
                     validate_button.enable();
                     return;
                   }
                   dialogue.close();
                   var okayDialogue = new Dialogue({
-                      title: tr("Check your email"),
-                      message: tr("We have sent you the informations and a confirmation link.")
+                      title: tr("Check your e-mail"),
+                      message: tr("You have been sent some info and a confirmation link.")
                   });
-                  okayDialogue.addButton(tr("Okay"), function() {
+                  okayDialogue.addButton(tr("OK"), function() {
                       okayDialogue.close()
                   })              },
               error: function(jqXHR, textStatus, errorThrown, data) {
                   console.log( jqXHR, textStatus, errorThrown, data)
-                  alert(tr("An error occured... Something might be wrong with the server."));
+                  alert(tr("An error occurred… Something might be wrong with the server."));
                   validate_button.enable();
               }
           });
@@ -9465,7 +9465,7 @@ var Editor = function() {
                 n && (o = n.title);
                 var u = new Dialogue({
                     title: tr("Delete story"),
-                    message: tr("Are you sure you wish to delete the story ") + o + "?"
+                    message: tr("Delete the story? ") + o + "?"
                 });
                 u.addButton(tr("Cancel")),
                 u.addButton(tr("Delete"), function() {
@@ -9493,7 +9493,7 @@ var Editor = function() {
         var e = function() {
             var e = OpenStory({
                 title: tr("Open"),
-                message: tr("Choose the story to open"),
+                message: tr("Choose a story to open"),
                 hasDelete: !0,
                 choose: function(e) {
                     u = s,
@@ -9507,10 +9507,10 @@ var Editor = function() {
         if (u >= n && u < s) {
             var t = new Dialogue({
                 title: tr("Unsaved changes"),
-                message: tr("Saving is in progress. Are you sure you wish to continue and open a different story anyway?")
+                message: tr("Saving… progress. Continue and open a different story anyway?")
             });
             t.addButton(tr("Cancel")),
-            t.addButton(tr("Continue..."), function() {
+            t.addButton(tr("Continue…"), function() {
                 t.close(),
                 e()
             })
@@ -9568,7 +9568,7 @@ var Editor = function() {
                                 title: "Thank you!",
                                 message: "Your story has been successfully entered into the competition. Good luck!"
                             });
-                            t.addButton("Okay")
+                            t.addButton("OK")
                         })
                     })
                 }
@@ -9579,9 +9579,9 @@ var Editor = function() {
         if (u == t) {
             var n = new Dialogue({
                 title: tr("Save changes?"),
-                message: tr("Would you like to log in and save changes to your work in progress before continuing?")
+                message: tr("Log in and save changes before continuing?")
             });
-            n.addButton(tr("Don't save"), function() {
+            n.addButton(tr("Do not save"), function() {
                 n.close(),
                 e()
             }),
@@ -9593,9 +9593,9 @@ var Editor = function() {
         } else if (u >= r && u < s) {
             var n = new Dialogue({
                 title: tr("Unsaved changes"),
-                message: tr("Saving is in progress. Are you sure you wish to continue anyway?")
+                message: tr("Saving… progress. Continue anyway?")
             });
-            n.addButton(tr("Continue"), function() {
+            n.addButton(tr("Continue… function() {
                 n.close(),
                 e()
             }),
@@ -9614,8 +9614,8 @@ var Editor = function() {
       , O = function() {
         var e = $("#libraryButton");
         Editor.toggleLibrary() ? (e.addClass("toggledto"),
-        e.attr("tooltip", tr("Close the contents list"))) : (e.removeClass("toggledto"),
-        e.attr("tooltip", tr("Open the contents list")))
+        e.attr("tooltip", tr("Close the content list"))) : (e.removeClass("toggledto"),
+        e.attr("tooltip", tr("Open the content list")))
     }
       , M = function() {
         Editor.launchGraph()
@@ -9630,7 +9630,7 @@ var Editor = function() {
         const inkURL = htmlURL + ".ink";
         
         const content = `
-        <p><a href="${htmlURL}" target="_blank">${tr("Play the story in a browser")}</a>.</p>
+        <p><a href="${htmlURL}" target="_blank">${tr("Play the story in a web browser")}</a>.</p>
         <input type="text" onClick="this.select();" class="selectInput" value="${htmlURL}" />
         <p><a href="${jsonURL}" target="_blank">${tr("Get the story in JSON format")}</a></p>
         <input type="text" onClick="this.select();" class="selectInput" value="${jsonURL}" />
@@ -9654,7 +9654,7 @@ var Editor = function() {
             margin: "0px 0px 20px"
         }),
 
-        shareDialogue.addButton(tr("Okay"));
+        shareDialogue.addButton(tr("OK"));
         /*
         e.addButton("Release", function() {
             window.open("http://textadventures.co.uk/create/submitlink/?url=http%3A%2F%2Fwriter.inklestudios.com%2Fstories%2F" + EditorAccount.currentStoryId())
@@ -9671,7 +9671,7 @@ var Editor = function() {
         }
           , t = new Dialogue({
             title: tr("Settings"),
-            message: tr("Scale of the editor:")
+            message: tr("Editor size:")
         })
           , n = $('<div class="optionSet"></div>');
         t.addContent(n);
@@ -9704,7 +9704,7 @@ var Editor = function() {
         };
         o("mirroring", tr("display option once chosen"), "optionMirroring"),
         o("checkpoints", tr("provide more rewind points"), "allowCheckpoints"),
-        t.addButton("Okay", function() {
+        t.addButton("OK", function() {
             EditorMenu.requireSave(),
             t.close()
         }),
@@ -9753,7 +9753,7 @@ var Editor = function() {
         var e = $("#account_container #editMenu");
         j(e),
         c || (Editor.settings.graphing && F(tr("map"), e, EditorMenu.launchMapView, tr("Open the map")),
-        Editor.toggleLibrary(!0) ? F("<span id='libraryButton' class='toggledto'>" + tr("contents") + "</span>", e, EditorMenu.toggleLibraryView, tr("Close contents list")) : F("<span id='libraryButton'>" + tr("contents") + "</span>", e, EditorMenu.toggleLibraryView, tr("Open contents list"))),
+        Editor.toggleLibrary(!0) ? F("<span id='libraryButton' class='toggledto'>" + tr("contents") + "</span>", e, EditorMenu.toggleLibraryView, tr("Close content list")) : F("<span id='libraryButton'>" + tr("contents") + "</span>", e, EditorMenu.toggleLibraryView, tr("Open content list"))),
         c ? (F(tr("write"), e, EditorMenu.enterEditMode, tr("Write your story")),
         F("<span class='toggledto'>read</span>", e)) : (F("<span class='toggledto'>" + tr("write") + "</span>", e),
         F(tr("read"), e, EditorMenu.enterPlayMode, tr("Read your story"))),
@@ -9776,13 +9776,13 @@ var Editor = function() {
       , R = function(a) {
         u = a;
         var f = $("#saveStateMessage");
-        a === t ? f.text(tr("Sign in to save")) : a >= n && a <= r ? f.text(tr("Saving soon...")) : a === i ? f.text(tr("Saving...")) : a === s ? f.text(tr("Saved.")) : a == e ? f.text("") : a == o ? f.text(tr("Tutorial in progress...")) : f.text(tr("Error. Save state unknown.")),
+        a === t ? f.text(tr("Sign in to save")) : a >= n && a <= r ? f.text(tr("Saving…on...")) : a === i ? f.text(tr("Saving...")) : a === s ? f.text(tr("Saved.")) : a == e ? f.text("") : a == o ? f.text(tr("Tutorial in progress...")) : f.text(tr("Error. Unknown save state.")),
         EditorAccount.username() && 
           f.prepend( 
-            tr("Logged in as &name -- ",{name: EditorAccount.username()})
+            tr("Logged in as Logged in as &name -- name — ",{name: EditorAccount.username()})
             ),
         !EditorAccount.signedIn() || a === o || a === s || a === e ? window.onbeforeunload = null : window.onbeforeunload = function() {
-            var e = tr("inklewriter has unsaved changes");
+            var e = tr("Unsaved changes in Inklewriter");
             return e
         }
     }
@@ -9857,7 +9857,7 @@ var Editor = function() {
         EditorAccount.signedIn() && L(function() {
             var t = new Dialogue({
                 title: tr("Sign out"),
-                message: tr("Are you sure you wish to sign out &name ?",{name:EditorAccount.username() }) 
+                message: tr("Sign out Are you sure you wish to sign out &name ?name?",{name:EditorAccount.username() }) 
             });
             t.addButton(tr("Cancel")),
             t.addButton(tr("Sign out"), function() {
@@ -9879,7 +9879,7 @@ var Editor = function() {
         // Copy from N
         var t = new Dialogue({
             title: tr("Import"),
-            message: tr("Paste your story to import in JSON format."),
+            message: tr("Paste your story to import it in JSON format."),
             footer: tr("After import, your story will be added to your account. Use the <b>Open</b> button to select it from the list and edit it."),
         })
           , n = tr("Import story")
@@ -9910,7 +9910,7 @@ var Editor = function() {
                 },
                 error: function(t, n, r) {
                     e++
-                    alert(tr("Could not save new story. Try again ?"))
+                    alert(tr("Could not save new story. Try again?"))
                 }
             }).done(function(e) {
                 console.log("Sending (importing) done."),
@@ -9971,7 +9971,7 @@ var Editor = function() {
                 i.flagsCollected.push(this.prevChunk.flagsCollected[s]);
         if (!r) {
             t ? this.jqPlayChunk.html("<div class='the_end'>End</div>") : (n(),
-            this.jqPlayChunk.html(tr("This page intentionally left blank.") + " <br>(<a href='javascript:EditorMenu.enterEditMode();'>"+tr("Continue the story from here")+"</a>.)")),
+            this.jqPlayChunk.html(tr("This page intentionally left blank.") + " <br>(<a href='javascript:EditorMenu.enterEditMode();'>"+tr("Continue…e story from here")+"</a>.)")),
             $("#read_area").append(this.jqPlayChunk);
             return
         }
@@ -10034,7 +10034,7 @@ var Editor = function() {
             this.jqTextBlock.find(".back_to_top").bind("click tap", function() {
                 b(e.first().jqPlayChunk)
             }),
-            $("#read_area").append("<div id='madeby'>Text &copy; the author. <a href='http://www.inklestudios.com/inklewriter'><strong>inklewriter</strong></a> &copy; <a href='http://www.inklestudios.com'><strong>inkle</strong></a></div>")) : this.jqTextBlock.append('<br>(<a href="javascript:EditorMenu.enterEditMode();">' + tr("Go back to Write mode to continue") + '</a>.)</div>');
+            $("#read_area").append("<div id='madeby'>Text &copy; the author. <a href='http://www.inklestudios.com/inklewriter'><strong>inklewriter</strong></a> &copy; <a href='http://www.inklestudios.com'><strong>inkle</strong></a></div>")) : this.jqTextBlock.append('<br>(<a href="javascript:EditorMenu.enterEditMode();">' + tr("Go back to writing mode to continue") + '</a>.)</div>');
         else {
             var i = this.stitches.last().options;
             for (var o = 0; o < i.length; o++) {
@@ -10077,7 +10077,7 @@ var Editor = function() {
             y(),
             o(n)
         }) : (this.jqPlayOption.addClass("disabled"),
-        n.writeModeOnly ? this.jqPlayOption.attr("tooltip", tr("Switch to write mode to continue.")) : this.jqPlayOption.attr("tooltip", tr("This option has been disallowed by conditions.")))
+        n.writeModeOnly ? this.jqPlayOption.attr("tooltip", tr("Switch to writing mode to continue.")) : this.jqPlayOption.attr("tooltip", tr("This option has been disallowed by conditions.")))
     }
       , o = function(t) {
         t.text() != "..." && StoryModel.optionMirroring && e.last().jqPlayChunk.prepend('<div class="option_chosen">' + p(t.text()) + "</div>")
@@ -10379,7 +10379,7 @@ var Editor = function() {
                 }, {
                     notIfCondition: "other counter >= 7"
                 }, {
-                    option: "Okay, thanks.",
+                    option: "OK, thanks.",
                     linkPath: "FAQs"
                 }, {
                     option: "How do I write the value of a counter in the story?",
@@ -10413,13 +10413,13 @@ var Editor = function() {
                     option: "Can I do more complex tests?",
                     linkPath: "inlineSyntax3"
                 }, {
-                    option: "Okay, got it.",
+                    option: "OK, got it.",
                     linkPath: "FAQs"
                 }]
             },
             inlineSyntax3: {
                 content: ["You can use the keywords *-not-* and *-and-* in your test. So you could write {first flag and second flag and not third flag:a very specific bit of text | and a more common alternative}.", {
-                    option: "Okay, got it.",
+                    option: "OK, got it.",
                     linkPath: "FAQs"
                 }]
             },
@@ -10512,7 +10512,7 @@ var Editor = function() {
             },
             FindingLooseEnds3: {
                 content: ["So it's a good idea when writing to make all the options as you go; then they're easier to go back and fill in.", {
-                    option: "Okay, thanks.",
+                    option: "OK, thanks.",
                     linkPath: "FAQs"
                 }]
             },
@@ -10590,18 +10590,18 @@ var Editor = function() {
             },
             butForNowWereTry: {
                 content: ["But for now, we're trying to learn how it works. So let's get going.", {
-                    option: "Okay",
+                    option: "OK",
                     linkPath: "noProblemThisTut",
                     ifConditions: null,
                     notIfConditions: null
                 }, {
                     option: "I still don't get it. An example, please?",
-                    linkPath: "ohOkayHereGoesUm",
+                    linkPath: "ohOKHereGoesUm",
                     ifConditions: null,
                     notIfConditions: null
                 }]
             },
-            ohOkayHereGoesUm: {
+            ohOKHereGoesUm: {
                 content: ["Oh, okay. Here goes. Um...", {
                     divert: "theInspectorLook"
                 }]
@@ -10968,7 +10968,7 @@ var Editor = function() {
             },
             LogicNextStep: {
                 content: ['Click where it says "Add conditions" and it will bring up an interface for adding tests, which have to either be passed - or /=not=/ be passed - for the option to appear. Try it now - and try it in *-read-* mode too!', {
-                    option: "Okay, I get it",
+                    option: "OK, I get it",
                     linkPath: "inlineTests",
                     ifConditions: null,
                     notIfConditions: null
@@ -11232,12 +11232,12 @@ var Editor = function() {
                 }]
             },
             seeBelowWhereItS: {
-                content: ["See below, where it says \"Add option\"? Just click that and it'll make a new blank option for you. Type in the option's text, and then press the arrow to start a new paragraph.", {
+                content: ["See below, where it says \"Add an option\"? Just click that and it'll make a new blank option for you. Type in the option's text, and then press the arrow to start a new paragraph.", {
                     divert: "tryItBelowAndWhe"
                 }]
             },
             tryItBelowAndWhe: {
-                content: ["Try it below, and when you're done, rewind back to here and choose the Continue option.", {
+                content: ["Try it below, and when you're done, rewind back to here and choose the Continue…tion.", {
                     option: "Continue",
                     linkPath: "soNowYouCouldSta",
                     ifConditions: null,
@@ -11326,7 +11326,7 @@ var Editor = function() {
             },
             exactlyTheReader: {
                 content: ["Exactly. The reader and writer work together to tell a story.", {
-                    option: "Okay, so, what now?",
+                    option: "OK, so, what now?",
                     linkPath: "takeALookAtTheRi",
                     ifConditions: null,
                     notIfConditions: null
@@ -11348,7 +11348,7 @@ var Editor = function() {
                     ifConditions: null,
                     notIfConditions: null
                 }, {
-                    option: "Okay, show me how",
+                    option: "OK, show me how",
                     linkPath: "firstWeNeedAPara",
                     ifConditions: null,
                     notIfConditions: null
@@ -11499,7 +11499,7 @@ var Editor = function() {
             },
             butRememberAllYo: {
                 content: ["But remember, all your paths can be joined back together using the *-Join-* function. You can join any paragraph to any paragraph you like. (You can even make loops, if you want to!)", {
-                    option: "Okay. What's next?",
+                    option: "OK. What's next?",
                     linkPath: "theNextTutorialW",
                     ifConditions: null,
                     notIfConditions: null
@@ -11556,7 +11556,7 @@ var Editor = function() {
             },
             soJumpBackHereOk: {
                 content: ["So jump back here, okay?", {
-                    option: "Okay. What's next?",
+                    option: "OK. What's next?",
                     linkPath: "seeOnTheLeftOfTh",
                     ifConditions: null,
                     notIfConditions: null
@@ -11770,7 +11770,7 @@ var Editor = function() {
                 <img draggable=false id='splash-logo' src='/img/splash-logo-free.png'></img>\n\
               </div>\n\
               <div id='menu'>\n\
-                <p style='padding-top: 10px; color: red; font-weight: bold;'>" + tr("Inklewriter is free software thanks to Inklestudio!")  + "</p>\n\
+                <p style='padding-top: 10px; color: red; font-weight: bold;'>" + tr("Inklewriter is copylefted libre software, licensed AGPLv3+. Big thanks to Inklestudio!")  + "</p>\n\
                 <ul>\n\
                   <li>\n\
                   <div class='button' id='tutorial'>" + tr("get started") + "</div>\n\
