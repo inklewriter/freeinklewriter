@@ -9595,7 +9595,7 @@ var Editor = function() {
                 title: tr("Unsaved changes"),
                 message: tr("Saving… progress. Continue anyway?")
             });
-            n.addButton(tr("Continue… function() {
+            n.addButton(tr("Continue…"), function() {
                 n.close(),
                 e()
             }),
