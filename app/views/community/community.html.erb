@@ -5,7 +5,7 @@
 	<div class="container">
 		<div class="row">
 			<div id="hello" class="col-md-9">
-				<p>Inklewriter is a fantastic online tool that allows users to write interactive stories. It has been conceived and developped by <%= link_to "Inkle Studios", "https://www.inklestudios.com/", rel: "noopener noreferrer", class: "action-link", target: "blank" %> but later deprecated. We are bringing back to you today under a free license with Inkle Studios agreement.</p>
+				<p><%= t(".motto_html", link: link_to("Inkle Studios", "https://www.inklestudios.com/", rel: "noopener noreferrer", class: "action-link", target: "blank")) %></p>
 			</div>
 			<div id="hello-image" class="col-md-3">
 				<%= image_tag "ink-pen.gif" %>
