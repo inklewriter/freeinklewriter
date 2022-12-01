@@ -162,5 +162,8 @@
         "You'll still be able to share your stories, but don't forget your password, as we won't be able to send a reminder.": "Du vil fremdeles kunne dele historiene dine, men ikke glem passordet ditt, siden du ikke vil kunne få noen påminnelser.",
         "Your email": "Din e-postadresse",
         "You will then be able to test for this marker later on in the story.": "Du vil så kunne teste om denne markøren er å finne senere i historien din."
+    },
+    "en_EN": {
+        "Add conditions": "Legg til betingelser"
     }
 }
