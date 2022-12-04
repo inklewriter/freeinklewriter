@@ -13,16 +13,6 @@
  *
  * Date: Mon Nov 21 21:11:03 2011 -0500
  */
-
-
-
-
-
-
-
-
-
-
 function cleanWordPaste(e) {
     var t = document.createElement("DIV");
     t.innerHTML = e;
@@ -4796,7 +4786,7 @@ Array.prototype.indexOf || (Array.prototype.indexOf = function(e) {
 );
 
         
-getFirstBrowserLanguage = function () {
+getFirstBrowserLocale = function () {
     var nav = window.navigator,
     browserLanguagePropertyKeys = ['language', 'browserLanguage', 'systemLanguage', 'userLanguage'],
     i,
@@ -4823,6 +4813,125 @@ getFirstBrowserLanguage = function () {
     return typeof(language) === "string" ? language.toLowerCase() : "";
     
   };
+  
+  /*!
+ * jQuery Cookie Plugin v1.4.1
+ * https://github.com/carhartl/jquery-cookie
+ *
+ * Copyright 2013 Klaus Hartl
+ * Released under the MIT license
+ */
+(function (factory) {
+	if (typeof define === 'function' && define.amd) {
+		// AMD
+		define(['jquery'], factory);
+	} else if (typeof exports === 'object') {
+		// CommonJS
+		factory(require('jquery'));
+	} else {
+		// Browser globals
+		factory(jQuery);
+	}
+}(function ($) {
+
+	var pluses = /\+/g;
+
+	function encode(s) {
+		return config.raw ? s : encodeURIComponent(s);
+	}
+
+	function decode(s) {
+		return config.raw ? s : decodeURIComponent(s);
+	}
+
+	function stringifyCookieValue(value) {
+		return encode(config.json ? JSON.stringify(value) : String(value));
+	}
+
+	function parseCookieValue(s) {
+		if (s.indexOf('"') === 0) {
+			// This is a quoted cookie as according to RFC2068, unescape...
+			s = s.slice(1, -1).replace(/\\"/g, '"').replace(/\\\\/g, '\\');
+		}
+
+		try {
+			// Replace server-side written pluses with spaces.
+			// If we can't decode the cookie, ignore it, it's unusable.
+			// If we can't parse the cookie, ignore it, it's unusable.
+			s = decodeURIComponent(s.replace(pluses, ' '));
+			return config.json ? JSON.parse(s) : s;
+		} catch(e) {}
+	}
+
+	function read(s, converter) {
+		var value = config.raw ? s : parseCookieValue(s);
+		return $.isFunction(converter) ? converter(value) : value;
+	}
+
+	var config = $.cookie = function (key, value, options) {
+
+		// Write
+
+		if (value !== undefined && !$.isFunction(value)) {
+			options = $.extend({}, config.defaults, options);
+
+			if (typeof options.expires === 'number') {
+				var days = options.expires, t = options.expires = new Date();
+				t.setTime(+t + days * 864e+5);
+			}
+
+			return (document.cookie = [
+				encode(key), '=', stringifyCookieValue(value),
+				options.expires ? '; expires=' + options.expires.toUTCString() : '', // use expires attribute, max-age is not supported by IE
+				options.path    ? '; path=' + options.path : '',
+				options.domain  ? '; domain=' + options.domain : '',
+				options.secure  ? '; secure' : ''
+			].join(''));
+		}
+
+		// Read
+
+		var result = key ? undefined : {};
+
+		// To prevent the for loop in the first place assign an empty array
+		// in case there are no cookies at all. Also prevents odd result when
+		// calling $.cookie().
+		var cookies = document.cookie ? document.cookie.split('; ') : [];
+
+		for (var i = 0, l = cookies.length; i < l; i++) {
+			var parts = cookies[i].split('=');
+			var name = decode(parts.shift());
+			var cookie = parts.join('=');
+
+			if (key && key === name) {
+				// If second argument (value) is a function it's a converter...
+				result = read(cookie, value);
+				break;
+			}
+
+			// Prevent storing a cookie that we couldn't decode.
+			if (!key && (cookie = read(cookie)) !== undefined) {
+				result[name] = cookie;
+			}
+		}
+
+		return result;
+	};
+
+	config.defaults = {};
+
+	$.removeCookie = function (key, options) {
+		if ($.cookie(key) === undefined) {
+			return false;
+		}
+
+		// Must not alter options, thus extending a fresh object...
+		$.cookie(key, '', $.extend({}, options, { expires: -1 }));
+		return !$.cookie(key);
+	};
+
+}));
+
 /**
  * @file jquery.tr.js
  * @brief Support for internationalization.
@@ -4857,7 +4966,7 @@ getFirstBrowserLanguage = function () {
 	 * Name of cookie storing language. Change it if it conflicts.
 	 * If you don't use the jQuery's Cookie plugin, it doesn't matter.
 	 */
-	var cookieName = 'language';
+	var cookieName = 'locale';
 
 	// end of configuration
 
@@ -5037,30 +5146,52 @@ getFirstBrowserLanguage = function () {
 })(jQuery);
 
 // Translation logic
-var available_languages = {
-  "de" : "de",
-  "en" : "en",
-  "fr" : "fr",
-  "nb" : "nb_no"
-};
-var browser_language = getFirstBrowserLanguage();
+var available_locales = {
+    "de" : {
+      "label": "Deutsch",
+      "pattern" : "de"
+    },
+    "en": {
+      "label": "English",
+      "pattern" : "en"
+    },
+    "fr":{
+      "label": "Français",
+      "pattern" : "fr"
+    },
+    "nb_no":{
+      "label": "Norsk",
+      "pattern" : "nb"
+    },
+  };
+  
+var browser_locale = $.cookie("locale") || getFirstBrowserLocale();
 
-function locale_match(needle, matches){
-  var pattern;
-  for (pattern in matches){
-    if( needle.match(RegExp("^"+pattern))){
-      return matches[pattern];
+function locale_match(needle){
+  for ( var locale in available_locales){
+    var pattern = available_locales[locale]["pattern"]
+    if( needle.match(RegExp("^"+pattern, "i"))){
+      return locale;
     }
   }
   return "en";
 }
 
-var inklewriter_locale = locale_match(browser_language, available_languages);
+  function change_locale ( locale ) {
+    var reload_fn = function(){
+      $.cookie("locale",locale);
+      window.location.href = window.location.href
+      };
+    setTimeout(reload_fn, 100);
+  }
+
+var inklewriter_locale = locale_match(browser_locale, available_locales);
 
 var tr = $.tr.translator();
 document.tr = tr;
 
 $.tr.language(inklewriter_locale, true);  
+
 $.ajax(
   {
     dataType: "json",

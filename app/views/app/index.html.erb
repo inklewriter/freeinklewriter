@@ -7,17 +7,18 @@
         <div id="right-shelf-container">
             <a class="shelf-text" target="_blank" tr-data="true" href="https://github.com/inklewriter/freeinklewriter" tooltip="Get the code!">Github</a> 
             <a class="shelf-text" target="_blank" tr-data="true" href="/privacy" tooltip="Your privacy matters...">Privacy</a> 
-        
+            <div  class="shelf-text" id="language-nav">
+              <a id="language-picker" href="javascript:void(0)">Loading...</a>
+              <ul id="language-picker-menu">
+              </ul>
+            </div>
+
             <div id="saveStateMessage">
-                
-                
                 
             </div>
         </div>
         
     </div>
-
-      
 
 <script>
 
@@ -42,6 +43,16 @@ $(document).ready(function(){
         $(el).text(trans)
       }
     })
+
+    $("#language-picker").text( available_locales[$.cookie("locale")]["label"] );
+
+    // Fill translation  menu
+    var $language_menu = $("#language-picker-menu")
+    $.each( available_locales, function(locale, locale_info){
+      var $el = $('<li ><a href="javascript:change_locale(\''+locale.trim()+'\')">' + locale_info["label"] + '</a></li>' );
+      $language_menu.append( $el )  
+    })
+
     rangy.init();
     
     <% if current_user.present? %>        
