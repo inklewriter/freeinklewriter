@@ -1,1 +1,36 @@
-{}
+en:
+  pundit:
+    story_policy:
+      story_params?: Accès à cette page interdit
+      update_story_params?: Accès à cette page interdit
+      show?: Histoire non publiée
+      update?: Cette histoire ne vous appartient pas
+      destroy?: Cette histoire ne vous appartient pas
+    nil_class_policy:
+      story_params?: cette page n'existe pas
+      update_story_params?: cette page n'existe pas
+      show?: Cette page n'existe pas
+      update?: Cette page n'existe pas
+      destroy?: Cette page n'existe pas
+  story:
+    zero: aucune histoire
+    one: 1 histoire
+    other: '%{count} histoires'
+  it_is:
+    zero: c'est
+    one: c'est
+    other: ils sont
+  activerecord:
+    attributes:
+      license:
+        license_name: Nom de licence
+    errors:
+      models:
+        story_privacy:
+          attributes:
+            user_private:
+              inclusion: Paramètres de vie privée incorrects
+        license:
+          attributes:
+            license_name:
+              too_long: le nom de la licence doit être inférieur à %{count} caractères
