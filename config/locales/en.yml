@@ -62,9 +62,6 @@ en:
     attributes:
       license:
         license_name: License name  
-
-
-  activerecord:
     errors:
       models:
         story_privacy:
