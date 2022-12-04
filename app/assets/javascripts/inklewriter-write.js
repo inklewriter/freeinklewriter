@@ -5042,22 +5042,23 @@ var available_languages = {
   "en" : "en",
   "fr" : "fr",
   "nb" : "nb_no"
-}
+};
 var browser_language = getFirstBrowserLanguage();
 
 function locale_match(needle, matches){
+  var pattern;
   for (pattern in matches){
     if( needle.match(RegExp("^"+pattern))){
-      return pattern;
+      return matches[pattern];
     }
   }
   return "en";
 }
 
-var inklewriter_locale = locale_match(browser_language, available_languages)
+var inklewriter_locale = locale_match(browser_language, available_languages);
 
 var tr = $.tr.translator();
-document.tr = tr
+document.tr = tr;
 
 $.tr.language(inklewriter_locale, true);  
 $.ajax(
@@ -5066,7 +5067,9 @@ $.ajax(
     url: '/translations/dictionary.'+inklewriter_locale+".json",
     async: false,
     success: function(data) {
-      $.tr.dictionary(data);
+      var dict = {}
+      dict[inklewriter_locale] = data
+      $.tr.dictionary(dict);
       tr = $.tr.translator();
     },
     error: function(a,b){
