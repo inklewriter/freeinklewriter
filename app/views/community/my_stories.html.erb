@@ -13,26 +13,26 @@
 		<div id="stories">
 		
 			<% unless @user.stories.any? %>
-				<p>You are currently owning no story. Just switch to the main app and start creating your own stories !</p>
+				<p><%= t(".you_are_owning_no_story") %></p>
 			<% else %>
-				<p>You are currently owning <%= t('story', count: @user.stories.count) %>. Here <%= t('it_is', count: @user.stories.count) %> :</p>
+				<p><%= t(".you_are_owning_x_stories", stories: t('story', count: @user.stories.count)) %>. <%= t('here_it_is', count: @user.stories.count) %> :</p>
 
 				<div class="row story-item-header">
 				
 	                <div class="col-md-5">
-	                    <span class="story-name">Title</span>
+	                    <span class="story-name"><%= t(".story_title") %></span>
 	                </div> 
 	                <div class="col-md-2">
-	                    <span class="story-detail">Words</span>
+	                    <span class="story-detail"><%= t(".number_of_words") %></span>
 	                </div>
 	                <div class="col-md-1">
-	                    <span class="story-detail">Privacy Policy</span>
+	                    <span class="story-detail"><%= t(".privacy_policy") %></span>
 	                </div>
 	                <div class="col-md-2">
-	                    <span class="story-detail">License</span>
+	                    <span class="story-detail"><%= t(".license") %></span>
 	                </div>
 	                <div class="col-md-1">
-	                    <span class="story-detail">Score</span>
+	                    <span class="story-detail"><%= t(".score") %></span>
 	                </div>
 
 	            </div>    
@@ -48,11 +48,16 @@
 						</div>
 						
 						<div class="col-md-2">
-							<span class="story-detail"><%= s&.story_stat&.total_words.to_s %> words</span>
+							<span class="story-detail"><%= t("word", count: s&.story_stat&.total_words.to_i) %><%=  %></span>
 						</div>
 						
 						<div class="col-md-1">
-							<span class="story-detail"><%= s.story_privacy.user_private if s.story_privacy.present? %></span>
+							<span class="story-detail"><%= 
+              if s.story_privacy.present?
+                t(snakecase(s.story_privacy.user_private)) 
+              else
+                t("no_privacy_setting_yet")
+              end %></span>
 						</div>
 						
 						<div class="col-md-2">
