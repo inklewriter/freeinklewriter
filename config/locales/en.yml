@@ -53,12 +53,18 @@ en:
     zero: no story
     one: 1 story
     other: "%{count} stories"
-  it_is: 
-    zero: it is
-    one: it is 
-    other: they are
-
-
+  here_it_is: 
+    zero: here it is
+    one: here it is 
+    other: here they are
+  word:
+    zero: 0 word 
+    one: 1 word 
+    other: "%{count} words"  
+  no_privacy_setting_yet: No privacy setting yet 
+  private: private 
+  public: public
+  public_and_searchable: public and searchable    
 
   # SCOPED
 
@@ -102,6 +108,27 @@ en:
       counter_example_explanation: "which will show your player something like:"
       counter_example_user_display: You have fifteen more letters to post, one to No. 22 over the road.
       try_it_out: Try it out!
+      navigating_html: There are lots of ways to find your way around in <strong>inklewriter</strong>. First, you can use the rewind buttons in the top right of every page of your story. Clicking rewind will roll the story back to that point, so you can add new options or take different choices.
+    my_stories:
+      you_are_owning_no_story: You are currently owning no story. Just switch to the main app and start creating your own stories !  
+      you_are_owning_x_stories: You are currently owning %{stories}
+      story_title: Title
+      number_of_words: Words
+      privacy_policy: Privacy Policy
+      license: License
+      score: Score
+
+
+
+
+
+
+
+
+
+
+
+
 
   # Activerecord
   activerecord: 
