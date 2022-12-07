@@ -49,7 +49,7 @@ en:
 
 
   #generic    
-  story: 
+  stories: 
     zero: no story
     one: 1 story
     other: "%{count} stories"
@@ -57,16 +57,36 @@ en:
     zero: here it is
     one: here it is 
     other: here they are
-  word:
+  words:
     zero: 0 word 
     one: 1 word 
     other: "%{count} words"  
   no_privacy_setting_yet: No privacy setting yet 
+  not_set_yet: not set yet
   private: private 
   public: public
   public_and_searchable: public and searchable    
+  privacy_policy: privacy policy
+  story: story
+  story_title: title
+  number_of_words: words      
+  license: license
+  score: score
 
   # SCOPED
+
+  layouts:
+    footer:
+      source_code: source code
+      report_bugs: report bugs
+      footer_note_html: The InkleWriter app was originally developped by <a href='https://www.inklestudios.com/' target='_blank' rel='noopener noreferrer'>inkle studios</a> and is now accessible under a free license.
+    header:
+      you_arent_signed_in: you aren't signed in 
+      greetings_name: hello %{name}
+    menu: 
+      write_a_story: write a story  
+      my_stories: my stories
+      how_it_works: how it works
 
   community: 
     community: 
@@ -112,22 +132,37 @@ en:
     my_stories:
       you_are_owning_no_story: You are currently owning no story. Just switch to the main app and start creating your own stories !  
       you_are_owning_x_stories: You are currently owning %{stories}
-      story_title: Title
-      number_of_words: Words
-      privacy_policy: Privacy Policy
-      license: License
-      score: Score
-
-
-
-
-
-
-
-
-
-
-
+      
+    story_params:
+      your_password_is_x_html: (your password is <b>%{password}</b>)
+      password_allows_accessing_a_story: The password allows you to grant access to private stories to specific visitors.  
+      use_this_link_to_see_story: "For this specific story, please use link :"
+      how_privacy_policy_work: How do privacy policies work?
+      they_define_who_can_read_your_story: They define how your interactive story can be accessed by other people. 
+      private_scope: Your story can only be read by you or people with a special link containing a "bypass token" - an elaborated word for "password".
+      public_scope: This is the default. Your story can be read by anyone but it should not be indexed, searched, nor promoted.
+      public_and_searchable_scope: Your story can appear in a search engine made by our team with the objective of promoting works created in Inklewriter.
+      click_to_pick_a_license: Click on a block below to select a license
+      why_picking_a_license: Why should I pick a liscense?
+      inklewriter_sets_no_default: Inklewriter sets no license on your work by default.
+      it_is_important_to_enforce_a_license: Yet without one, there is no strict way to know how others should deal with your work on the Internet.
+      we_recommend_to_add_a_license: We recommand you to choose a licence especially if you agree to make your story searchable.
+      a_license_if_your_own_policy: By defining one, you specify the conditions you intend your work to be shared and distributed.
+      why_creative_commons: Why do you recommand Creative Commons Licenses?
+      you_can_pick_any_but_cc_are_good: You are free to use other licenses but we recommand the Creative Commons 4.0 (CC 4.0) ones.
+      cc_advantages: "We think CC 4.0 licenses have many advantages:"
+      they_are_designed_for_the_web: They are by design made for works of art in the Internet age.
+      they_come_from_the_free_community: They come from the free software community who have has a strong experience about licenses and their many subtleties.
+      they_have_been_refined_over_time: They have been perfected over many years and have very high chances of being accepted by courts of justice should you ever have to face such a situation.
+      you_can_use_your_own: But feel free to use any license to your liking.
+      you_can_use_the_zero_license: "For example, if you intend to give up copyright and put your work into the worldwide public domain with no conditions, you can use this one:"
+      which_to_choose: Which license should I choose?
+      BY: Credit must be given to the creator
+      NC: Only noncommercial uses of the work are permitted
+      SA: Adaptations must be shared under the same terms
+      ND: No derivatives or adaptations of the work are permitted
+      to_fit_your_intentions : To fit your intentions regarding your work, CC licenses offer different options you can "mix" together.
+      CC_documentation_html: Please refer to the <a href="https://creativecommons.org/licenses/" target="_blank" class="link">official CC 4.0 Documentation</a> for full details but here's a brief summary of these options.
 
 
   # Activerecord

@@ -15,24 +15,24 @@
 			<% unless @user.stories.any? %>
 				<p><%= t(".you_are_owning_no_story") %></p>
 			<% else %>
-				<p><%= t(".you_are_owning_x_stories", stories: t('story', count: @user.stories.count)) %>. <%= t('here_it_is', count: @user.stories.count) %> :</p>
+				<p><%= t(".you_are_owning_x_stories", stories: t('stories', count: @user.stories.count)) %>. <%= t('here_it_is', count: @user.stories.count) %> :</p>
 
 				<div class="row story-item-header">
 				
 	                <div class="col-md-5">
-	                    <span class="story-name"><%= t(".story_title") %></span>
+	                    <span class="story-name"><%= t("story_title").capitalize %></span>
 	                </div> 
 	                <div class="col-md-2">
-	                    <span class="story-detail"><%= t(".number_of_words") %></span>
+	                    <span class="story-detail"><%= t("number_of_words").capitalize %></span>
 	                </div>
 	                <div class="col-md-1">
-	                    <span class="story-detail"><%= t(".privacy_policy") %></span>
+	                    <span class="story-detail"><%= t("privacy_policy").capitalize %></span>
 	                </div>
 	                <div class="col-md-2">
-	                    <span class="story-detail"><%= t(".license") %></span>
+	                    <span class="story-detail"><%= t("license").capitalize %></span>
 	                </div>
 	                <div class="col-md-1">
-	                    <span class="story-detail"><%= t(".score") %></span>
+	                    <span class="story-detail"><%= t("score").capitalize %></span>
 	                </div>
 
 	            </div>    
@@ -48,7 +48,7 @@
 						</div>
 						
 						<div class="col-md-2">
-							<span class="story-detail"><%= t("word", count: s&.story_stat&.total_words.to_i) %><%=  %></span>
+							<span class="story-detail"><%= t("words", count: s&.story_stat&.total_words.to_i) %><%=  %></span>
 						</div>
 						
 						<div class="col-md-1">

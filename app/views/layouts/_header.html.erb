@@ -12,11 +12,11 @@
 
 		<% if user_signed_in? %>
 			<div id="user-signed-in">
-				Hello <%= @user.email %>
-			</div>
+				<%= t(".greetings_name", name: @user.email ) %>
+      </div>
 		<% else %> 
 			<div id="no-user">
-				<p>you aren't signed in</p>
+				<p><%= t(".you_arent_signed_in") %></p>
 			</div>			
 		<% end %>
 		
