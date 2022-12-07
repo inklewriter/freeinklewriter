@@ -4,9 +4,9 @@
 <div id="community-story-params" class="main-container">
   <div class="container">
 
-    <h1><span class="mute">Story</span class="mute"> <%= @story.title.first(100) %></h1>
+    <h1><span class="mute"><%= t("story").capitalize %></span class="mute"> <%= @story.title.first(200) %></h1>
 
-		<h2>Privacy policy</h2>
+		<h2><%= t("privacy_policy") %></h2>
 
 		
 		<%= form_with model: @story, url: update_story_params_path(@story.id), method: "PATCH", local: true do |f| %>
@@ -18,12 +18,12 @@
 
 						<div>
 							<%= privacy.label(:user_private, value: priv_selector) do %>
-								<%= privacy.radio_button :user_private, priv_selector %><%= priv_selector %>
+								<%= privacy.radio_button :user_private, priv_selector %><%= t(snakecase(priv_selector)) %>
 							<% end %>
 
 							<% if priv_selector == "private" %>
-								<% bypass_tok = @story&.story_privacy&.bypass_token || "not set yet " %>
-								( your password is <b><%= bypass_tok %></b>)
+								<% bypass_tok = @story&.story_privacy&.bypass_token || t("not_set_yet") %>
+								<%= t(".your_password_is_x_html", password: bypass_tok) %>
 								<%# privacy.label :bypass_token%>
 								<%# privacy.text_field :bypass_token %>								
 							<% end %>
@@ -31,9 +31,9 @@
 
 					<% end %>
 
-					<p>The password allows you to grant access to private stories to specific visitors. 
+					<p><%= t(".password_allows_accessing_a_story") %> 
 						<% if @story.story_privacy.bypass_token.present? %>	
-							For this specific story, please use link : <a href="<%= request.base_url %>/stories/<%= @story.id%>?bypass_token=<%= @story.story_privacy.bypass_token %>"><%= request.base_url %>/stories/<%= @story.id%>?bypass_token=<%= @story.story_privacy.bypass_token %></a>
+							<%= t(".use_this_link_to_see_story") %> <a href="<%= request.base_url %>/stories/<%= @story.id%>?bypass_token=<%= @story.story_privacy.bypass_token %>"><%= request.base_url %>/stories/<%= @story.id%>?bypass_token=<%= @story.story_privacy.bypass_token %></a>
 						<% end %>
 					</p>
 
@@ -51,13 +51,13 @@
       	<%= image_tag "quill-question.svg" %>
       </div>
       <div class="col-md-11"> 
-		    <h3>How do privacy policies work? </h3>
-		    <p>They define how your interactive story can be accessed by other people. </p>
+		    <h3><%= t(".how_privacy_policy_work") %></h3>
+		    <p><%= t(".they_define_who_can_read_your_story") %></p>
 
 		    <ul>
-		    	<li> <b>private</b> - Your story can only be read by you or people with a special link containing a "bypass token" - an elaborated word for "password".
-		    	<li> <b>public</b> - This is the default. Your story can be read by anyone but it should not be indexed, searched, nor promoted.
-		    	<li> <b>public and searchable </b>- Your story can appear in a search engine made by our team with the objective of promoting works created in Inklewriter.
+		    	<li> <b><%= t("private") %></b> - <%= t(".private_scope") %>
+		    	<li> <b><%= t("public") %></b> - <%= t(".public_scope") %>
+		    	<li> <b><%= t("public_and_searchable") %></b> - <%= t(".public_and_searchable_scope") %>
 		    </ul>
 	    </div> 
       
@@ -68,11 +68,11 @@
 
   <%= form_with model: @story, url: update_story_params_path(@story.id), method: "PATCH", local: true do |f| %>
 
-	  <h2>License</h2>
+	  <h2><%= t("license").capitalize %></h2>
 
 			
 
-      <h3>Click on a block below to select its license.</h3>
+      <h3><%= t(".click_to_pick_a_license") %>.</h3>
 
 			<div id= "license-list">
 
@@ -126,36 +126,32 @@
     </div>
     
     <div class="col-md-11"> 
-      <h3>What is the interest of a license? Why should I select one? </h3>
-      <p>Inklewriter sets no license on your work by default. </p>
-      <p>Yet without one, there is no strict way to know how others should respect your work on the Internet.</p>
-      <p>We recommand you to choose a licence especially if you agree to make your story searchable.</p>
-      <p>By defining one, you specify the conditions you intend your work to be shared and distributed. </p>
-      <h3>Why do you recommand Creative Commons Licenses?</h3>
-      <p>You are free to use other licenses but we recommand the Creative Commons 4.0 (CC 4.0) ones.</p>
-      <p>We think CC 4.0 licenses have many advantages:</p>
+      <h3><%= t(".why_picking_a_license") %></h3>
+      <p><%= t(".inklewriter_sets_no_default") %></p>
+      <p><%= t(".it_is_important_to_enforce_a_license") %></p>
+      <p><%= t(".we_recommend_to_add_a_license") %></p>
+      <p><%= t(".a_license_if_your_own_policy") %></p>
+      <h3><%= t(".why_creative_commons") %></h3>
+      <p><%= t(".you_can_pick_any_but_cc_are_good") %></p>
+      <p><%= t(".cc_advantages") %></p>
 
 			<ul>
-				<li>They are by design made for works of art in the Internet age.</li>
-				<li>They come from the free software community who have has a strong experience about licenses and their many subtleties.</li>
-				<li>They have been perfected over many years and have very high chances of being accepted by courts of justice should you ever have to face such a situation.</li>
+				<li><%= t(".they_are_designed_for_the_web") %></li>
+				<li><%= t(".they_come_from_the_free_community") %></li>
+				<li><%= t(".they_have_been_refined_over_time") %></li>
 			</ul>
 
         
-        <p>But feel free to use any license to your liking. </p>
-        <p>For example, if you intend to give up copyright and put your work into the worldwide public domain with no conditions, you can use the <a href="https://creativecommons.org/choose/zero/" target="_blank">CC0 license</a>.</p>
-        <h3>Which license should I choose?</h3>
-        <p>
-        To fit your intentions regarding your work, CC licenses offer different options you can "mix" together. 
-        </p>
-        <p>
-        Please refer to the <a href="https://creativecommons.org/licenses/" target="_blank" class="link">official CC 4.0 Documentation</a> for full details but here's a brief summary of these options.
-        </p>
+        <p><%= t(".you_can_use_your_own") %></p>
+        <p><%= t(".you_can_use_the_zero_license") %> <a href="https://creativecommons.org/choose/zero/" target="_blank">CC0 license</a>.</p>
+        <h3><%= t(".which_to_choose") %></h3>
+        <p><%= t(".to_fit_your_intentions") %></p>
+        <p><%= t(".CC_documentation_html") %></p>
         <ul>
-	        <li> <b>BY</b> – Credit must be given to the creator</li>
-	        <li> <b>NC (Non Commercial) </b>– Only noncommercial uses of the work are permitted</li>
-	        <li> <b>SA (Share Alike) </b>– Adaptations must be shared under the same terms</li>
-	        <li> <b>ND (No Derivatives) </b>– No derivatives or adaptations of the work are permitted</li>
+	        <li> <b>BY</b> – <%= t(".BY") %></li>
+	        <li> <b>NC (Non Commercial)</b> – <%= t(".NC") %></li>
+	        <li> <b>SA (Share Alike)</b> – <%= t(".SA") %></li>
+	        <li> <b>ND (No Derivatives)</b> – <%= t(".ND") %></li>
         </ul>
       </div>
     </div>    

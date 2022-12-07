@@ -2,14 +2,14 @@
 	<div class="container">
 		<div id="menu-items">
 			<% if user_signed_in? %>
-				<%= link_to "write a story", root_path %>
-				<%= link_to "my stories", my_stories_path %>
+				<%= link_to t(".write_a_story"), root_path %>
+				<%= link_to t(".my_stories"), my_stories_path %>
 			<% end %>
-			<%= link_to "how it works", how_it_works_path %>
+			<%= link_to t(".how_it_works"), how_it_works_path %>
 		</div>
 	</div>
 </div>
 
 <% content_for :headcss do %>
-    <%= stylesheet_link_tag    "layouts/menu", media: 'all' %>
+    <%= stylesheet_link_tag "layouts/menu", media: 'all' %>
 <% end %>
