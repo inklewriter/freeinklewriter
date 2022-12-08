@@ -1,0 +1,63 @@
+fr:
+  devise:
+    confirmations:
+      confirmed: "Votre adresse email a été confirmée avec succès."
+      send_instructions: "Vous allez recevoir un email de confirmation dans quelques instants"
+      send_paranoid_instructions: "Si votre adresse email existe dans notre base, vous allez recevoir un email de confirmation dans quelques instants."
+    failure:
+      already_authenticated: "Vous êtes déjà connecté."
+      inactive: "Votre compte n'est pas encore activé."
+      invalid: "Mot de passe ou %{authentication_keys} non valide."
+      locked: "Votre compte est bloqué."
+      last_attempt: "Il vous reste encore une tentative."
+      not_found_in_database: "Mot de passe ou %{authentication_keys} non valide."
+      timeout: "Votre session a expiré. Connectez-vous de nouveau."
+      unauthenticated: "Vous devez vous connecter ou créer un compte pour poursuivre."
+      unconfirmed: "Vous devez confirmer votre compte pour poursuivre."
+    mailer:
+      confirmation_instructions:
+        subject: "Instructions de confirmations"
+      reset_password_instructions:
+        subject: "Instructions de renouvellement de mot de passe"
+      unlock_instructions:
+        subject: "Instructions pour le déblocage du compte"
+      email_changed:
+        subject: "Adresse email changée"
+      password_change:
+        subject: "Mot de passe changé"
+    omniauth_callbacks:
+      failure: "Impossible de vous authentifier depuis %{kind} à cause de \"%{reason}\"."
+      success: "Authentifié avec succès depuis le compte %{kind}."
+    passwords:
+      no_token: "Vous ne pouvez pas accéder àa cette page depuis un email de remise à jour de mot de passe."
+      send_instructions: "Vous allez recevoir un email dans quelques instants."
+      send_paranoid_instructions: "Si votre adresse email existe dans notre base, vous allez recevoir un email de récupération de compte dans quelques instants."
+      updated: "Votre mot de passe a été changé avec succès. Vous êtes connecté."
+      updated_not_active: "Votre mot de passe a été changé avec succès."
+    registrations:
+      destroyed: "A bientôt. Votre compte a été supprimé avec succès."
+      signed_up: "Hello. Votre compte a été créé avec succès"
+      signed_up_but_inactive: "Votre compte a été créé avec succès. Cependant vous devez l'activer pour vous connecter."
+      signed_up_but_locked: "Votre compte a été créé avec succès. Cependant il semble bloqué."
+      signed_up_but_unconfirmed: "Un message avec un lien vous a été envoyé. Cliquez sur le lien pour activer votre compte."
+      update_needs_confirmation: "Votre compte a été mis à jour, mais nous devons vérifier votre nouvelle adresse email. Cliquez sur le lien contenu dans le message envoyé."
+      updated: "Votre compte a été mis à jour avec succès."
+      updated_but_not_signed_in: "Votre compte a été mis à jour avec succès, mais comme votre mot de passe a changé, vous devez vous connectez de nouveau."
+    sessions:
+      signed_in: "Connecté"
+      signed_out: "Déconnecté"
+      already_signed_out: "Deconnecté"
+    unlocks:
+      send_instructions: "Vous allez recevoir un email pour debloquer votre compte dans quelques instants."
+      send_paranoid_instructions: "Si votre compt eexiste, vous allez recevoir un email pour le débloquer."
+      unlocked: "Votre compte a été debloqué avec succès. Vous pouvez vous connecter."
+  errors:
+    messages:
+      already_confirmed: "a déjà été confirmé, vous pouvez vous connecter"
+      confirmation_period_expired: "doit être confirmé dans un délai de %{period}, demandez un nouveau lien"
+      expired: "a expiré, demandez en un de nouveau"
+      not_found: "n'a pas été trouvé"
+      not_locked: "n'était pas bloqué"
+      not_saved:
+        one: "1 erreur a empêché %{resource} d'être sauvegardé:"
+        other: "%{count} erreurs ont empêché %{resource} d'être sauvegardé:"
