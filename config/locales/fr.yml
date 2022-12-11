@@ -1,0 +1,152 @@
+fr:  
+  # pundit
+  pundit:
+    story_policy: 
+      story_params?: Vous ne pouvez accéder à cette page
+      update_story_params?: Vous ne pouvez accéder à cette page
+      show?: L'histoire n'est pas publiée
+      update?: Il semble que cette histoire ne soit pas la votre
+      destroy?: Il semble que cette histoire ne soit pas la votre
+    nil_class_policy: 
+      story_params?: Cette page n'existe pas
+      update_story_params?: Cette page n'existe pas
+      show?: Cette page n'existe pas  
+      update?: Cette page n'existe pas
+      destroy?: Cette page n'existe pas
+
+
+  #generic    
+  stories: 
+    zero: aucune histoire
+    one: 1 histoire
+    other: "%{count} histoires"
+  here_it_is: 
+    zero: voici
+    one: voici 
+    other: voici
+  words:
+    zero: 0 mot
+    one: 1 mot 
+    other: "%{count} mots"  
+  no_privacy_setting_yet: Aucun paramètrage de confidentialité pour le moment 
+  not_set_yet: n'est pas encore parametré
+  private: privé 
+  public: public
+  public_and_searchable: public et apparait dans les recherches   
+  privacy_policy: politique de confidentialité
+  story: histoire
+  story_title: titre
+  number_of_words: mots      
+  license: license
+  score: score
+
+  # SCOPED
+
+  layouts:
+    footer:
+      source_code: code source
+      report_bugs: signaler un disfonctionnement
+      footer_note_html: InkleWriter est une app originellement développée par <a href='https://www.inklestudios.com/' target='_blank' rel='noopener noreferrer'>inkle studios</a> et est dorénavant accessible sous license libre.
+    header:
+      you_arent_signed_in: vous n'êtes pas connecté 
+      greetings_name: bonjour %{name}
+    menu: 
+      write_a_story: écrire une histoire  
+      my_stories: mes histoire
+      how_it_works: comment ça marche
+
+  community: 
+    community: 
+      motto_html: Inklewriter est un outil simple et élégant qui permet d'écrire des histoires interactives. Conçu par %{link} et ensuite décomissionné, nous vous le présentons de nouveau sous license libre, avec l'accord de Inkle Studios.
+    how_it_works:
+      preamble: Cette page décrit le fonctionnement d'InkleWriter. Il est possible pour vous d'y contribuer par le biais d'une pull request sur Github.  
+      getting_started: Commencer
+      start_writing_html: C'est très facile de commencer une histoire. Quand vous démarrez le site <strong>inklewriter</strong>, il vous sera offert al possibilité de suivre le tutoriel, ou bien de démarrer une histoire. 
+      add_options: Ecrire et ajouter des options
+      add_choice_html: Vous ecrivez l'histoire sur les morceaux de papier au milieu de l'ecran, et de l'environnement <strong>inklewriter</strong>. Quand vous souhaitez ajouter un choix multiple, cliquez sur le bouton "ajouter option", puis donner le nom de votre choix. Pour chaque choix, une flèche s'affichera pour suivre ce chemin.
+      switching_paths: Comment puis-je changer de chemin?
+      content_panel_html: Vous pouvez également ouvrir la paneau <strong>contenus</strong> en utilisant le bouton en haut à droite. Vous y trouverez tous les paragraphes de votre histoire. Cliquez sur l'un d'entre eux pour y être amené.
+      joining_paths: Comment fusionner différents chemins?
+      branching: Quand votre histoire a une bifurcation, vous pouvez souhaiter joindre les différentes branches en une seule. C'est possible de le faire en utilisant le bouton "joindre" situé sous une section de texte. En cliquant sur ce bouton vous ferez apparaître le panneau de contenus, pour choisir à quel autre paragraphe joindre celui-ci.
+      how_to_read: Comment lire une histoire?
+      read_the_story: Cliquez sur le bouton "lire" dans la barre d'outils. L'histoire démarrera automatiquement depuis l'endroit ou vous êtiez en train de travailler, mais vous pouvez utiliser le bouton "rembobiner" pour retourner à n'importe quel point de l'histoire.
+      signing_up: Quand est-il de la création de compte?
+      not_signed_in_explanation_html: Vous pouvez utiliser <strong>inklewriter</strong> sans créer de compte. Votre histoire sera sauvegardée localmeent (dans votre navigateur) et sera disponible à chaque fois que vous reviendrez. Mais vous pourrez travailer sur une seule histoire, et si vous changez d'ordinateur, votre histoire ne pourra vous suivre.
+      cant_save_stories_if_unsigned: Egalement, si vous travaillez localement, vous ne pouvez partagez vos histoires avec d'autres personnes. 
+      advantages_of_signing_in: En créant votre compte, vous pourrez travailler sur plusieurs histoires, et changer l'histoire sur laquelle vous travailler comme bon vous semble. Encore mieux, chacune de vos histoires disposera de sa propre page avec un lien propre que vous pouvez partager, pour que vos amis puisse les lire.
+      how_to_sign_up: La création de compte se fait avec votre adresse email et un mot de passe. Vous pourrez debloquez votre compte si vous oubliez votre mot de passe, et nous pourrons vous contacter en cas d'informations critique concernant le site. Nous ne partagerons pas votre email ni ne vous enverrons de courriers indésirables.
+      how_to_add_images: Comment puis-je ajouter des images?
+      select_image_position: "Tout d'abord, positionnez vous dans le bon paragraphe. puis cliquez sur le bouton image en bas à gauche:"
+      adding_an_image_html: Une boîte de dialogue apparaîtra. Vous ne pouvez envoyer vos images sur <strong>inklewriter</strong> directement; vous devez utilsier une image qui se trouve déjà sur internet. Vous pouvez en trouver une sur <a href="https://images.google.com/">Google Images</a> par example, et copier-coller son lien. Si <strong>inklewriter</strong> peut utiliser l'image, une petite vignette apparaîtra.
+      be_careful_of_copyright: Attention tout de même, de nombreuses images sur Internet sons soumise à des droits d'auteur
+      how_to_use_logic: Comment utilsier de la logique?
+      please_check_sherlock_story_html: Regardez <a href="/2012/06/08/learning-logic-with-sherlock-holmes.html">cet article de blog</a> qui mentionne notre <a href="http://writer.inklestudios.com/stories/musgraveritual">Sherlock Holmes qui sert d'example</a>.
+      how_to_add_links: Comment ajouter des hyperliens?
+      add_link_in_brackets: "C'est possible! ajoutez juste le lien entre crochets:"
+      link_example: "[http://www.inklestudios.com]"
+      change_link_appearance_html: Si vous souhaitez que le lien apparaisse avec un autre texte (comme <a href="/">celui-ci</a>), alors ajoutez une barre verticale, et le texte que vous souhaitez
+      link_with_placeholder: "[http://www.inklestudios.com|le site inkle]"
+      how_to_vary_what_is_written: Y a-t-il un moyen de faire varier l'ecriture?
+      many_ways_to_vary_content_html: "Oui beaucoup! Il y a la section sur la logique que vous pouvez lire. Mais vous pouvez également faire varier le texte (un adjectif par example) en le mettant entre des accolades, chacun séparé par une barre verticale, et le faire commencer par un tilde: <span style='font-size: 24pt;'>~</span>. <strong>Inklewriter</strong> passe alors en mode aléatoire. Par exemple si vous écrivez :"
+      variation_example: Le ciel était {~clair|nuageux|sombre} avec une lune {~pleine|gibbeuse|nouvelle}.
+      example_explanation: Alors le lecteur de votre histoire lira quelque chose de différent à chaque fois:- parfois nuageux avec une lune pleine, parfois clair avec une lune gibbeuse!
+      it_is_possible_to_print_a_counter: "Vous pouvez également introduire des compteurs, pour des chiffres ou des mots. Comme ceci:"
+      counter_example: Vous avez encore [value:letters] lettres à poster, dont une au numéro [number:houseNumber] de la rue.
+      counter_example_explanation: "qui montrera à votre lecteur quelque chose comme ceci:"
+      counter_example_user_display: Vous avez encore quinze lettres à poster, dont une au numéro 22 de la rue.
+      try_it_out: Essayez donc!
+      navigating_html: Il y a beaucoup de façons de créer avec <strong>inklewriter</strong>.
+    my_stories:
+      you_are_owning_no_story: Vous ne possédez encore aucune histoire. Passez sur l'application et commencez à créer !  
+      you_are_owning_x_stories: Vous possédez %{stories}
+      
+    story_params:
+      your_password_is_x_html: (votre mot de passe est <b>%{password}</b>)
+      password_allows_accessing_a_story: Le mot de passe vous permet d'offrir l'accès à certaines personnes à des histoires privées.  
+      use_this_link_to_see_story: "Pour cette histoire spécifique utilisez le lien:"
+      how_privacy_policy_work: Comment l'option de confidentialité fonctionne?
+      they_define_who_can_read_your_story: Elle determine comment vos histoires peuvent être accédées par d'autres personnes. 
+      private_scope: Votre histoire ne peut être lue que par vous, ou les personnes qui possèdent le lien contenant le mot de passe.
+      public_scope: C'est l'option par défaut. Votre histoire peut être lue par tout le monde mais n'est pas indexée, promue ou incluse dans un résultat de recherche.
+      public_and_searchable_scope: Votre histoire sera incluse dans un moteur de recherche en cours de développement et fait par notre petite équipe pour promouvoir les histoires d'Inklewriter.
+      click_to_pick_a_license: Cliquez sur un bloc ci-dessous pour choisir une license
+      why_picking_a_license: Pourquoi choisir une license?
+      inklewriter_sets_no_default: Inklewriter n'ajoute aucune license à votre travail par défaut.
+      it_is_important_to_enforce_a_license: Mais sans license les autres personnes ne savent pas comment intéragir avec votre travail et respecter vos droits d'auteur.
+      we_recommend_to_add_a_license: Nous vous recommandons de choisir une license, surtout si votre histoire a une option de confidentialité "public et apparaît dans les recherches".
+      a_license_if_your_own_policy: En en définissant une, vou sspécifiez les conditions de partage et de distribution de votre histoire (ou leur absence).
+      why_creative_commons: Pourquoi nous recommandons une license Creative Commons?
+      you_can_pick_any_but_cc_are_good: Vous êtes libres d'utiliser une autre license mais nous recommandons les Creative Commons 4.0 (CC 4.0).
+      cc_advantages: "Les licenses CC 4.0 ont plusieurs avantages:"
+      they_are_designed_for_the_web: Elles sont bien appropriées aux oeuvres de l'esprit au temps de l'internet.
+      they_come_from_the_free_community: Elles proviennent de la communauté du logiciel libre, qui ont acquis une grande expérience en matière de licenses et de leurs subtilités.
+      they_have_been_refined_over_time: Elles ont été améliorées au fil du temps et ont de fortes chances dêtres reconnues légalement.
+      you_can_use_your_own: Mais vous pouvez utiliser une autre license en tapant simplement son nom dans le champs approprié.
+      you_can_use_the_zero_license: "Par example, si vous avez l'intention d'abandonner tout droit d'auteur, vous pouvez utiliser celle-ci:"
+      which_to_choose: Quelle license CC choisir?
+      BY: La seule condition à l'usage de mon histoire est de mentionner le nom de l'auteur
+      NC: La seule condition à l'usage de mon histoire est une utilisation non-commerciale
+      SA: Toute modifications de mon histoire est autorisée mais l'auteur doit être mentionné. 
+      ND: La seule condition à l'usage de mon histoire est de ne pas la modifier
+      to_fit_your_intentions : Les licenses CC peuvent être cumulées entre elles.
+      CC_documentation_html: Référez vous à <a href="https://creativecommons.org/licenses/" target="_blank" class="link">la documentation officielle</a> pour plus de détails.
+
+
+  # Activerecord
+  activerecord: 
+    attributes:
+      license:
+        license_name: Nom de la license 
+
+
+  activerecord:
+    errors:
+      models:
+        story_privacy:
+          attributes:
+            user_private:
+              inclusion: "l'option de confidentialité ne semble pas correcte"
+        license:
+          attributes:
+            license_name:
+              too_long: "Le nom de la license ne peux dépasser %{count} caractères"
