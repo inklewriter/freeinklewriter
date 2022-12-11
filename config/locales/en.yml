@@ -143,7 +143,7 @@ en:
       public_scope: This is the default. Your story can be read by anyone but it should not be indexed, searched, nor promoted.
       public_and_searchable_scope: Your story can appear in a search engine made by our team with the objective of promoting works created in Inklewriter.
       click_to_pick_a_license: Click on a block below to select a license
-      why_picking_a_license: Why should I pick a liscense?
+      why_picking_a_license: Why should I pick a license?
       inklewriter_sets_no_default: Inklewriter sets no license on your work by default.
       it_is_important_to_enforce_a_license: Yet without one, there is no strict way to know how others should deal with your work on the Internet.
       we_recommend_to_add_a_license: We recommand you to choose a licence especially if you agree to make your story searchable.
