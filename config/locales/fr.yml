@@ -21,9 +21,9 @@ fr:
     one: 1 histoire
     other: "%{count} histoires"
   here_it_is: 
-    zero: voici
-    one: voici 
-    other: voici
+    zero: Le/la voici
+    one: Le/la voici 
+    other: Les voici
   words:
     zero: 0 mot
     one: 1 mot 
@@ -52,7 +52,7 @@ fr:
       greetings_name: bonjour %{name}
     menu: 
       write_a_story: écrire une histoire  
-      my_stories: mes histoire
+      my_stories: mes histoires
       how_it_works: comment ça marche
 
   community: 
