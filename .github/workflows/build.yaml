@@ -18,6 +18,12 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
+        env:
+          POSTGRES_DB: travis_ci
+          POSTGRES_HOST: localhost
+          POSTGRES_PORT: 5433
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: anything
     env:
       PGHOST: localhost
       PGPORT: 5432
