@@ -10,17 +10,17 @@ on:
 jobs:
   build:
     env:
-      PGHOST=localhost
-      PGPORT=5432
-      PGUSER=postgres
-      PGPASSWORD=anything
-      POSTGRES_DB=travis_ci
-      POSTGRES_HOST=localhost
-      POSTGRES_PORT=5433
-      POSTGRES_USER=postgres
-      POSTGRES_PASSWORD=anything
-      SECRET_KEY_BASE=development_secret
-      'COMMIT=${GITHUB_SHA::8}'
+      PGHOST: localhost
+      PGPORT: 5432
+      PGUSER: postgres
+      PGPASSWORD: anything
+      POSTGRES_DB: travis_ci
+      POSTGRES_HOST: localhost
+      POSTGRES_PORT: 5433
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: anything
+      SECRET_KEY_BASE: development_secret
+      COMMIT: ${GITHUB_SHA::8}
     runs-on: '${{ matrix.os }}'
     strategy:
       matrix:
