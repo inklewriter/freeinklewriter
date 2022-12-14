@@ -34,7 +34,7 @@ jobs:
           /etc/postgresql/*/main/pg_hba.conf
       - run: sudo service postgresql restart
       - run: sleep 1
-      - run: sudo su postgres -c /usr/bin/createdb "inklewriter_test"
+      - run: sudo su postgres -c "psql -c 'create database inklewriter_test' -U postgres"
       - run: RAILS_ENV=test bundle exec rake --trace db:migrate
       - run: bundle exec rake db:test:prepare
       - run: cp .env.sample .env
