@@ -19,7 +19,9 @@
 			</div>
 
 			<div class="col-md-6">
-				<p></p>
+				<% I18n.available_locales.each do |l| %>
+          <%= button_to l.to_s, update_language_path(l.to_s), method: "post" %>
+        <% end %>
 			</div>			
 
 		</div>

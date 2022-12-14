@@ -3,7 +3,11 @@ class ApplicationController < ActionController::Base
 	rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 	# This is the root controller
 	# All app wide methods may append here
-  around_action :set_locale
+  
+
+  before_action :set_locale
+  
+  
 
   private
 
@@ -19,25 +23,69 @@ class ApplicationController < ActionController::Base
 	  end	   
 	end
 
-  def default_url_options
-    { locale: I18n.locale }
-  end
-  	
-  def set_locale(&action) 
+  
+  
+  def set_locale
+    locale_from_cookie = parse_language_from_cookie
+    p "FROM COOKIE #{locale_from_cookie}"
+    if locale_from_cookie.present? && I18n.available_locales.include?(locale_from_cookie.to_sym)
+      # language has been set by user and it is a known locale for the backend
+      I18n.locale = locale_from_cookie.to_sym
+      return
+    end
 
-    locale = params[:locale] || I18n.default_locale
-    # locale = params[:locale] || locale_from_header || I18n.default_locale
-    
-    # if curr_user.present? && curr_user.respond_to?("last_used_locale") && curr_user.last_used_locale != locale.to_s
-    #      curr_user.update_columns(last_used_locale: locale.to_s)
-    # end
-       
-    I18n.with_locale(locale, &action)
-  end  
+    locale_from_browser = parse_language_from_browser
+    p "FROM BROWSER #{locale_from_browser}"
+    if locale_from_browser.present? && I18n.available_locales.include?(locale_from_browser.to_sym)
+      # if a language is found in browser then we use it
+      I18n.locale = locale_from_browser.to_sym
+      return
+    end
 
-  def locale_from_header
-      parsed_locale = params[:locale] || request.env['HTTP_ACCEPT_LANGUAGE'].scan(/^[a-z]{2}/)[0]
-      I18n.available_locales.map(&:to_s).include?(parsed_locale) ? parsed_locale : nil
+    # else we default to the I18n.default_language
+    I18n.locale = I18n.default_locale
+
+    # Here we don't create the cookie, we update the cookie only from a hard selection
+    # from the user
+    # need to create a specific route to update locale in cookie
+
   end
+
+  def parse_language_from_cookie
+    if cookies[:_inklewriter_language].present?
+      cookies[:_inklewriter_language]  
+    else 
+      nil    
+    end
+  end
+
+  def parse_language_from_browser
+    browser_locale = request.env['HTTP_ACCEPT_LANGUAGE'].scan(/^[a-z]{2}/)[0]
+    if browser_locale.present?
+      browser_locale
+    else
+      nil 
+    end
+  end
+
+  def update_language_cookie(lang = I18n.default_locale)
+    # this method is called from the community#update_language action
+    cookies[:_inklewriter_language] = { 
+      value: lang, 
+      expires: Time.now + 360.days
+    }
+  end
+
+
+  # below is only used if locale is set from the URL
+  # def default_url_options
+  #   { locale: I18n.locale }
+  # end
+
+  # around action syntax
+  # def set_locale(&action) 
+    # here we define the locale     
+    # I18n.with_locale(locale, &action)
+  # end   
 
 end

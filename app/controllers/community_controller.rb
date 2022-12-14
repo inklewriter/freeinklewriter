@@ -52,6 +52,13 @@ class CommunityController < ApplicationController
 		end
 	end
 
+  def update_language
+    if params[:lang].present? and I18n.available_locales.include?(params[:lang].to_sym)
+      update_language_cookie(params[:lang].to_sym)
+    end
+    redirect_to request.referer || community_path
+  end
+
 	private 
 
 	def pundit_user
