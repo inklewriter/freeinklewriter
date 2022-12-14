@@ -34,9 +34,9 @@ jobs:
           /etc/postgresql/*/main/pg_hba.conf
       - run: sudo service postgresql restart
       - run: sleep 1
-      - run: psql -c 'create database inklewriter_test' -U postgres
-      - run: 'RAILS_ENV=test bundle exec rake --trace db:migrate'
-      - run: 'bundle exec rake db:test:prepare'
+      - run: su postgres -c /usr/bin/createdb "foo"
+      - run: RAILS_ENV=test bundle exec rake --trace db:migrate
+      - run: bundle exec rake db:test:prepare
       - run: cp .env.sample .env
       - run: docker volume create --name=inkledb
       - run: docker-compose up -d || travis_terminate 1
