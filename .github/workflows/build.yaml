@@ -46,7 +46,7 @@ jobs:
       - name: Setup Ruby
         uses: actions/setup-ruby@v1
         with:
-          ruby-version: 3.0
+          ruby-version: 3.0.4
       - run: RAILS_ENV=test bundle exec rake --trace db:migrate
       - run: bundle exec rake db:test:prepare
       - run: cp .env.sample .env
