@@ -56,27 +56,29 @@ jobs:
       - run: docker-compose up -d || travis_terminate 1
       - run: docker-compose stop
       - run: |
-          if [[ "$TRAVIS_PULL_REQUEST" == "false" ]]; then
-              echo "$DOCKER_PASS" | docker login -u=albancrommer --password-stdin;
-              case "$TRAVIS_BRANCH" in  
-                "master")
-                  TAG="latest"
-                  ;;
-                "dev")
-                  TAG="dev"
-                  CD="stageme.inklewriter.com"
-                  ;;
-              esac
-              if [[ -n "$TAG" ]]; then
-                docker tag albancrommer/inklewriter albancrommer/inklewriter:$COMMIT;
-                docker push albancrommer/inklewriter:$COMMIT;
-                docker tag albancrommer/inklewriter albancrommer/inklewriter:$TAG;
-                docker push albancrommer/inklewriter:$TAG;
-              fi
-              if [[ -n "$CD" ]]; then 
-                URL="https://$CD/webhooks"
-                echo "Requesting deployment for branch '$TRAVIS_BRANCH' on '$URL'"
-                curl -X POST -H "Content-Length: 0"  -H "Token: $CD_TOKEN" "$URL"
-              fi
+          if [[ $GITHUB_REF_TYPE == "branch" ]]; then
+            case "$GITHUB_REF_NAME" in  
+              "master")
+                TAG="latest"
+                ;;
+              "dev")
+                TAG="dev"
+                CD="stageme.inklewriter.com"
+                ;;
+            esac
+          elif [[ $GITHUB_REF_TYPE == "tag" ]]; then 
+            TAG="$GITHUB_REF_NAME"
           fi
-
+          if [[ -n "$TAG" ]]; then
+            echo "Pushing image to dockerhub"
+            echo "$DOCKER_PASS" | docker login -u=albancrommer --password-stdin;
+            docker tag albancrommer/inklewriter albancrommer/inklewriter:${GITHUB_SHA::8};
+            docker push albancrommer/inklewriter:${GITHUB_SHA::8};
+            docker tag albancrommer/inklewriter albancrommer/inklewriter:$TAG;
+            docker push albancrommer/inklewriter:$TAG;
+          fi
+          if [[ -n "$CD" ]]; then 
+            URL="https://$CD/webhooks"
+            echo "Requesting deployment for branch/tag '$GITHUB_REF_NAME' on '$URL'"
+            curl -X POST -H "Content-Length: 0"  -H "Token: $CD_TOKEN" "$URL"
+          fi
