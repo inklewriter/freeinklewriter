@@ -53,7 +53,7 @@ jobs:
       - run: bundle exec rake db:test:prepare
       - run: cp .env.sample .env
       - run: docker volume create --name=inkledb
-      - run: docker-compose up -d || travis_terminate 1
+      - run: docker-compose up -d 
       - run: docker-compose stop
       -
         name: Login to Docker Hub
@@ -79,9 +79,13 @@ jobs:
           if [[ -n "$TAG" ]]; then
             COMMIT=${GITHUB_SHA::8}
             echo "Pushing image to dockerhub with tag '$TAG' and SHA:'$COMMIT'"
-            docker tag "albancrommer/inklewriter albancrommer/inklewriter:${COMMIT}";
+            echo docker tag "albancrommer/inklewriter" "albancrommer/inklewriter:${COMMIT}";
+            docker tag "albancrommer/inklewriter" "albancrommer/inklewriter:${COMMIT}";
+            echo docker push "albancrommer/inklewriter:${COMMIT}";
             docker push "albancrommer/inklewriter:${COMMIT}";
-            docker tag "albancrommer/inklewriter albancrommer/inklewriter:${TAG}";
+            echo docker tag "albancrommer/inklewriter" "albancrommer/inklewriter:${TAG}";
+            docker tag "albancrommer/inklewriter" "albancrommer/inklewriter:${TAG}";
+            echo docker push "albancrommer/inklewriter:${TAG}";
             docker push "albancrommer/inklewriter:${TAG}";
           fi
           if [[ -n "$CD" ]]; then 
