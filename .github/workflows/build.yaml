@@ -77,16 +77,16 @@ jobs:
             TAG="$GITHUB_REF_NAME"
           fi
           if [[ -n "$TAG" ]]; then
+            IMAGE_ID=$(docker image list | grep albancrommer/inklewriter | head -n 1 | awk '{print $3}')
             COMMIT=${GITHUB_SHA::8}
-            echo "Pushing image to dockerhub with tag '$TAG' and SHA:'$COMMIT'"
+            echo "Pushing local image '$IMAGE_ID' to dockerhub with tag '$TAG' and SHA:'$COMMIT'"
             echo "Local images:"
-            docker image list
-            echo docker tag "albancrommer/inklewriter" "albancrommer/inklewriter:${COMMIT}";
-            docker tag "albancrommer/inklewriter" "albancrommer/inklewriter:${COMMIT}";
+            echo docker tag "${IMAGE_ID}" "albancrommer/inklewriter:${COMMIT}";
+            docker tag "${IMAGE_ID}" "albancrommer/inklewriter:${COMMIT}";
             echo docker push "albancrommer/inklewriter:${COMMIT}";
             docker push "albancrommer/inklewriter:${COMMIT}";
-            echo docker tag "albancrommer/inklewriter" "albancrommer/inklewriter:${TAG}";
-            docker tag "albancrommer/inklewriter" "albancrommer/inklewriter:${TAG}";
+            echo docker tag "${IMAGE_ID}" "albancrommer/inklewriter:${TAG}";
+            docker tag "${IMAGE_ID}" "albancrommer/inklewriter:${TAG}";
             echo docker push "albancrommer/inklewriter:${TAG}";
             docker push "albancrommer/inklewriter:${TAG}";
           fi
