@@ -62,7 +62,8 @@ jobs:
           username: albancrommer
           password: ${{ secrets.DOCKER_TOKEN }}      
       - run: |
-          if [[ $GITHUB_REF_TYPE == "branch" ]]; then
+          echo "ref_type:'$GITHUB_REF_TYPE' ref_name:'$GITHUB_REF_NAME'"
+          if [[ "$GITHUB_REF_TYPE" == "branch" ]]; then
             case "$GITHUB_REF_NAME" in  
               "master")
                 TAG="latest"
