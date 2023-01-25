@@ -91,7 +91,7 @@ jobs:
             docker push "albancrommer/inklewriter:${TAG}";
           fi
           if [[ -n "$CD" ]]; then 
-            echo "Requesting deployment for branch/tag '$GITHUB_REF_NAME' on '$URL'"
-            URL="https://$CD/webhooks"
-            curl -X POST -H "Content-Length: 0"  -H "Token: $CD_TOKEN" "$URL"
+            URL="https://${CD}/webhooks"
+            echo "Requesting deployment for branch/tag '$GITHUB_REF_NAME' on '$URL' with token '${CD_TOKEN::4}'"
+            curl -X POST -H "Content-Length: 0"  -H "Token: ${CD_TOKEN}" "${URL}"
           fi
