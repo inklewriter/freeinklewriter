@@ -77,14 +77,15 @@ jobs:
             TAG="$GITHUB_REF_NAME"
           fi
           if [[ -n "$TAG" ]]; then
-            echo "Pushing image to dockerhub"
-            docker tag albancrommer/inklewriter albancrommer/inklewriter:${GITHUB_SHA::8};
-            docker push albancrommer/inklewriter:${GITHUB_SHA::8};
-            docker tag albancrommer/inklewriter albancrommer/inklewriter:$TAG;
-            docker push albancrommer/inklewriter:$TAG;
+            COMMIT=${GITHUB_SHA::8}
+            echo "Pushing image to dockerhub with tag '$TAG' and SHA:'$COMMIT'"
+            docker tag "albancrommer/inklewriter albancrommer/inklewriter:${COMMIT}";
+            docker push "albancrommer/inklewriter:${COMMIT}";
+            docker tag "albancrommer/inklewriter albancrommer/inklewriter:${TAG}";
+            docker push "albancrommer/inklewriter:${TAG}";
           fi
           if [[ -n "$CD" ]]; then 
-            URL="https://$CD/webhooks"
             echo "Requesting deployment for branch/tag '$GITHUB_REF_NAME' on '$URL'"
+            URL="https://$CD/webhooks"
             curl -X POST -H "Content-Length: 0"  -H "Token: $CD_TOKEN" "$URL"
           fi
