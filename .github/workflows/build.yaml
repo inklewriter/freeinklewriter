@@ -79,6 +79,8 @@ jobs:
           if [[ -n "$TAG" ]]; then
             COMMIT=${GITHUB_SHA::8}
             echo "Pushing image to dockerhub with tag '$TAG' and SHA:'$COMMIT'"
+            echo "Local images:"
+            docker image list
             echo docker tag "albancrommer/inklewriter" "albancrommer/inklewriter:${COMMIT}";
             docker tag "albancrommer/inklewriter" "albancrommer/inklewriter:${COMMIT}";
             echo docker push "albancrommer/inklewriter:${COMMIT}";
