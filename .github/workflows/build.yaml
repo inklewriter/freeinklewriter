@@ -35,7 +35,7 @@ jobs:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: anything
       SECRET_KEY_BASE: development_secret
-      COMMIT: ${GITHUB_SHA::8}
+      
     runs-on: '${{ matrix.os }}'
     strategy:
       matrix:
@@ -66,6 +66,7 @@ jobs:
         env:
           CD_TOKEN: ${{ secrets.CD_TOKEN }} 
         run: |
+          COMMIT=${GITHUB_SHA::8}
           echo "ref_type:'$GITHUB_REF_TYPE' ref_name:'$GITHUB_REF_NAME'"
           if [[ "$GITHUB_REF_TYPE" == "branch" ]]; then
             case "$GITHUB_REF_NAME" in  
