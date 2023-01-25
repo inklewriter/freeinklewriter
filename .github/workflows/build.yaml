@@ -61,7 +61,11 @@ jobs:
         with:
           username: albancrommer
           password: ${{ secrets.DOCKER_TOKEN }}      
-      - run: |
+      -   
+        name: Push to Registry and CD
+        env:
+          CD_TOKEN: ${{ secrets.CD_TOKEN }} 
+        run: |
           echo "ref_type:'$GITHUB_REF_TYPE' ref_name:'$GITHUB_REF_NAME'"
           if [[ "$GITHUB_REF_TYPE" == "branch" ]]; then
             case "$GITHUB_REF_NAME" in  
@@ -78,7 +82,6 @@ jobs:
           fi
           if [[ -n "$TAG" ]]; then
             IMAGE_ID=$(docker image list | grep albancrommer/inklewriter | head -n 1 | awk '{print $3}')
-            COMMIT=${GITHUB_SHA::8}
             echo "Pushing local image '$IMAGE_ID' to dockerhub with tag '$TAG' and SHA:'$COMMIT'"
             echo "Local images:"
             echo docker tag "${IMAGE_ID}" "albancrommer/inklewriter:${COMMIT}";
