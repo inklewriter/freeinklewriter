@@ -1,0 +1,185 @@
+# Files in the config/locales directory are used for internationalization
+# and are automatically loaded by Rails. If you want to use locales other
+# than English, add the necessary files in this directory.
+#
+# To use the locales, use `I18n.t`:
+#
+#     I18n.t 'hello'
+#
+# In views, this is aliased to just `t`:
+#
+#     <%= t('hello') %>
+#
+# To use a different locale, set it with `I18n.locale`:
+#
+#     I18n.locale = :es
+#
+# This would use the information in config/locales/es.yml.
+#
+# The following keys must be escaped otherwise they will not be retrieved by
+# the default I18n backend:
+#
+# true, false, on, off, yes, no
+#
+# Instead, surround them with single quotes.
+#
+# en:
+#   'true': 'foo'
+#
+# To learn more, please read the Rails Internationalization guide
+# available at http://guides.rubyonrails.org/i18n.html.
+
+en:  
+  # pundit
+
+
+  pundit:
+    story_policy: 
+      story_params?: You cannot access this page
+      update_story_params?: You cannot access this page
+      show?: Story is not published
+      update?: It seems this story isn't yours
+      destroy?: It seems this story isn't yours
+    nil_class_policy: 
+      story_params?: this page does not exist 
+      update_story_params?: this page does not exist 
+      show?: This page does not exist   
+      update?: This page does not exist
+      destroy?: This page does not exist
+
+
+  #generic    
+  stories: 
+    zero: no story
+    one: 1 story
+    other: "%{count} stories"
+  here_it_is: 
+    zero: here it is
+    one: here it is 
+    other: here they are
+  words:
+    zero: 0 word 
+    one: 1 word 
+    other: "%{count} words"  
+  no_privacy_setting_yet: No privacy setting yet 
+  not_set_yet: not set yet
+  private: private 
+  public: public
+  public_and_searchable: public and searchable    
+  privacy_policy: privacy policy
+  story: story
+  story_title: title
+  number_of_words: words      
+  license: license
+  score: score
+
+  # SCOPED
+
+  layouts:
+    footer:
+      source_code: source code
+      report_bugs: report bugs
+      footer_note_html: The InkleWriter app was originally developped by <a href='https://www.inklestudios.com/' target='_blank' rel='noopener noreferrer'>inkle studios</a> and is now accessible under a free license.
+    header:
+      you_arent_signed_in: you aren't signed in 
+      greetings_name: hello %{name}
+    menu: 
+      write_a_story: write a story  
+      my_stories: my stories
+      how_it_works: how it works
+
+  community: 
+    community: 
+      motto_html: Inklewriter is a simple and elegant online tool that allows users to write interactive stories. It has been conceived and developped by %{link} but later deprecated. We are bringing back to you today under a free license with Inkle Studios agreement.
+    how_it_works:
+      preamble: This page is designed to explain how InkleWriter works. It is currently empty but we will work at providing a complete guide to the application. It is actually possible for you to contribute to it if you have basic knowledge of HTML, CSS and Git/Github (which I admit is probably the hardest part).  
+      getting_started: Getting started
+      start_writing_html: It couldn’t be easier to start writing. When you first launch the <strong>inklewriter</strong> website, you’ll be offered the option of taking the tutorial, or starting a new story. If you click new you can get writing straight away.
+      add_options: Write, and add options
+      add_choice_html: You’ll write your story onto the scraps of paper in the middle of the <strong>inklewriter</strong> workbench. When you want to add choices, just click the Add Option button, and type in the name of the choice. Each choice has an arrow you can click to follow that path.
+      switching_paths: How do I change to another path?
+      content_panel_html: You can also open the <strong>contents</strong> panel using the button in the top right. This lists every paragraph of text you’ve written. Click on one to jump straight there.
+      joining_paths: How do I join different paths back together again?
+      branching: Once your story has branched, you’ll often want to to bring the different branches back together again. This is done using the “join” button below a section of text. Clicking this button brings up the content panel, for you to select which paragraph to join to.
+      how_to_read: How do I read my story?
+      read_the_story: Read your story by clicking the “read” button in the toolbar. The story will automatically start from wherever you working in the story, but you can use the rewind buttons to roll back to whatever point you like.
+      signing_up: What’s this about signing up?
+      not_signed_in_explanation_html: You can use <strong>inklewriter</strong> without signing in. Your story will be saved locally in your browser and be available every time you come back. But you’ll only be able to work on one story at a time, and if you move from one computer to another, your stories won’t come with you.
+      cant_save_stories_if_unsigned: Finally, if you work locally, you can’t share your stories with others.
+      advantages_of_signing_in: By signing in, you’ll be able to work on as many stories as you like, and switch between them as easily as you would in a word-processor. Better still, every story you write will get its own web-page with a link you can share, so other people can read what you’ve written.
+      how_to_sign_up: Sign-up is done with your email address and a password. We’ll use your email to help you if you forget your password, or if there’s critical information about site maintenance. We’ll never share it and we won’t spam you.
+      how_to_add_images: How do I add images?
+      select_image_position: "First, make sure the cursor is in the correct paragraph. Then click the image widget in the bottom left:"
+      adding_an_image_html: A dialogue box will appear. You can’t upload images to <strong>inklewriter</strong> directly; you have to use images which are already on the internet. Find one – using <a href="https://images.google.com/">Google Images</a>, for instance – and then copy the link of that image, and paste it in. If <strong>inklewriter</strong> can use the image, a little thumbnail of it will appear.
+      be_careful_of_copyright: Please remember, a lot of images on the internet are copyrighted!
+      how_to_use_logic: How do I use logic?
+      please_check_sherlock_story_html: Take a look at <a href="/2012/06/08/learning-logic-with-sherlock-holmes.html">this blog post</a> about our <a href="http://writer.inklestudios.com/stories/musgraveritual">Sherlock Holmes example story</a>.
+      how_to_add_links: Can I add hyperlinks?
+      add_link_in_brackets: "You can! Just type the name of the link in square brackets, like this:"
+      link_example: "[http://www.inklestudios.com]"
+      change_link_appearance_html: If you want the link to appear as text (like <a href="/">this one</a> is), then add a vertical bar, and the text you want, like this
+      link_with_placeholder: "[http://www.inklestudios.com|inkle's website]"
+      how_to_vary_what_is_written: Are there ways to vary what’s written?
+      many_ways_to_vary_content_html: "Lots and lots! There’s the whole section on logic you could read. But you can also make text vary randomly by putting it inside curly braces, separated by vertical bars, and starting with a tilda: <span style='font-size: 24pt;'>~</span>. This tells <strong>inklewriter</strong> to go into “shuffle” mode. So for example, if you write"
+      variation_example: The sky was {~clear|cloudy|dark|very far away} and the moon was {~full|gibbous|new}.
+      example_explanation: Then your reader will see a different description every time:- sometimes cloudy with a full moon, sometimes clear with a new moon!
+      it_is_possible_to_print_a_counter: "You can also print out the value of any counters you’re using, either as a number or as words. Try like this:"
+      counter_example: You have [value:letters] more letters to post, one to No. [number:houseNumber] over the road.
+      counter_example_explanation: "which will show your player something like:"
+      counter_example_user_display: You have fifteen more letters to post, one to No. 22 over the road.
+      try_it_out: Try it out!
+      navigating_html: There are lots of ways to find your way around in <strong>inklewriter</strong>. First, you can use the rewind buttons in the top right of every page of your story. Clicking rewind will roll the story back to that point, so you can add new options or take different choices.
+    my_stories:
+      you_are_owning_no_story: You are currently owning no story. Just switch to the main app and start creating your own stories !  
+      you_are_owning_x_stories: You are currently owning %{stories}
+      
+    story_params:
+      your_password_is_x_html: (your password is <b>%{password}</b>)
+      password_allows_accessing_a_story: The password allows you to grant access to private stories to specific visitors.  
+      use_this_link_to_see_story: "For this specific story, please use link :"
+      how_privacy_policy_work: How do privacy policies work?
+      they_define_who_can_read_your_story: They define how your interactive story can be accessed by other people. 
+      private_scope: Your story can only be read by you or people with a special link containing a "bypass token" - an elaborated word for "password".
+      public_scope: This is the default. Your story can be read by anyone but it should not be indexed, searched, nor promoted.
+      public_and_searchable_scope: Your story can appear in a search engine made by our team with the objective of promoting works created in Inklewriter.
+      click_to_pick_a_license: Click on a block below to select a license
+      why_picking_a_license: Why should I pick a license?
+      inklewriter_sets_no_default: Inklewriter sets no license on your work by default.
+      it_is_important_to_enforce_a_license: Yet without one, there is no strict way to know how others should deal with your work on the Internet.
+      we_recommend_to_add_a_license: We recommand you to choose a licence especially if you agree to make your story searchable.
+      a_license_if_your_own_policy: By defining one, you specify the conditions you intend your work to be shared and distributed.
+      why_creative_commons: Why do you recommand Creative Commons Licenses?
+      you_can_pick_any_but_cc_are_good: You are free to use other licenses but we recommand the Creative Commons 4.0 (CC 4.0) ones.
+      cc_advantages: "We think CC 4.0 licenses have many advantages:"
+      they_are_designed_for_the_web: They are by design made for works of art in the Internet age.
+      they_come_from_the_free_community: They come from the free software community who have has a strong experience about licenses and their many subtleties.
+      they_have_been_refined_over_time: They have been perfected over many years and have very high chances of being accepted by courts of justice should you ever have to face such a situation.
+      you_can_use_your_own: But feel free to use any license to your liking.
+      you_can_use_the_zero_license: "For example, if you intend to give up copyright and put your work into the worldwide public domain with no conditions, you can use this one:"
+      which_to_choose: Which license should I choose?
+      BY: Credit must be given to the creator
+      NC: Only noncommercial uses of the work are permitted
+      SA: Adaptations must be shared under the same terms
+      ND: No derivatives or adaptations of the work are permitted
+      to_fit_your_intentions : To fit your intentions regarding your work, CC licenses offer different options you can "mix" together.
+      CC_documentation_html: Please refer to the <a href="https://creativecommons.org/licenses/" target="_blank" class="link">official CC 4.0 Documentation</a> for full details but here's a brief summary of these options.
+
+
+  # Activerecord
+  activerecord: 
+    attributes:
+      license:
+        license_name: License name  
+
+
+  activerecord:
+    errors:
+      models:
+        story_privacy:
+          attributes:
+            user_private:
+              inclusion: "privacy values don't seem correct"
+        license:
+          attributes:
+            license_name:
+              too_long: "license name cannot exceed %{count} characters"

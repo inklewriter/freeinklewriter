@@ -2,7 +2,6 @@ version: '2'
 
 volumes:
   inkledb:
-    external: true
 
 services:
 
