@@ -27,10 +27,9 @@ class ApplicationController < ActionController::Base
   
   def set_locale
     locale_from_cookie = parse_language_from_cookie
-<<<<<<< HEAD
-=======
+
     p "FROM COOKIE #{locale_from_cookie}"
->>>>>>> c76cbb8297a823d224921ece4038077a3c532ad4
+
     if locale_from_cookie.present? && I18n.available_locales.include?(locale_from_cookie.to_sym)
       # language has been set by user and it is a known locale for the backend
       I18n.locale = locale_from_cookie.to_sym
@@ -38,10 +37,9 @@ class ApplicationController < ActionController::Base
     end
 
     locale_from_browser = parse_language_from_browser
-<<<<<<< HEAD
-=======
+
     p "FROM BROWSER #{locale_from_browser}"
->>>>>>> c76cbb8297a823d224921ece4038077a3c532ad4
+
     if locale_from_browser.present? && I18n.available_locales.include?(locale_from_browser.to_sym)
       # if a language is found in browser then we use it
       I18n.locale = locale_from_browser.to_sym
