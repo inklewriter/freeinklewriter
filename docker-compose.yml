@@ -2,17 +2,23 @@ version: '2'
 
 volumes:
   inkledb:
-    external: true
+
+networks:
+  inklenet:
 
 services:
 
   db:
+    networks: 
+      - inklenet
     env_file: .env
     image: postgres
     volumes:
       - inkledb:/var/lib/postgresql/data/pgdata
       
   app:
+    networks: 
+      - inklenet
     env_file: .env
     build: .
     image: albancrommer/inklewriter:latest
