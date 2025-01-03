@@ -1,1 +1,36 @@
-{}
+en:
+  pundit:
+    story_policy:
+      story_params?: இந்த பக்கத்தை நீங்கள் அணுக முடியாது
+      update_story_params?: இந்த பக்கத்தை நீங்கள் அணுக முடியாது
+      show?: கதை வெளியிடப்படவில்லை
+      update?: இந்த கதை உங்களுடையது அல்ல என்று தெரிகிறது
+      destroy?: இந்த கதை உங்களுடையது அல்ல என்று தெரிகிறது
+    nil_class_policy:
+      story_params?: இந்த பக்கம் இல்லை
+      update_story_params?: இந்த பக்கம் இல்லை
+      show?: இந்த பக்கம் இல்லை
+      update?: இந்த பக்கம் இல்லை
+      destroy?: இந்த பக்கம் இல்லை
+  it_is:
+    zero: அது
+    one: அது
+    other: அவை
+  story:
+    zero: கதை இல்லை
+    one: 1 கதை
+    other: '%{count} கதைகள்'
+  activerecord:
+    attributes:
+      license:
+        license_name: உரிம பெயர்
+    errors:
+      models:
+        story_privacy:
+          attributes:
+            user_private:
+              inclusion: தனியுரிமை மதிப்புகள் சரியானதாகத் தெரியவில்லை
+        license:
+          attributes:
+            license_name:
+              too_long: உரிமப் பெயர் %{count} எழுத்துக்களைத் தாண்டக்கூடாது
