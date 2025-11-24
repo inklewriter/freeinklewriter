@@ -27,6 +27,11 @@ class UserTest < ActiveSupport::TestCase
     assert user.save, "Failed to save valid user"
   end
 
+  test "should save user with @inklewriter special domain (historical)" do
+    user = User.new(email: "user@inklewriter", password: "password123")
+    assert user.save, "Failed to save user with @inklewriter domain"
+  end
+
   test "should not save duplicate email" do
     # Use existing fixture user email
     existing_user = users(:one)

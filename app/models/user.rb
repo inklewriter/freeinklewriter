@@ -9,7 +9,10 @@ class User < ApplicationRecord
 
 
   validates :email, presence: true
-  validates :email, format: { with: /\A\S+@.+\.\S+\z/ }
+  validates :email, format: {
+    with: /\A\S+@(.+\.\S+|inklewriter)\z/,
+    message: "must be a valid email format or use @inklewriter domain"
+  }
   validates :email, uniqueness: true
   
 end
