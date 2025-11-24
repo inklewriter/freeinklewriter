@@ -6,12 +6,12 @@ module Rating
 			if story.class.name == "Story" 
 				@s = story.story_stat
 			elsif story.class.name == "Integer"
-				if Story.exists?(id: story)
-					@s = Story.find(story).story_stat
+				if ::Story.exists?(id: story)
+					@s = ::Story.find(story).story_stat
 				end
 			elsif story.class.name == "String"
-				if Story.exists?(id: story.to_i)
-					@s = Story.find(story.to_i).story_stat
+				if ::Story.exists?(id: story.to_i)
+					@s = ::Story.find(story.to_i).story_stat
 				end
 			elsif story.class.name == "Hash"
 				@s = story.story_stat

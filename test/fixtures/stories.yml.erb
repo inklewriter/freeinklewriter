@@ -1,0 +1,49 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# Simple story with basic structure
+simple_story:
+  user: one
+  title: "Untitled Story"
+  data:
+    stitches:
+      onceUponATimeThe:
+        content:
+          - "Once upon a time, there was a lonely tester called Claude."
+          - divert: "itHadToTestAnApp"
+          - pageNum: 1
+      itHadToTestAnApp:
+        content:
+          - "It had to test an application and it was so much work."
+    initial: "onceUponATimeThe"
+    optionMirroring: true
+    allowCheckpoints: false
+    editorData:
+      playPoint: "itHadToTestAnApp"
+      libraryVisible: false
+      authorName: "Anonymous"
+      textSize: 2
+
+# Story with choices, diverts, conditions, and flags
+story_with_choices:
+  user: one
+  title: "test syntax"
+  data:
+<%= JSON.parse('{"stitches":{"initBoo":{"content":["init boo",{"option":"Substract 1 to var","linkPath":"applyingVar","ifConditions":null,"notIfConditions":null},{"option":"Add 1 to var","linkPath":"applyingVar1","ifConditions":null,"notIfConditions":null},{"pageNum":1}]},"applyingVar":{"content":["Applying: var += -1",{"divert":"theVariableVarIs"},{"flagName":"var - 1"}]},"theVariableVarIs":{"content":["The variable var is inferior to  0 ",{"divert":"theVariableVarIs1"},{"ifCondition":"var <= -1"}]},"theVariableVarIs1":{"content":["The variable var is superior to 0",{"divert":"theVarIsEqualTo"},{"ifCondition":"var >= 1"}]},"theVarIsEqualTo":{"content":["The var is equal to 0",{"divert":"theVarIsEqualTo1"},{"ifCondition":"var = 0"}]},"theVarIsEqualTo1":{"content":["The var is equal to -1",{"divert":"theVarIsEqualTo2"},{"ifCondition":"var = -1"}]},"theVarIsEqualTo2":{"content":["The var is equal to 1",{"divert":"doItAgain"},{"ifCondition":"var = 1 "}]},"doItAgain":{"content":["Do it again !",{"divert":"initBoo"}]},"applyingVar1":{"content":["Applying: var += 1",{"divert":"theVariableVarIs"},{"flagName":"var +1 "}]}},"initial":"initBoo","optionMirroring":true,"allowCheckpoints":false,"editorData":{"playPoint":"initBoo","libraryVisible":false,"authorName":"Anonymous","textSize":2}}').to_yaml.gsub(/^/, '    ').sub(/^    ---\s*\n/, '') %>
+
+# Story with flags and conditional choices
+story_with_flags:
+  user: two
+  title: "Untitled Story"
+  data: <%= JSON.parse('{"stitches":{"hello":{"content":["Hello",{"option":"You went north","linkPath":"itWasCold","ifConditions":null,"notIfConditions":null},{"option":"Or south?","linkPath":"itWasABitLessCol","ifConditions":null,"notIfConditions":null},{"pageNum":1}]},"itWasCold":{"content":["It was cold.",{"divert":"youWentToDrinkSo"},{"flagName":"north"}]},"youWentToDrinkSo":{"content":["You went to drink something.",{"option":"You picked a coffee","linkPath":"thatsGoodCoffee","ifConditions":[{"ifCondition":"north"}],"notIfConditions":null},{"option":"You picked a cocktail","linkPath":"margaritaIsTheBe","ifConditions":[{"ifCondition":"south"}],"notIfConditions":null},{"option":"Just water please","linkPath":"youreAFancyOneIn","ifConditions":null,"notIfConditions":null}]},"itWasABitLessCol":{"content":["It was a bit less cold.",{"divert":"youWentToDrinkSo"},{"flagName":"south"}]},"margaritaIsTheBe":{"content":["Margarita is the best."]},"youreAFancyOneIn":{"content":["You'"'"'re a fancy one, innit."]},"thatsGoodCoffee":{"content":["That'"'"'s good coffee",{"runOn":true},{"pageNum":2}]}},"initial":"hello","optionMirroring":true,"allowCheckpoints":false,"editorData":{"playPoint":"youWentToDrinkSo","libraryVisible":false,"authorName":"Anonymous","textSize":2}}').to_yaml.gsub(/^/, '    ').sub(/^    ---\s*\n/, '') %>
+
+# Story with image
+story_with_image:
+  user: one
+  title: "Untitled Story"
+  data: <%= JSON.parse('{"stitches":{"onceUponATime":{"content":["Once upon a time...",{"image":"https://blog.inklewriter.com/wp-content/uploads/2022/10/cropped-logo.png"},{"pageNum":1}]}},"initial":"onceUponATime","optionMirroring":true,"allowCheckpoints":false,"editorData":{"playPoint":"onceUponATime","libraryVisible":false,"authorName":"Anonymous","textSize":2}}').to_yaml.gsub(/^/, '    ').sub(/^    ---\s*\n/, '') %>
+
+# Story with advanced syntax patterns {x:y} and [x:y]
+story_with_advanced_syntax:
+  user: two
+  title: "Untitled Story"
+  data: <%= JSON.parse('{"stitches":{"onceUponATimeThe":{"content":["Once upon a time, there was a lonely tester called Claude.",{"divert":"itHadToTestAnApp"},{"pageNum":1}]},"itHadToTestAnApp":{"content":["It had to test an application and it was so much work. [https://blog.inklewriter.com/wp-content/uploads/2022/10/cropped-logo.png]",{"image":"https://blog.inklewriter.com/wp-content/uploads/2022/10/cropped-logo.png"},{"divert":"butItDidWellAndF"}]},"butItDidWellAndF":{"content":["But it did well and finally succeeded.",{"option":"Did it really?","linkPath":"yesItDidMoreThan","ifConditions":null,"notIfConditions":null},{"option":"Or did it not?","linkPath":"wellIndeedItFail","ifConditions":null,"notIfConditions":null}]},"yesItDidMoreThan":{"content":["Yes it did. More than once : {loop > 0 : many times | one time}.",{"divert":"onceUponATimeThe"},{"flagName":"seen=true"},{"flagName":"loop + 1"}]},"wellIndeedItFail":{"content":["Well, indeed it failed.",{"divert":"butItDidWellAndF"}]}},"initial":"onceUponATimeThe","optionMirroring":true,"allowCheckpoints":false,"editorData":{"playPoint":"butItDidWellAndF","libraryVisible":false,"authorName":"Anonymous","textSize":2}}').to_yaml.gsub(/^/, '    ').sub(/^    ---\s*\n/, '') %>
