@@ -17,11 +17,15 @@ services:
       - inkledb:/var/lib/postgresql/data/pgdata
       
   app:
-    networks: 
+    networks:
       - inklenet
     env_file: .env
-    build: .
-    image: albancrommer/inklewriter:latest
+    image: inklewriter:latest
+    entrypoint: ""
+    command:
+      - tail 
+      - -f
+      - /dev/null
     volumes:
         - .:/usr/src/app
     ports:

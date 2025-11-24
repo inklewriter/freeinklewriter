@@ -211,12 +211,77 @@ This project follows a TDD workflow. When implementing new features or fixing bu
 - System tests: `test/system/`
 
 **Running tests during development:**
-```bash
-# Run specific test file frequently as you work
-rails test test/controllers/stories_controller_test.rb
 
-# Run all tests before committing
-rails test
+**IMPORTANT**: All tests MUST be run using docker-compose to ensure consistent environment with database access.
+
+### Docker Test Workflow
+
+1. **Build the Docker image** (required after code changes):
+   ```bash
+   docker build -t inklewriter:latest .
+   ```
+
+   Note: The image must be built separately as `inklewriter:latest` before running docker-compose.
+
+2. **Run tests using docker-compose**:
+   ```bash
+   # Run all tests
+   docker compose run --rm app rails test
+
+   # Run specific test file
+   docker compose run --rm app rails test test/models/user_test.rb
+
+   # Run specific test by name
+   docker compose run --rm app rails test test/models/story_test.rb -n test_should_not_save_without_data
+
+   # Run specific test directory
+   docker compose run --rm app rails test test/models/
+   ```
+
+3. **Complete test workflow** (rebuild + test):
+   ```bash
+   # Rebuild and run all tests
+   docker build -t inklewriter:latest . && docker compose run --rm app rails test
+   ```
+
+### Test Workflow Rules
+
+- **Always use docker-compose** to ensure database connectivity
+- **Use `--rm` flag** to automatically remove container after test run
+- **Rebuild image** with `docker-compose build` when code changes
+- **No persistent test containers** - tests run in volatile instances
+- **Database**: PostgreSQL runs in separate container (defined in docker-compose.yml)
+
+### Quick Test Commands
+
+```bash
+# Full TDD cycle: build + test all
+alias test-all='docker build -t inklewriter:latest . && docker compose run --rm app rails test'
+
+# Test models only (fast)
+alias test-models='docker compose run --rm app rails test test/models/'
+
+# Test controllers only
+alias test-controllers='docker compose run --rm app rails test test/controllers/'
+
+# Test services only
+alias test-services='docker compose run --rm app rails test test/services/'
+
+# Test single file
+alias test-file='docker compose run --rm app rails test'
+```
+
+### Database Management for Tests
+
+```bash
+# Create test database
+docker compose run --rm app rails db:create RAILS_ENV=test
+
+# Run migrations on test database
+docker compose run --rm app rails db:migrate RAILS_ENV=test
+
+# Reset test database
+docker compose run --rm app rails db:test:prepare
 ```
 
 ## Commit Message Format
