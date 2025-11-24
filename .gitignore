@@ -39,3 +39,14 @@
 
 # Vim
 .*swp
+
+# Personal/local configs
+config-default.json
+
+# Local deployment configs
+ingress.yaml
+kubernetes.yaml
+
+# Temporary archives and patches
+*.zip
+patch*.sh
