@@ -21,11 +21,6 @@ services:
       - inklenet
     env_file: .env
     image: inklewriter:latest
-    entrypoint: ""
-    command:
-      - tail 
-      - -f
-      - /dev/null
     volumes:
         - .:/usr/src/app
     ports:
