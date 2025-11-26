@@ -9,7 +9,7 @@ Bundler.require(*Rails.groups)
 module Freeifwriter
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 7.0
+    config.load_defaults 7.1
 
     # Rails 7.0 upgrade: Disable fixture foreign key verification for backward compatibility
     # This allows existing fixtures to work without requiring immediate updates
