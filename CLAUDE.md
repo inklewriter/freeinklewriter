@@ -214,6 +214,7 @@ This project follows a TDD workflow. When implementing new features or fixing bu
 
 **IMPORTANT**: All tests MUST be run using docker-compose to ensure consistent environment with database access.
 
+
 ### Docker Test Workflow
 
 1. **Build the Docker image** (required after code changes):
@@ -253,6 +254,7 @@ This project follows a TDD workflow. When implementing new features or fixing bu
    docker build -t inklewriter:latest . && \
    docker compose down && \
    docker compose up -d && \
+   docker compose logs | head -n 100 && \
    docker compose run --rm app rails test
    ```
 
@@ -264,6 +266,7 @@ This project follows a TDD workflow. When implementing new features or fixing bu
 - **No persistent test containers** - tests run in volatile instances
 - **Database**: PostgreSQL runs in separate container (defined in docker-compose.yml)
 - **Image cache issue**: docker-compose may use old images even after rebuild - always force-recreate
+- **After running unit tests, always do some basic http testing.**
 
 ### Quick Test Commands
 
