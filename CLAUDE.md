@@ -8,11 +8,11 @@ Inklewriter/Freeinklewriter is a reverse-engineered version of the inklewriter s
 
 ## Technology Stack
 
-- **Framework**: Ruby on Rails 5.2.4.6
-- **Ruby Version**: 2.6+
+- **Framework**: Ruby on Rails 6.1.7.10
+- **Ruby Version**: 3.1.4
 - **Database**: PostgreSQL
 - **Authentication**: Devise
-- **Web Server**: Puma
+- **Web Server**: Puma 5.6.9
 - **Frontend**: JavaScript (inklewriter-write.js, inklewriter-read.js)
 - **Container**: Docker + docker-compose
 
@@ -181,7 +181,7 @@ Required variables (see `.env.sample`):
 ## Deployment
 
 The project includes Docker and Kubernetes configurations:
-- `Dockerfile`: Alpine-based Ruby 2.6.7 image
+- `Dockerfile`: Alpine-based Ruby 3.1.4 image
 - `docker-compose.yml`: App + PostgreSQL setup
 - `kubernetes.yaml`: K8s deployment with ingress
 - `entrypoint.sh`: Initializes DB and starts Rails server
