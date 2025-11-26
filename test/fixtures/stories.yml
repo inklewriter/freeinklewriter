@@ -1,9 +1,52 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  user_id: 1
-  data: 
+# Simple story with basic structure
+simple_story:
+  user: one
+  title: "Untitled Story"
+  data:
+    stitches:
+      onceUponATimeThe:
+        content:
+          - "Once upon a time, there was a lonely tester called Claude."
+          - divert: "itHadToTestAnApp"
+          - pageNum: 1
+      itHadToTestAnApp:
+        content:
+          - "It had to test an application and it was so much work."
+    initial: "onceUponATimeThe"
+    optionMirroring: true
+    allowCheckpoints: false
+    editorData:
+      playPoint: "itHadToTestAnApp"
+      libraryVisible: false
+      authorName: "Anonymous"
+      textSize: 2
 
-two:
-  user_id: 1
-  data: 
+# Story with choices
+story_with_choices:
+  user: one
+  title: "test syntax"
+  data:
+    stitches:
+      start:
+        content:
+          - "Choose your path"
+          - option: "Go left"
+            linkPath: "left"
+          - option: "Go right"
+            linkPath: "right"
+      left:
+        content:
+          - "You went left"
+      right:
+        content:
+          - "You went right"
+    initial: "start"
+    optionMirroring: true
+    allowCheckpoints: false
+    editorData:
+      playPoint: "start"
+      libraryVisible: false
+      authorName: "Anonymous"
+      textSize: 2

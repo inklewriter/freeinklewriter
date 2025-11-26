@@ -1,21 +1,26 @@
-FROM ruby:3.0.4-slim-bullseye
+FROM ruby:3.3.0-alpine
+
 WORKDIR /usr/src/app
 COPY Gemfile* /usr/src/app/ 
-RUN apt update && apt install -y \ 
-  build-essential \
+RUN apk add --update \ 
+  build-base \
   nodejs \
   postgresql-client \
-  libpq-dev \
+  postgresql-dev \
   shared-mime-info \
-  libpq-dev \
+  sqlite-dev \
   tzdata \
   yarn \
+  && rm -rf /var/cache/apk/* \
   && cd /usr/src/app \
   && bundle install
 COPY . . 
+
 COPY entrypoint.sh /usr/bin/
 RUN chmod +x /usr/bin/entrypoint.sh 
+
 ENTRYPOINT ["entrypoint.sh"]
 EXPOSE 3000
+
 # Start the main process.
 CMD ["rails", "server", "-b", "0.0.0.0"]

@@ -129,8 +129,9 @@ class Story < ApplicationRecord
 	end
 
 	def sanitize_author
-		if self.data["editorData"]["authorName"].present?
-			self.data["editorData"]["authorName"] = ActionController::Base.helpers.sanitize(self.data["editorData"]["authorName"])
+		if self.data.present? && self.data["editorData"].present? && self.data["editorData"]["authorName"].present?
+			self.data["editorData"]["authorName"] = ActionController::Base.helpers.sanitize(self.data["editorData"]["authorName"], tags: [])
+			self.data_will_change!  # Mark JSON column as changed
 		end
 	end
 

@@ -1,37 +1,26 @@
 class StoriesController < ApplicationController
-	
-	# This controller handles everything around stories
-	# Because main page lies in app#index, this controller mostly do JSON and 
-	# allow upload and download of stories and all related activity	
-	
-	before_action :user_logged_in, only: [:create, :update, :destroy, :query_bp]	
+
+	# before_action :authenticate_user!, only: [:create, :update, :destroy] 
+	before_action :user_logged_in, only: [:create, :update, :destroy]
+	before_action :check_story_owner, only: [:update, :destroy]
 
 	def show
 		if Story.exists?(params[:id])
-
-			@story =  Story.find(params[:id])			
-
-			if @story.story_privacy.present? && @story.story_privacy.bypass_token.present? && 
-				params[:bypass_token].present? && params[:bypass_token].to_s == @story.story_privacy.bypass_token
-				skip_authorization
-			else
-				authorize @story
-			end
-
+			@story = Story.find(params[:id])
 			@data = {title: @story.title, data: @story.data, url_key: @story.id}.to_json
 			@author = @story.data["editorData"]["authorName"]
 			@title = @story.title
 			
 
 			respond_to do |format|
-				format.html {  
-					# building preview here 
+				format.html {
+					# building preview here
                 	@first_stitches_content = []
                 	@first_options_content = []
-                	finding_option(@story.data["stitches"][@story.data["initial"]], @first_stitches_content, @first_options_content)                 	            	
+                	finding_option(@story.data["stitches"][@story.data["initial"]], @first_stitches_content, @first_options_content)
                 }
 				format.json
-				format.ink { render "inking.html"	}
+				format.ink { render template: "stories/inking", formats: [:html]	}
 			end
 
 		else
@@ -39,9 +28,9 @@ class StoriesController < ApplicationController
        		@id = params[:id]
         	
           	respond_to do |format|
-				format.html { render "stories/not_found.html.erb" }
+				format.html { render "not_found" }
 				format.json { render json: { message: "Oops like you searched for a non existing story. You may head to legacy app and check this address http://oldinklewriter.inklestudios.com/stories/#{@id}.json to retrieve your story. You can then import it into the new app"}, status: 404 }
-				format.ink { render "stories/not_found.html.erb" }
+				format.ink { render "not_found" }
 			end
 		end
 	end
@@ -57,7 +46,7 @@ class StoriesController < ApplicationController
 	end
 
 	def update
-		@story = authorize Story.find(params[:id])
+		@story = Story.find(params[:id])
 		
 		if params[:data].present? and params[:title].present?
 			@story.data = params[:data]
@@ -73,7 +62,7 @@ class StoriesController < ApplicationController
 
 
 	def create		
-		@story = authorize set_user.stories.new(data: params[:data], title: params[:title])
+		@story = set_user.stories.new(data: params[:data], title: params[:title])
 		if @story.save
 			render json: { title: @story.title, data: @story.data, url_key: @story.url_key }, :status => 201
 		else
@@ -82,31 +71,12 @@ class StoriesController < ApplicationController
 	end
 
 	def destroy 
-		@story = authorize Story.find(params[:id])
-
+		@story = Story.find(params[:id])
 		if @story.destroy
 			render json: { message: "ok" }, :status => 201
 		else
 			render json: {}, :status => 400
 		end	
-	end
-
-	def query_bp
-		if Story.exists?(params[:id])
-			s = Story.find(params[:id])
-
-			if s.story_privacy.present? && s.story_privacy.bypass_token.present?
-				if current_user.admin.present? || (s.user.id == current_user.id)
-					render json: {message: s.story_privacy.bypass_token}, status: 200
-				else
-					render json: {message: "unauthorized"}, status: 401
-				end
-			else
-				render json: { message: "not privacy token found" }, status: 405
-			end
-		else
-			render json: {message: "not found"}, status: 404
-		end
 	end
 
 	private 
@@ -158,6 +128,8 @@ class StoriesController < ApplicationController
   		
   	end 
 
+	
+
 	def user_logged_in
 		unless current_user.present?
 			redirect_to root_path
@@ -165,10 +137,18 @@ class StoriesController < ApplicationController
 	end
 
 	def set_user
-		current_user				
+		return current_user				
 	end
 
-  	
+	def check_story_owner
+		unless set_user.id == Story.find(params[:id]).user.id
+	      	redirect_to "stories/not_story_owner", allow_other_host: true
+	    end
+	end
+
+	def story_params
+    	params.require(:story).permit(:data, :title)
+  	end
 
   		
   	

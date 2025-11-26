@@ -8,12 +8,12 @@ module Stats
 			if story.class.name == "Story" 
 				@story = story.data
 			elsif story.class.name == "Integer"
-				if Story.exists?(id: story)
-					@story = Story.find(story).data
+				if ::Story.exists?(id: story)
+					@story = ::Story.find(story).data
 				end
 			elsif story.class.name == "String"
-				if Story.exists?(id: story.to_i)
-					@story = Story.find(story.to_i).data
+				if ::Story.exists?(id: story.to_i)
+					@story = ::Story.find(story.to_i).data
 				end
 			elsif story.class.name == "Hash"
 				@story = story
