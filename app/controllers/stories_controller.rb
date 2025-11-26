@@ -13,14 +13,14 @@ class StoriesController < ApplicationController
 			
 
 			respond_to do |format|
-				format.html {  
-					# building preview here 
+				format.html {
+					# building preview here
                 	@first_stitches_content = []
                 	@first_options_content = []
-                	finding_option(@story.data["stitches"][@story.data["initial"]], @first_stitches_content, @first_options_content)                 	            	
+                	finding_option(@story.data["stitches"][@story.data["initial"]], @first_stitches_content, @first_options_content)
                 }
 				format.json
-				format.ink { render "inking.html"	}
+				format.ink { render template: "stories/inking", formats: [:html]	}
 			end
 
 		else
@@ -28,9 +28,9 @@ class StoriesController < ApplicationController
        		@id = params[:id]
         	
           	respond_to do |format|
-				format.html { render "stories/not_found.html.erb" }
+				format.html { render "not_found" }
 				format.json { render json: { message: "Oops like you searched for a non existing story. You may head to legacy app and check this address http://oldinklewriter.inklestudios.com/stories/#{@id}.json to retrieve your story. You can then import it into the new app"}, status: 404 }
-				format.ink { render "stories/not_found.html.erb" }
+				format.ink { render "not_found" }
 			end
 		end
 	end
@@ -142,8 +142,8 @@ class StoriesController < ApplicationController
 
 	def check_story_owner
 		unless set_user.id == Story.find(params[:id]).user.id
-	      	redirect_to "stories/not_story_owner"
-	    end	    
+	      	redirect_to "stories/not_story_owner", allow_other_host: true
+	    end
 	end
 
 	def story_params
