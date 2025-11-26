@@ -1,6 +1,9 @@
 class ApplicationController < ActionController::Base
-	include Pundit
-	rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+	# Only include Pundit if the gem is loaded
+	if defined?(Pundit)
+		include Pundit
+		rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+	end
 	# This is the root controller
 	# All app wide methods may append here
   
