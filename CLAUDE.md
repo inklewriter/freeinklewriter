@@ -223,7 +223,16 @@ This project follows a TDD workflow. When implementing new features or fixing bu
 
    Note: The image must be built separately as `inklewriter:latest` before running docker-compose.
 
-2. **Run tests using docker-compose**:
+2. **Force docker-compose to use the new image**:
+   ```bash
+   docker compose pull app || true  # Pull if using remote image (will fail for local, that's OK)
+   docker compose up -d --force-recreate app
+   ```
+
+   **CRITICAL**: After building a new image, docker-compose may still use a cached version.
+   You must force-recreate the containers to ensure the new image is used.
+
+3. **Run tests using docker-compose**:
    ```bash
    # Run all tests
    docker compose run --rm app rails test
@@ -238,27 +247,34 @@ This project follows a TDD workflow. When implementing new features or fixing bu
    docker compose run --rm app rails test test/models/
    ```
 
-3. **Complete test workflow** (rebuild + test):
+4. **Complete test workflow** (rebuild + force refresh + test):
    ```bash
-   # Rebuild and run all tests
-   docker build -t inklewriter:latest . && docker compose run --rm app rails test
+   # Build new image, force docker-compose to use it, then run tests
+   docker build -t inklewriter:latest . && \
+   docker compose down && \
+   docker compose up -d && \
+   docker compose run --rm app rails test
    ```
 
 ### Test Workflow Rules
 
 - **Always use docker-compose** to ensure database connectivity
 - **Use `--rm` flag** to automatically remove container after test run
-- **Rebuild image** with `docker-compose build` when code changes
+- **Force-recreate containers** after building new images to avoid stale cache
 - **No persistent test containers** - tests run in volatile instances
 - **Database**: PostgreSQL runs in separate container (defined in docker-compose.yml)
+- **Image cache issue**: docker-compose may use old images even after rebuild - always force-recreate
 
 ### Quick Test Commands
 
 ```bash
-# Full TDD cycle: build + test all
-alias test-all='docker build -t inklewriter:latest . && docker compose run --rm app rails test'
+# Full TDD cycle: build + force refresh + test all
+alias test-all='docker build -t inklewriter:latest . && docker compose down && docker compose up -d && docker compose run --rm app rails test'
 
-# Test models only (fast)
+# Quick test (assumes image is up to date)
+alias test-quick='docker compose run --rm app rails test'
+
+# Test models only
 alias test-models='docker compose run --rm app rails test test/models/'
 
 # Test controllers only
@@ -266,9 +282,6 @@ alias test-controllers='docker compose run --rm app rails test test/controllers/
 
 # Test services only
 alias test-services='docker compose run --rm app rails test test/services/'
-
-# Test single file
-alias test-file='docker compose run --rm app rails test'
 ```
 
 ### Database Management for Tests
