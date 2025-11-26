@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2020_12_09_182413) do
+ActiveRecord::Schema[7.1].define(version: 2022_04_20_091956) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -21,6 +21,14 @@ ActiveRecord::Schema[7.1].define(version: 2020_12_09_182413) do
     t.index ["user_id"], name: "index_admins_on_user_id"
   end
 
+  create_table "licenses", force: :cascade do |t|
+    t.string "license_name"
+    t.bigint "story_id"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.index ["story_id"], name: "index_licenses_on_story_id"
+  end
+
   create_table "stories", force: :cascade do |t|
     t.bigint "user_id"
     t.json "data"
@@ -29,6 +37,15 @@ ActiveRecord::Schema[7.1].define(version: 2020_12_09_182413) do
     t.string "title"
     t.integer "url_key"
     t.index ["user_id"], name: "index_stories_on_user_id"
+  end
+
+  create_table "story_privacies", force: :cascade do |t|
+    t.string "user_private", default: "public"
+    t.bigint "story_id"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.string "bypass_token"
+    t.index ["story_id"], name: "index_story_privacies_on_story_id"
   end
 
   create_table "story_stats", force: :cascade do |t|
@@ -65,6 +82,8 @@ ActiveRecord::Schema[7.1].define(version: 2020_12_09_182413) do
   end
 
   add_foreign_key "admins", "users"
+  add_foreign_key "licenses", "stories"
   add_foreign_key "stories", "users"
+  add_foreign_key "story_privacies", "stories"
   add_foreign_key "story_stats", "stories"
 end
