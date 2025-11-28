@@ -2,6 +2,17 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Communication Style
+
+**Be terse in responses:**
+- Keep explanations concise
+- Only provide detailed information when:
+  - User explicitly requests input/decisions
+  - Describing testing procedures and results
+  - Explaining errors or blockers
+- Avoid verbose summaries of what was done
+- Focus on actionable information
+
 ## Project Overview
 
 Inklewriter/Freeinklewriter is a reverse-engineered version of the inklewriter server - a web application for creating interactive fiction/branching narrative stories. Users can write, edit, and publish non-linear stories with choices, conditions, flags, and diverts.
