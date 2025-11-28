@@ -5,13 +5,15 @@
         <a href="http://www.inklestudios.com/inklewriter"><img src="img/inklewriter_logo-free.png" alt="inklewriter" id="logo" /></a>
         
         <div id="right-shelf-container">
-            <a class="shelf-text" target="_blank" tr-data="true" href="https://github.com/inklewriter/freeinklewriter" tooltip="Get the code!">Github</a> 
-            <a class="shelf-text" target="_blank" tr-data="true" href="/privacy" tooltip="Your privacy matters...">Privacy</a> 
+            <a class="shelf-text" target="_blank" href="https://github.com/inklewriter/freeinklewriter" tooltip="Get the code!">Github</a>
+            <a class="shelf-text" target="_blank" href="/privacy" tooltip="Your privacy matters...">Privacy</a>
+            <!-- TODO: Language picker will be enabled in Phase 3, Feature 10 (Translation System)
             <div  class="shelf-text" id="language-nav">
               <a id="language-picker" href="javascript:void(0)">Loading...</a>
               <ul id="language-picker-menu">
               </ul>
             </div>
+            -->
 
             <div id="saveStateMessage">
                 
@@ -35,23 +37,26 @@ $(document).bind("keydown", function(event) {
     }
 });
 
-$(document).ready(function(){ 
-    
-    // translation of static UI elements
-    $("[tr-data]").each(function(i,el){
-      if( trans = tr($(el).text()) ) {
-        $(el).text(trans)
-      }
-    })
+$(document).ready(function(){
 
-    $("#language-picker").text( available_locales[$.cookie("locale")]["label"] );
-
-    // Fill translation  menu
-    var $language_menu = $("#language-picker-menu")
-    $.each( available_locales, function(locale, locale_info){
-      var $el = $('<li ><a href="javascript:change_locale(\''+locale.trim()+'\')">' + locale_info["label"] + '</a></li>' );
-      $language_menu.append( $el )  
-    })
+    // TODO: Translation system will be implemented in Phase 3, Feature 10
+    // Temporarily commented out to prevent JavaScript errors
+    //
+    // // translation of static UI elements
+    // $("[tr-data]").each(function(i,el){
+    //   if( trans = tr($(el).text()) ) {
+    //     $(el).text(trans)
+    //   }
+    // })
+    //
+    // $("#language-picker").text( available_locales[$.cookie("locale")]["label"] );
+    //
+    // // Fill translation  menu
+    // var $language_menu = $("#language-picker-menu")
+    // $.each( available_locales, function(locale, locale_info){
+    //   var $el = $('<li ><a href="javascript:change_locale(\''+locale.trim()+'\')">' + locale_info["label"] + '</a></li>' );
+    //   $language_menu.append( $el )
+    // })
 
     rangy.init();
     
