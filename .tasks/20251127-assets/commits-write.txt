@@ -1,0 +1,13 @@
+c536a8c [enh] isolating inkle js in assets js
+aec6992 [fix] Allow users to save when they click on 'saved'
+655a916 [fix] There should be a link to community pages, by replacing the getting started page
+f5c0189 feat: there should be a translation system for frontend
+a6ce58a fix: translate UI and avoid non existing languages
+5543a85 fix: more translations, change translations files directory
+3b0b758 fix: missing translation
+b648b93 fix: missing space
+3c4e872 fix: port translations to code
+34d7757 fix: javascript quote broken
+32264a2 fix: rework js and translations to match new source strings
+09928cd fix: simplify translation dictionaries
+53bdb78 fix: add a translation UI, add jQuery.cookie, tweak the locale structure

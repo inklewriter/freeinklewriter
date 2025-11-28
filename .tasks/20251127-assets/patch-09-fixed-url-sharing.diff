@@ -1,0 +1,35 @@
+diff --git a/app/assets/javascripts/pages/index.js b/app/assets/javascripts/pages/index.js
+index db7d64f..8057d7b 100644
+--- a/app/assets/javascripts/pages/index.js
++++ b/app/assets/javascripts/pages/index.js
+@@ -9273,10 +9273,11 @@ var Editor = function() {
+         var e = new Dialogue({
+             title: "Share '" + StoryModel.storyName() + "'",
+             message: "Share this unique URL to let others read your story.",
+-            footer: "<br/>Choose the <b>Release</b> option below to publish your story online at <a href='http://www.textadventures.co.uk'><b>textadventures.co.uk</b></a>."
++            footer: ""
++//            footer: "<br/>Choose the <b>Release</b> option below to publish your story online at <a href='http://www.textadventures.co.uk'><b>textadventures.co.uk</b></a>."
+         })
+           , t = e.addField()
+-          , n = "http://writer.inklestudios.com/stories/" + EditorAccount.currentStoryId();
++          , n = window.location.protocol+"://"+window.location.host+"/stories/" + EditorAccount.currentStoryId();
+         t.value(n),
+         t.$.find("input").css({
+             borderRadius: 20,
+@@ -9287,9 +9288,16 @@ var Editor = function() {
+         }),
+         t.select(),
+         e.addButton("Okay"),
++        e.addButton("Read now", function() {
++            window.open(window.location.protocol+"://"+window.location.host+"/stories/" + EditorAccount.currentStoryId())
++        })
++        /*
+         e.addButton("Release", function() {
+             window.open("http://textadventures.co.uk/create/submitlink/?url=http%3A%2F%2Fwriter.inklestudios.com%2Fstories%2F" + EditorAccount.currentStoryId())
+         })
++        */
++
++
+     }
+       , P = function() {
+         var e = {
