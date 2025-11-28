@@ -259,3 +259,11 @@ var Dialogue = function(parameters) {
 }
 
 Dialogue.keypressBoundFunction = null;
+
+// Feature 3: Dialog Centering Fix - Reposition dialogs and splash on window resize
+$(window).on("resize", function() {
+    $([".splash", ".dialogue"]).each(function(key, element) {
+        $(element).css("top", ($(window).innerHeight() - $(element).height()) / 2);
+        $(element).css("left", ($(window).innerWidth() - $(element).width()) / 2);
+    });
+});
