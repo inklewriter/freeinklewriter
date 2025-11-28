@@ -2,9 +2,10 @@ FROM ruby:3.3.0-alpine
 
 WORKDIR /usr/src/app
 COPY Gemfile* /usr/src/app/ 
-RUN apk add --update \ 
+RUN apk add --update \
   build-base \
   nodejs \
+  npm \
   postgresql-client \
   postgresql-dev \
   shared-mime-info \
@@ -14,6 +15,10 @@ RUN apk add --update \
   && rm -rf /var/cache/apk/* \
   && cd /usr/src/app \
   && bundle install
+
+COPY package*.json /usr/src/app/
+RUN npm install
+
 COPY . . 
 
 COPY entrypoint.sh /usr/bin/

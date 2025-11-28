@@ -322,6 +322,103 @@ docker compose run --rm app rails db:migrate RAILS_ENV=test
 docker compose run --rm app rails db:test:prepare
 ```
 
+### JavaScript Testing Workflow
+
+**Framework**: QUnit 2.24.2 (Node.js CLI)
+
+**Test Location**: `test/javascript/**/*_test.js`
+
+**CRITICAL Testing Requirements**:
+
+⚠️ **MANDATORY CONSTRAINTS - NO EXCEPTIONS:**
+- **ONLY test pure JavaScript functions** - functions that compute outputs from inputs with no side effects
+- **ABSOLUTELY NO DOM testing** - zero jQuery, zero element manipulation, zero event handlers
+- **ABSOLUTELY NO AJAX testing** - zero HTTP requests, zero server communication, zero async operations
+- **NO browser APIs** - no localStorage, no window object, no document object
+- **NO external dependencies** - tests must be self-contained with mocked/copied functions
+- **Focus EXCLUSIVELY on**: Pure business logic, data transformations, utility functions, algorithms
+
+**What CAN be tested:**
+- Data model getters/setters (e.g., `StoryModel.storyName()`, `StoryModel.setStoryName()`)
+- Pure utility functions (e.g., `wordCountOf()`, `commadString()`)
+- String/Array transformations (e.g., `String.camelCase()`, `Array.first()`)
+- Mathematical calculations and comparisons
+- Object/array manipulation without side effects
+- Flag/state logic without DOM interaction
+
+**What CANNOT be tested:**
+- Anything using `$()` or jQuery selectors
+- Functions that create/modify DOM elements
+- Event handlers (`click`, `tap`, `change`, etc.)
+- AJAX calls (`$.ajax`, `fetch`, etc.)
+- Functions that read/write to `localStorage`
+- Functions that use `window`, `document`, or browser APIs
+- Functions with side effects (file I/O, network, timers)
+
+**Running JavaScript Tests**:
+
+```bash
+# Run all JavaScript tests
+docker compose run --rm app npm test
+
+# Tests are executed using QUnit CLI via npx
+# The npm test script runs: npx qunit test/javascript/**/*_test.js
+```
+
+**JavaScript Test Workflow Rules - STRICTLY ENFORCED**:
+- **ALL JavaScript tests MUST pass** before ANY commit touching JS files
+- **Run ONLY when JavaScript code has changed** (not for every Ruby change)
+- **ALWAYS use docker-compose** - never run npm locally
+- **TDD REQUIRED**: Write tests FIRST before implementing new JavaScript features
+- **100% test pass rate** - zero tolerance for failing tests
+- **No test skipping** - do not use `QUnit.skip()` to bypass failures
+- **User acceptance required** - all tests must pass AND user must review before commit
+
+**Example Test Structure**:
+
+```javascript
+// test/javascript/example_test.js
+// Mock or copy the function to test
+function myFunction(input) {
+  return input * 2;
+}
+
+QUnit.module('Module Name', function(hooks) {
+  hooks.beforeEach(function() {
+    // Setup before each test
+  });
+
+  QUnit.test('Description of test', function(assert) {
+    assert.equal(myFunction(5), 10, 'Should double the input');
+  });
+});
+```
+
+**Current Test Coverage (56 tests total)**:
+- `test/javascript/sample_test.js`: QUnit framework verification (2 tests)
+- `test/javascript/storyModel_test.js`: StoryModel functions - core properties, flag parsing, conditionals, page calculations (32 tests)
+- `test/javascript/aux_test.js`: Utility functions and Array/String extensions (24 tests)
+
+**Testing JavaScript Bundle Delivery**:
+
+After making changes to JavaScript source files in `app/assets/javascripts/inklewriter-source/`:
+
+```bash
+# Verify bundles are served correctly
+curl -I http://localhost:3000/assets/inklewriter-source/inklewriter-main.js
+# Expected: HTTP/1.1 200 OK, Content-Type: application/javascript
+
+curl -I http://localhost:3000/assets/inklewriter-source/inklewriter-readmode.js
+# Expected: HTTP/1.1 200 OK, Content-Type: application/javascript
+
+# Check bundle sizes (lines of code)
+curl -s http://localhost:3000/assets/inklewriter-source/inklewriter-main.js | wc -l
+# Expected: ~25,000+ lines for main bundle
+
+curl -s http://localhost:3000/assets/inklewriter-source/inklewriter-readmode.js | wc -l
+# Expected: ~17,000+ lines for readmode bundle
+```
+
 ## Commit Message Format
 
 All commits must follow the **Conventional Commits** specification with AI traceability annotations.
