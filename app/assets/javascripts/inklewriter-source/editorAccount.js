@@ -496,8 +496,9 @@ var EditorAccount = function() {
             if( EditorMenu.unsavedChanges() ) {
                 
                 var signedOutMessage = navigator.cookieEnabled ? "<p>You have been disconnected from inklewriter, perhaps because of an extended period of inactivity.</p> <p>Please sign in again to save your unsaved changes.</p>" : "<p>You have been disconnected from inklewriter because your browser has cookies disabled. Please enable cookies for this site to sign in</p>";
-                
-                _gaq.push(['_trackEvent', 'Lost Connection to Server', 'Signed out']);
+
+                // Feature 9: Google Analytics Fixes - Disabled GA to prevent errors when unavailable
+                // _gaq.push(['_trackEvent', 'Lost Connection to Server', 'Signed out']);
 
                 var confirmation = new Dialogue({
                     title: "Signed out",
@@ -560,11 +561,12 @@ var EditorAccount = function() {
 
         var storyDataAsText = jQuery.stringifyJSON(story);
 
-        if (storyIsNew) {
-            _gaq.push(['_trackEvent', 'Server Interaction', 'Saving', 'New story', storyDataAsText.length/1000]);
-        } else {
-            _gaq.push(['_trackEvent', 'Server Interaction', 'Saving', 'Resave of existing story', storyDataAsText.length/1000]);
-        }
+        // Feature 9: Google Analytics Fixes - Disabled GA to prevent errors when unavailable
+        // if (storyIsNew) {
+        //     _gaq.push(['_trackEvent', 'Server Interaction', 'Saving', 'New story', storyDataAsText.length/1000]);
+        // } else {
+        //     _gaq.push(['_trackEvent', 'Server Interaction', 'Saving', 'Resave of existing story', storyDataAsText.length/1000]);
+        // }
 
         
         // New story

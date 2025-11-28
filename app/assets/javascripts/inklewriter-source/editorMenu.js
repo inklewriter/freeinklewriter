@@ -830,12 +830,17 @@ var EditorMenu = function() {
     
     var setup = function() {
         update();
-        
+
         if( !EditorAccount.signedIn() ) {
             if( saveState >= OUT_OF_DATE && saveState < SAVED ) {
                 setSaveState(UNSAVED);
             }
         }
+
+        // Feature: Save on Click - Allow users to manually trigger save by clicking on saved status
+        $("#saveStateMessage").on("click", function(event) {
+            EditorMenu.requireSave();
+        });
     }
     
     var signOut = function() {
