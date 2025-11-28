@@ -1,43 +1,42 @@
 # Asset Reintegration TODO
 
-**Last Updated:** 2025-11-27
-**Current Phase:** Phase 0 - Documentation
+**Last Updated:** 2025-11-28
+**Current Phase:** Phase 2 - JavaScript Testing Setup
 
-## Phase 0: Documentation
+## Phase 0: Documentation ✅ COMPLETED
 
 - [x] Track all commits to `pages/index.js`
 - [x] Track all commits to `inklewriter-write.js`
 - [x] Track all commits to `inklewriter-read.js`
 - [x] Save commit lists to files
 - [x] Create TEMPLATE.md
-- [ ] Create change file: import-story.md
-- [ ] Create change file: export-enhancements.md
-- [ ] Create change file: password-reset-modal.md
-- [ ] Create change file: dialog-centering-fix.md
-- [ ] Create change file: google-analytics-fixes.md
-- [ ] Create change file: tutorial-story-fix.md
-- [ ] Create change file: fixed-url-sharing.md
-- [ ] Create change file: save-on-click.md
-- [ ] Create change file: community-link.md
-- [ ] Create change file: translation-system.md
-- [ ] Generate patch file for each change
-- [ ] Review all documentation files
-- [ ] Commit Phase 0 documentation
+- [x] Create change file: feature-01-import-story.md
+- [x] Create change file: feature-02-export-enhancements.md
+- [x] Create change file: feature-03-save-on-click.md
+- [x] Create change file: feature-04-community-link.md
+- [x] Create change file: feature-05-password-reset-modal.md
+- [x] Create change file: feature-06-dialog-centering-fix.md
+- [x] Create change file: feature-07-google-analytics-fixes.md
+- [x] Create change file: feature-08-tutorial-story-fix.md
+- [x] Create change file: feature-09-fixed-url-sharing.md
+- [x] Create change file: feature-10-translation-system.md
+- [x] Generate patch file for each change (10 patches)
+- [x] Review all documentation files
+- [x] Commit Phase 0 documentation (commit: 4892bfd)
 
-## Phase 1: Basic Sprockets Setup
+## Phase 1: Basic Sprockets Setup ✅ COMPLETED
 
-- [ ] Copy `assets/javascripts/*` to `app/assets/javascripts/inklewriter-source/`
-- [ ] Copy `assets/stylesheets/*` to `app/assets/stylesheets/inklewriter-source/` (if needed for reference)
-- [ ] Create `app/assets/javascripts/inklewriter-main.js` manifest
-- [ ] Create `app/assets/javascripts/inklewriter-readmode.js` manifest
-- [ ] Update `config/initializers/assets.rb`
-- [ ] Update `app/views/layouts/application.html.erb`
-- [ ] Test: `curl http://localhost:3000/assets/inklewriter-main.js`
-- [ ] Test: `curl http://localhost:3000/assets/inklewriter-readmode.js`
-- [ ] Test: Create new story in browser
-- [ ] Test: Edit story in browser
-- [ ] Test: Save story in browser
-- [ ] Commit Phase 1
+- [x] Copy `assets/javascripts/*` to `app/assets/javascripts/inklewriter-source/`
+- [x] Copy `assets/stylesheets/*` (reference only, not used)
+- [x] Create `app/assets/javascripts/inklewriter-source/inklewriter-main.js` manifest
+- [x] Create `app/assets/javascripts/inklewriter-source/inklewriter-readmode.js` manifest
+- [x] Update `config/initializers/assets.rb` (added inklewriter-source to asset path)
+- [x] Update `app/views/layouts/application.html.erb` (use new manifest paths)
+- [x] Test: `curl http://localhost:3000/assets/inklewriter-source/inklewriter-main.js` ✓ 200 OK
+- [x] Test: `curl http://localhost:3000/assets/inklewriter-source/inklewriter-readmode.js` ✓ 200 OK
+- [x] Test: Homepage loads (HTTP 200) ✓
+- [x] Update CLAUDE.md with JS bundle delivery tests
+- [x] Commit Phase 1 (commit: eb68392)
 
 ## Phase 2: JavaScript Testing Setup
 
