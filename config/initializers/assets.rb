@@ -17,3 +17,6 @@ Rails.application.config.assets.paths << Rails.root.join('app', 'assets', 'javas
 
 # Inklewriter JavaScript bundles (compiled from source)
 Rails.application.config.assets.precompile += %w( inklewriter-main.js inklewriter-readmode.js )
+
+# Inklewriter converter (for .ink export format)
+Rails.application.config.assets.precompile += %w( inklewriter-convert.js )

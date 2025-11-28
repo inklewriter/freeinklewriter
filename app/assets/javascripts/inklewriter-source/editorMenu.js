@@ -393,35 +393,35 @@ var EditorMenu = function() {
     }
     
     var showShareDialogue = function() {
-        
-        
+
+        var htmlURL = window.location.protocol + "//" + window.location.host + "/stories/" + EditorAccount.currentStoryId();
+        var jsonURL = htmlURL + ".json";
+        var inkURL = htmlURL + ".ink";
+
+        var content = '<p><a href="' + htmlURL + '" target="_blank">Play the story in a browser</a>.</p>' +
+            '<input type="text" onClick="this.select();" class="selectInput" value="' + htmlURL + '" />' +
+            '<p><a href="' + jsonURL + '" target="_blank">Get the story in JSON format.</a></p>' +
+            '<input type="text" onClick="this.select();" class="selectInput" value="' + jsonURL + '" />' +
+            '<p><a href="' + inkURL + '" target="_blank">Get the story in Inklestudio\'s Ink format.</a></p>' +
+            '<input type="text" onClick="this.select();" class="selectInput" value="' + inkURL + '" />' +
+            '<br><br>';
+
         var shareDialogue = new Dialogue({
-            title: "Share '"+StoryModel.storyName()+"'",
-            message: "Share this unique URL to let others read your story.",
-			footer: "<br/>Choose the <b>Release</b> option below to publish your story online at <a href='http://www.textadventures.co.uk'><b>textadventures.co.uk</b></a>."
+            title: "Share '" + StoryModel.storyName() + "'",
+            message: content,
+            footer: "Caution, the JSON format exported here is not usable in Ink."
         });
-        
-        var shareField = shareDialogue.addField();
-        
-        var storyUrl = "http://writer.inklestudios.com/stories/"+EditorAccount.currentStoryId();
-        shareField.value(storyUrl);
-        
-        shareField.$.find("input").css({
-            borderRadius:     20,
-            fontSize:         14,
-            textDecoration:   "underline",
-            padding:          10,
-            width:             "95%"
+
+        $("input.selectInput").css({
+            borderRadius: 20,
+            fontSize: 14,
+            textDecoration: "underline",
+            padding: 10,
+            width: "95%",
+            margin: "0px 0px 20px"
         });
-        
-        shareField.select();
 
         shareDialogue.addButton("Okay");
-
-        shareDialogue.addButton("Release", function() {
-            // load the text adventures share URL
-            window.open("http://textadventures.co.uk/create/submitlink/?url=http%3A%2F%2Fwriter.inklestudios.com%2Fstories%2F" + EditorAccount.currentStoryId());
-        });
     }
     
     var showSettingsDialogue = function() {

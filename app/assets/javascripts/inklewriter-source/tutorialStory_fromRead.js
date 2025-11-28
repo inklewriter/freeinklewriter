@@ -576,7 +576,7 @@ var tutorialStory = {
                     }]
                 },
                 "youCanShareYourS": {
-                    "content": ["You can share your stories with anyone you like. Just click *-share-* and copy the web-address *-inklewriter-* will show to you.",
+                    "content": ["You can share your stories with anyone you like. Just click *-share-* and use the links *-inklewriter-* will show to you.",
                     {
                         "divert": "thisAddressIsUni"
                     }, {
