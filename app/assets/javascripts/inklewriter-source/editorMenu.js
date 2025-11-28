@@ -634,7 +634,8 @@ var EditorMenu = function() {
         addMenuOption("new", jqAccountMenu, EditorMenu.createNew, "Start a new story");
         
         if( EditorAccount.signedIn() ) {
-            addMenuOption("open", jqAccountMenu, EditorMenu.open, "Open one of your saved stories");            
+            addMenuOption("open", jqAccountMenu, EditorMenu.open, "Open one of your saved stories");
+            addMenuOption("import", jqAccountMenu, EditorMenu.importStory, "Import a story from another instance");
 //            addMenuOption("competition", jqAccountMenu, EditorMenu.competition);
         }
 
@@ -870,12 +871,58 @@ var EditorMenu = function() {
         var loadedStoryData = EditorAccount.loadLocalStory();
         if( loadedStoryData ) {
             Editor.load(loadedStoryData);
-            
+
             // Need to set the save state, so that it saves our session when we log in
             requireSave();
         }
     }
-    
+
+    var importStory = function() {
+        var dialogue = new Dialogue({
+            title: "Import",
+            message: "Paste your story to import in JSON format.",
+            footer: "After import, your story will be added to your account. Use the <b>Open</b> button to select it from the list and edit it."
+        });
+
+        var form = $('<form><textarea rows=20 cols=45></textarea></form>');
+
+        dialogue.addContent(form);
+        dialogue.addButton("Cancel");
+        dialogue.addButton("Import story", function() {
+            var story = $(".dialogue textarea").val();
+
+            // Validate JSON format
+            try {
+                JSON.parse(story);
+            } catch(e) {
+                console.log("Invalid JSON format:", e);
+                alert("Oops, your JSON format is invalid!");
+                return;
+            }
+
+            // POST story to server
+            $.ajax({
+                type: "POST",
+                url: "/stories.json",
+                contentType: "application/json",
+                processData: true,
+                data: story,
+                success: function(jqXHR, textStatus, errorThrown) {
+                    console.log("Successfully sent data (import).");
+                    dialogue.close();
+                },
+                error: function(t, n, r) {
+                    alert("Could not save new story. Try again?");
+                }
+            }).done(function(e) {
+                console.log("Sending (importing) done.");
+                EditorAccount.fetchStories();
+            });
+        });
+
+        return dialogue;
+    }
+
     // Module design pattern: Return public object
     return {
         eraseAndStartNew: eraseAndStartNew,
@@ -895,6 +942,7 @@ var EditorMenu = function() {
         setup: setup,
         update: update,
         processSignedInTasks: processSignedInTasks,
-        loadLocalStory: loadLocalStory
+        loadLocalStory: loadLocalStory,
+        importStory: importStory
     };
 }();
