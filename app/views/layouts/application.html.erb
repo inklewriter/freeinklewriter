@@ -29,12 +29,12 @@
 
     <%# adding inklewriter story reader to the controller stories and action show %>
     <% if params[:controller] == "stories" and params[:action] == "show" %>
-        <%= javascript_include_tag 'inklewriter-read' %>  
-    <% end %>  
+        <%= javascript_include_tag 'inklewriter-source/inklewriter-readmode' %>
+    <% end %>
 
     <%# adding inklewriter story writer to the root of site %>
     <% if params[:controller] == "app" and params[:action] == "index" %>
-        <%= javascript_include_tag 'inklewriter-write' %>  
+        <%= javascript_include_tag 'inklewriter-source/inklewriter-main' %>
     <% end %>  
     
 

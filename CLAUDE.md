@@ -61,6 +61,28 @@ rails test test/controllers/stories_controller_test.rb
 rails test:system
 ```
 
+### Testing JavaScript Bundle Delivery
+
+After making changes to JavaScript source files, verify asset bundles are correctly compiled and served:
+
+```bash
+# Test inklewriter-main.js (write mode) is accessible
+curl -I http://localhost:3000/assets/inklewriter-source/inklewriter-main.js
+
+# Expected: HTTP/1.1 200 OK, Content-Type: application/javascript
+
+# Test inklewriter-readmode.js (read mode) is accessible
+curl -I http://localhost:3000/assets/inklewriter-source/inklewriter-readmode.js
+
+# Expected: HTTP/1.1 200 OK, Content-Type: application/javascript
+
+# Verify bundle sizes are reasonable (should be ~25k+ lines for main, ~17k+ for readmode)
+curl -s http://localhost:3000/assets/inklewriter-source/inklewriter-main.js | wc -l
+curl -s http://localhost:3000/assets/inklewriter-source/inklewriter-readmode.js | wc -l
+```
+
+**Note**: JavaScript tests should ONLY be run when JavaScript source files have been modified. The bundles are compiled from source files in `app/assets/javascripts/inklewriter-source/` using Sprockets.
+
 ### Rails Commands
 
 ```bash
