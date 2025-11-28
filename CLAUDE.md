@@ -83,6 +83,38 @@ curl -s http://localhost:3000/assets/inklewriter-source/inklewriter-readmode.js 
 
 **Note**: JavaScript tests should ONLY be run when JavaScript source files have been modified. The bundles are compiled from source files in `app/assets/javascripts/inklewriter-source/` using Sprockets.
 
+### Running JavaScript Unit Tests
+
+JavaScript unit tests are implemented using QUnit 2.24.2 for pure function testing.
+
+```bash
+# Run all JavaScript tests (via npm in Docker container)
+docker compose run --rm app npm test
+
+# Expected output: Test summary with pass/fail counts
+# Example: 56 tests, 56 passed, 0 failed
+```
+
+**Testing Constraints:**
+- Tests can ONLY test pure functions (no DOM, no AJAX, no browser APIs)
+- Tests are located in `test/javascript/`
+- Test files must end with `.test.js`
+- QUnit runs via Node.js CLI (`npx qunit`)
+
+**When to run JavaScript tests:**
+- After modifying JavaScript source files in `app/assets/javascripts/inklewriter-source/`
+- Before committing JavaScript changes
+- NOT needed for view/controller changes
+
+**After JavaScript changes, rebuild Docker and test:**
+```bash
+# Full workflow: rebuild image, restart containers, run tests
+docker build -t inklewriter:latest . && \
+docker compose down && \
+docker compose up -d && \
+docker compose run --rm app npm test
+```
+
 ### Rails Commands
 
 ```bash
