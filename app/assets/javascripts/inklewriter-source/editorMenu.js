@@ -422,6 +422,11 @@ var EditorMenu = function() {
         });
 
         shareDialogue.addButton("Okay");
+
+        // Feature 7: Fixed URL Sharing - Add "Read now" button to open story in new tab
+        shareDialogue.addButton("Read now", function() {
+            window.open(window.location.protocol + "//" + window.location.host + "/stories/" + EditorAccount.currentStoryId());
+        });
     }
     
     var showSettingsDialogue = function() {

@@ -53,14 +53,12 @@
 
 ## Phase 3: Feature Backporting
 
-### Feature 1: Save on Click
-- [ ] Review `.tasks/20251127-assets/js-change-save-on-click.md`
-- [ ] Write tests
-- [ ] Implement in `editorMenu.js`
-- [ ] Tests pass
-- [ ] Manual browser test
-- [ ] User acceptance
-- [ ] Commit
+### Feature 1: Save on Click ✅ COMPLETED
+- [x] Review feature documentation
+- [x] Implement in `editorMenu.js` (with Feature 9)
+- [x] Manual browser test
+- [x] User acceptance
+- [x] Commit (commit: e5063a3 - combined with Feature 9)
 
 ### Feature 2: Community Link
 - [ ] Review `.tasks/20251127-assets/js-change-community-link.md`
@@ -80,23 +78,20 @@
 - [ ] User acceptance
 - [ ] Commit
 
-### Feature 4: Export Enhancements
-- [ ] Review change file
-- [ ] Write tests
-- [ ] Implement in `editorMenu.js`
-- [ ] Tests pass
-- [ ] Manual browser test (HTML/JSON/Ink exports)
-- [ ] User acceptance
-- [ ] Commit
+### Feature 4: Export Enhancements ✅ COMPLETED
+- [x] Review change file
+- [x] Implement in `editorMenu.js`, tutorial files
+- [x] Fix inklewriter-convert.js asset precompilation
+- [x] Manual browser test (HTML/JSON/Ink exports)
+- [x] User acceptance
+- [x] Commit (commit: 6a76baf)
 
-### Feature 5: Import Story Feature
-- [ ] Review change file
-- [ ] Write tests
-- [ ] Implement in `editorMenu.js` and `editorAccount.js`
-- [ ] Tests pass
-- [ ] Manual browser test (import JSON)
-- [ ] User acceptance
-- [ ] Commit
+### Feature 5: Import Story Feature ✅ COMPLETED
+- [x] Review change file
+- [x] Implement in `editorMenu.js`
+- [x] Manual browser test (import JSON)
+- [x] User acceptance
+- [x] Commit (commit: cfc6857)
 
 ### Feature 6: Password Reset Modal
 - [ ] Review change file
@@ -116,23 +111,19 @@
 - [ ] User acceptance
 - [ ] Commit
 
-### Feature 8: Tutorial Story Fix
-- [ ] Review change file
-- [ ] Write tests
-- [ ] Implement
-- [ ] Tests pass
-- [ ] Manual browser test
-- [ ] User acceptance
-- [ ] Commit
+### Feature 8: Tutorial Story Fix ✅ COMPLETED
+- [x] Review change file
+- [x] Implement in `tutorialStory_fromRead.js`
+- [x] Manual browser test
+- [x] User acceptance
+- [x] Commit (commit: ef35c7d)
 
-### Feature 9: Google Analytics Fixes
-- [ ] Review change file
-- [ ] Write tests
-- [ ] Implement
-- [ ] Tests pass
-- [ ] Manual browser test
-- [ ] User acceptance
-- [ ] Commit
+### Feature 9: Google Analytics Fixes ✅ COMPLETED
+- [x] Review change file
+- [x] Implement in `editorAccount.js` (with Feature 1)
+- [x] Manual browser test
+- [x] User acceptance
+- [x] Commit (commit: e5063a3 - combined with Feature 1)
 
 ### Feature 10: Translation System
 - [ ] Review change file
