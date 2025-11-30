@@ -22,6 +22,13 @@
 
 <script>
 
+// Feature flags
+var features_list = <%= enabled_features.to_json.html_safe %>;
+
+function is_featured(feature_name) {
+  return features_list.indexOf(feature_name) !== -1;
+}
+
 var trisymbol = "&#9654;";
 createTriSymbol();
 
