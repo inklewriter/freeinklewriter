@@ -1,0 +1,435 @@
+@import url(reset.css);
+ 
+ html {
+     background: gray;
+     height: 100%;
+ }
+
+ body {
+     font-family: Helvetica, sans-serif;
+     height: 100%;
+ }
+
+ #general_content {
+
+ }
+
+ h1 {
+ 	text-align: center;
+ }
+
+ div {
+     position: relative;
+     margin: 0;
+     padding: 0;
+ }
+
+ #main_viewport {
+ }
+
+ #branding {
+     height: 47px;
+ }
+
+ #branding #red {
+    width: 100%;
+    height: 30px
+ }
+
+ #branding #shelf {
+     width: 100%;
+     height: 17px;
+     top:0px;
+     background-image: url(/img/shelf_small.jpg);
+ }
+
+ #branding a {
+     position: absolute;
+     z-index:1000;
+     top:0px;
+ }
+
+ #branding #logo {
+
+     width: 200px; /* 189px for non-beta logo */
+     height: 47px;
+     top: 0px;
+     left: 0px;
+ }
+ 
+ #right-shelf-container {
+     position: absolute;
+     right: 0px;
+     top: 0px;
+     width: 70%;
+     height: 50px;
+     text-align: right;
+ }
+
+#branding a.shelf-icon {
+     float: right;
+     position: relative;
+     display: block;
+     width: 34px;
+     height: 34px;
+     margin-left: 3px;
+     margin-right: 3px;
+     margin-top: 3px;
+     background-position: left center;
+     cursor: pointer;
+ }
+
+#branding a.shelf-icon:hover {
+     background-position: right center;
+ }
+
+
+ /*----------------------------------------------------------------
+
+     Play Mode
+
+ ----------------------------------------------------------------*/
+
+
+ #player_container {
+     position: relative;
+     width: 100%;
+     color: #555;
+     /* leaves a nasty edge: box-shadow: inset 0px 0px 200px rgba(0, 0, 0, 0.8);*/
+     margin: 0 auto;
+     padding: 0;
+ }
+
+ #player_container #read_area {
+     position: relative;
+     left: 0px;
+     width:100%;
+     vertical-align:middle;
+     overflow-x: hidden;
+     text-align: center;
+
+     font-family: Baskerville, Georgia, Times, "Times New Roman", serif;
+ }
+
+ #player_container #read_area h1 {
+     font-size:36pt;
+     font-weight: normal;
+     color: #111;
+
+     padding-top: 70px;
+     padding-bottom: 10px;
+     width:500px;
+     left:-50px;
+ }
+
+ #player_container #read_area h2 {
+     font-size:24pt;
+     font-weight: normal;
+     font-style: italic;
+     color: #111;
+
+     padding-bottom: 50px;
+     width:500px;
+     left:-50px;
+ }
+
+
+ #player_container .chunk {
+     width: 400px;
+     height: auto;
+     padding-left: 100px;
+     padding-right: 100px;
+     padding-top: 10px;
+     padding-bottom: 10px;
+     margin: auto;
+     margin-top: 10px;
+     background: white;    
+     box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.5);
+ }
+
+ #player_container .chunk:first-child {
+     margin-top: 40px;
+ }
+
+ #player_container .chunk + .chunk {
+     margin-top: 0px;
+ }
+
+ #player_container .chunk:last-child {
+     margin-bottom: 50px;
+ }
+
+ #player_container .stitch_block {
+     width: 400px;
+     font-size: 18px;
+     line-height: 1.5em;
+     text-indent: 1em;
+     text-align: justify;
+     color: black;
+     padding-bottom:15px;
+ }
+
+ #player_container .chunk .flags {
+     position: absolute;
+     right: -180px;
+     text-align: left;
+     display: block;
+     width: 150px;
+     background-color: lightYellow;
+     border-radius: 4px;
+     border: 2px solid black;
+     padding: 5px 2px 5px 10px;
+     list-style-type: circle;
+     color: blue;
+ }
+
+ #player_container .chunk .stitch.openingStitch {
+     text-indent: 0em;
+ }
+
+ #player_container .chunk .stitch.openingStitch:first-line {
+     font-variant:small-caps;
+     font-size: 1.2em;
+ }
+
+ #player_container .chunk .stitch.openingStitch:first-letter {
+     display: block;
+     float: left;
+     text-indent: 0.5em;
+     font-size: 1.5em;
+     margin-right: 0.06em;
+     margin-left: 0.1em;
+     margin-top: 0.0em;
+     margin-bottom: 0;
+ }
+
+ #player_container .chunk .option_chosen {
+     text-align: left;
+     font-style:italic;
+     padding-bottom:10px;
+     left:-20px;
+ }
+
+ #player_container .chunk .the_end {
+	font-style: italic;
+	text-align: right;
+	font-size: 1em;
+	margin-top: 40px;
+	margin-bottom: 20px;
+ }
+ 
+ #player_container .chunk .the_end .back_to_top {
+	background: url("/img/up-arrow.png") no-repeat;
+	width: 21px;
+	height: 21px;
+	margin-left: 25px;
+	top: 5px;
+	display: inline-block;
+	cursor:pointer;
+ }
+
+ #player_container .option_button {
+     font-size: 24px;
+     font-style: italic;
+
+     text-align: center;
+
+     cursor: pointer;
+     color: #404040;
+
+     padding-top: 0.6em;
+     padding-bottom: 0.6em;
+ }
+
+ #player_container .option_button:hover {
+     background: url("/img/divider-line.png") repeat-y center;
+ }
+
+ #player_container .option_button:active {
+     background: #EEE;
+     color: black;
+ }
+
+ #player_container .option_block {
+     padding-top: 20px;
+     padding-bottom: 20px;
+ }
+
+ #player_container.narrow .chunk {
+     padding-left:4%;
+     padding-right:4%;
+     width:88%;
+ }
+ #player_container.narrow #read_area h1 {
+     width: 80%;
+     padding-top: 30px;    
+     padding-left:10%;
+     left:0px;
+ }
+ #player_container.narrow #read_area h2 {
+     width: 80%;
+     padding-left:10%;
+     left:0px;
+     padding-bottom: 50px;    
+ }
+
+ #player_container.narrow .stitch_block {
+     width: 94%;
+     padding-left:5%;
+     text-align:left;
+ }
+ #player_container.narrow .chunk .flags {
+     display:none;
+ }
+ #player_container.narrow .option_chosen {
+     left:-12px;
+ }
+
+
+ .rewindButton {
+     position: absolute;
+     right: 10px;
+     top: 10px;
+     width: 75px;
+     height: 21px;
+     background-image: url("/img/back-arrow.png");
+     z-index: 4;
+     opacity: 0.4;
+     cursor: pointer;
+     font-size: 10px;
+     background-repeat: no-repeat;
+     text-align: right;
+     padding-top:5px;
+     font-style: italic;
+ }
+
+ .rewindButton.initial {
+	color: black;
+	background-color: beige;
+ }
+
+ .rewindButton.noText {
+     width:21px;
+ } 
+
+ .rewindButton:hover {
+     opacity: 0.6;
+ }
+
+ .rewindButton:active {
+     opacity: 0.9;
+ }
+
+ /*
+             TOOLTIPS
+ */
+
+ #tooltip {
+     position:fixed;
+     min-width:80px !important; 
+     max-width: 220px  !important; 
+     padding:4px 10px 3px 10px !important;
+     min-height: 18px;
+     background: black;
+     background: rgba(0,0,0,0.7);
+     opacity: 1 !important; 
+     border-radius: 24px;
+     z-index:10000;
+     color: white;
+     font-weight:bold;
+     font-style:normal;
+     line-height:1.2em;
+     font-size:10pt;
+     vertical-align:center !important;
+     text-align: center !important;
+     -moz-user-select: -moz-none;
+     -khtml-user-select: none;
+     -webkit-user-select: none;
+     user-select: none;
+ }
+
+
+
+
+
+ #sidebar-ads {
+     position: fixed;
+     bottom: 10px;
+     left: 10px;
+     width: 200px;
+     z-index: 10000;
+ }
+
+ #sidebar-ads a {
+     display: block;
+     width: 200px;
+     border-radius: 10px;
+     background: #4c4c4c;
+     background: rgba(0, 0, 0, 0.35);
+     text-align: center;
+     padding: 15px;
+     margin: 10px;
+ }
+
+ #sidebar-ads a:hover {
+     background: #222;
+     background: rgba(0, 0, 0, 0.5);
+ }
+
+ #sidebar-ads a.app {
+     color: white;
+     text-decoration: none;
+     text-align: left;
+     overflow:auto;
+ }
+
+ #sidebar-ads a.app img {
+     float: left;
+     margin-right: 10px;
+ }
+
+ #sidebar-ads a.app h3 {
+     margin-left: 74px;
+     font-size: 11pt;
+     margin-bottom: 5px;
+ }
+
+ #sidebar-ads a.app p {
+     margin-left: 74px;
+     font-size: 10pt;
+     line-height: 1.1em;
+ }
+
+#madeby {
+    position: relative;
+    height: 13px;
+    background: rgba(0, 0, 0, 0.1);
+    color: white;
+    margin: 30px auto;
+    width: 280px;
+    font-size: 13px;
+    padding: 10px;
+    border-radius: 15px;    
+}
+
+#madeby a {
+    color: white;
+}
+
+#player_container .option-divider {
+	background: url("/img/divider-line.png") no-repeat;
+	width: 350px;
+	height: 1px;
+	margin: 0 auto;
+}
+
+#player_container #illustration {
+	padding:10px;
+	width:90%;
+	text-align: center;
+}
+
+#player_container .pic {
+	max-width:100%;
+	max-height:200px;	
+}

@@ -2914,3 +2914,72 @@ div#error_explanation li {
     font-size: 24px;
     padding-bottom: 20px;
 }
+
+/* Translation styling */
+
+#language-nav { 
+  position: relative; 
+  float: right;
+  min-width: 90px;
+  text-align: center;
+}
+
+#language-nav a#language-picker { 
+  font-size: 9pt;
+  font-style: italic;
+  margin-right: 15px;
+  text-shadow: none;
+  right: 2px;
+  top: 10px;
+  color: white;
+  max-height: 30px;
+  overflow: hidden;
+  cursor: pointer;
+  display: inline-block;
+  text-decoration: none;
+  padding: 0em 0em 0em 1em;
+}
+
+#language-nav a#language-picker:hover { 
+  text-decoration: none; 
+}
+
+#language-nav ul#language-picker-menu { 
+  background: #ccc;
+  border: 1px solid #bbb;
+  border-radius: 14px;
+  box-shadow: 2px 0px 11px #333;
+  display: none;
+  list-style: none;
+  margin-top: -10px;
+  padding: 4px;
+  position: absolute;
+  width: 100%;
+
+}
+
+#language-nav:hover ul#language-picker-menu { 
+  display: block; 
+  z-index: 10;
+}
+
+#language-nav ul#language-picker-menu li { 
+    text-align: center;
+    width: 100%; 
+}
+
+#language-nav #language-picker-menu li a {
+  padding: 10px;
+  line-height: 8px;
+  display: block;
+  color: black;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 0.8em;
+  text-shadow: 0px 1px 1px white;
+}
+
+#language-nav #language-picker-menu li a:hover {
+  color:white ;
+  text-shadow: 0px 1px 3px black;
+}

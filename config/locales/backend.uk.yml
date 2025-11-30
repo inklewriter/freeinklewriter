@@ -1,0 +1,36 @@
+en:
+  story:
+    zero: немає історії
+    one: 1 історія
+    other: '%{count} історії'
+  it_is:
+    zero: це
+    one: це
+    other: вони є
+  activerecord:
+    attributes:
+      license:
+        license_name: Назва ліцензії
+    errors:
+      models:
+        story_privacy:
+          attributes:
+            user_private:
+              inclusion: значення конфіденційності не здаються правильними
+        license:
+          attributes:
+            license_name:
+              too_long: Назва ліцензії не може перевищувати %{count} символів
+  pundit:
+    story_policy:
+      story_params?: Ви не можете отримати доступ до цієї сторінки
+      update_story_params?: Ви не можете отримати доступ до цієї сторінки
+      show?: Історія не опублікована
+      destroy?: Здається, ця історія не ваша
+      update?: Здається, ця історія не ваша
+    nil_class_policy:
+      update_story_params?: ця сторінка не існує
+      story_params?: ця сторінка не існує
+      update?: Ця сторінка не існує
+      destroy?: Ця сторінка не існує
+      show?: Ця сторінка не існує

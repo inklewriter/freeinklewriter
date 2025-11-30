@@ -24,5 +24,13 @@ module Freeifwriter
     # Application configuration can go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
+
+    # Only configure Brotli compression if the gem is loaded
+    if defined?(Sprockets::ExportersPack::BrotliExporter)
+      config.assets.configure do |env|
+        env.register_exporter %w(text/css application/javascript image/svg+xml), Sprockets::ExportersPack::BrotliExporter
+      end
+    end
+    
   end
 end

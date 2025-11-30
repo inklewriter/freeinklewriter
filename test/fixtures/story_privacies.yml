@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_private: false
+  flagged_for_privacy: false
+  admin_private: false
+  story: one
+
+two:
+  user_private: false
+  flagged_for_privacy: false
+  admin_private: false
+  story: two

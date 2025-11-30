@@ -1,0 +1,32 @@
+<div id="footer">
+	<div class="container">
+		<div class="row">
+
+			<div class="col-md-2">
+				<div id="footer-logo">
+					<%= image_tag 'logo', alt: "inklewriter" %>
+					<%= link_to "logo design by rawpixel.com / Freepik", "http://www.freepik.com", rel: "noopener noreferrer", target: "blank" %>
+				</div>
+			</div>	
+
+			<div class="col-md-4">
+				<div id="footer-presentation">
+				<p>The InkleWriter app was originally developped by <%= link_to "inkle studios", "https://www.inklestudios.com/", target: "blank", rel: "noopener noreferrer" %> and is now accessible under a free license.</p>
+				<%= link_to "source code", "https://github.com/inklewriter/freeinklewriter", rel: "noopener noreferrer", class: "action-link", target: "blank" %>
+				<%= link_to "report bugs", "https://github.com/inklewriter/freeinklewriter/issues", rel: "noopener noreferrer", class: "action-link", target: "blank" %>
+				
+				</div>
+			</div>
+
+			<div class="col-md-6">
+				<p></p>
+			</div>			
+
+		</div>
+	</div>
+</div>
+
+
+<% content_for :headcss do %>
+    <%= stylesheet_link_tag "layouts/footer", media: 'all' %>
+<% end %>

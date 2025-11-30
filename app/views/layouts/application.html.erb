@@ -16,9 +16,9 @@
     <%= csp_meta_tag %>
 
     <%# below stylesheet has been removed from global scope %>
-    <%# stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
 
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    
     <%= yield(:headcss) %>
     <%= stylesheet_link_tag    "#{params[:controller]}", media: 'all' %>
 
@@ -29,18 +29,14 @@
 
     <%# adding inklewriter story reader to the controller stories and action show %>
     <% if params[:controller] == "stories" and params[:action] == "show" %>
-        <%= javascript_include_tag 'inklewriter-read' %>  
-    <% end %>  
+        <%= javascript_include_tag 'inklewriter-source/inklewriter-readmode' %>
+    <% end %>
 
     <%# adding inklewriter story writer to the root of site %>
-    <% if params[:controller] == "pages" and params[:action] == "index" %>
-        <%= javascript_include_tag 'inklewriter-write' %>  
+    <% if params[:controller] == "app" and params[:action] == "index" %>
+        <%= javascript_include_tag 'inklewriter-source/inklewriter-main' %>
     <% end %>  
-
-    <%# adding inle CSS to stories and pages#index %>
-    <% if params[:controller] == "stories" or (params[:controller] == "pages" and params[:action] == "index") %>
-        <%= stylesheet_link_tag 'inklewriter' %>  
-    <% end %>  
+    
 
     <script>
 
@@ -53,10 +49,14 @@
 
         var AUTH_TOKEN = document.querySelector('meta[name=csrf-token]').content;
     </script>
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
 
   </head>
 
   <body>
+
+    <%= render 'layouts/flash_message' unless flash.empty?  %>
+
     <%= yield %>
   </body>
 </html>

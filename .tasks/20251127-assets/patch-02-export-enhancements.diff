@@ -1,0 +1,64 @@
+diff --git a/app/assets/javascripts/pages/index.js b/app/assets/javascripts/pages/index.js
+index 71f1729..bb605ec 100644
+--- a/app/assets/javascripts/pages/index.js
++++ b/app/assets/javascripts/pages/index.js
+@@ -9273,27 +9273,37 @@ var Editor = function() {
+         L(x)
+     }
+       , D = function() {
+-        var e = new Dialogue({
++        
++        const htmlURL = window.location.protocol+"//"+window.location.host+"/stories/" + EditorAccount.currentStoryId();
++        const jsonURL = htmlURL + ".json";
++        const inkURL = htmlURL + ".ink";
++        
++        const content = `
++        <p><a href="${htmlURL}" target="_blank">Play the story in a browser</a>.</p>
++        <input type="text" onClick="this.select();" class="selectInput" value="${htmlURL}" />
++        <p><a href="${jsonURL}" target="_blank">Get the story in JSON format.</a></p>
++        <input type="text" onClick="this.select();" class="selectInput" value="${jsonURL}" />
++        <p><a href="${inkURL}" target="_blank">Get the story in Inklestudio's Ink format.</a></p>
++        <input type="text" onClick="this.select();" class="selectInput" value="${inkURL}" />
++        <br><br>
++        `;
++        var shareDialogue = new Dialogue({
+             title: "Share '" + StoryModel.storyName() + "'",
+-            message: "Share this unique URL to let others read your story.",
+-            footer: ""
++            message: content,
++            footer: "Caution, the JSON format exported here is not usable in Ink."
+ //            footer: "<br/>Choose the <b>Release</b> option below to publish your story online at <a href='http://www.textadventures.co.uk'><b>textadventures.co.uk</b></a>."
+         })
+-          , t = e.addField()
+-          , n = window.location.protocol+"//"+window.location.host+"/stories/" + EditorAccount.currentStoryId();
+-        t.value(n),
+-        t.$.find("input").css({
++        
++        $("input.selectInput").css({
+             borderRadius: 20,
+             fontSize: 14,
+             textDecoration: "underline",
+             padding: 10,
+-            width: "95%"
++            width: "95%",
++            margin: "0px 0px 20px"
+         }),
+-        t.select(),
+-        e.addButton("Okay"),
+-        e.addButton("Read now", function() {
+-            window.open(window.location.protocol+"//"+window.location.host+"/stories/" + EditorAccount.currentStoryId())
+-        })
++
++        shareDialogue.addButton("Okay");
+         /*
+         e.addButton("Release", function() {
+             window.open("http://textadventures.co.uk/create/submitlink/?url=http%3A%2F%2Fwriter.inklestudios.com%2Fstories%2F" + EditorAccount.currentStoryId())
+@@ -10413,7 +10423,7 @@ var Editor = function() {
+                 }]
+             },
+             youCanShareYourS: {
+-                content: ["You can share your stories with anyone you like. Just click *-share-* and copy the web-address *-inklewriter-* will show to you.", {
++                content: ["You can share your stories with anyone you like. Just click *-share-* and use the links *-inklewriter-* will show to you.", {
+                     divert: "thisAddressIsUni"
+                 }, {
+                     pageNum: 6

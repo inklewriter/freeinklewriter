@@ -1,0 +1,1 @@
+PRIVACY_SELECTORS=["private", "public", "public and searchable"]

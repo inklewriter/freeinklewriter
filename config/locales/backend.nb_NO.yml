@@ -1,0 +1,36 @@
+en:
+  pundit:
+    story_policy:
+      story_params?: Du har ikke tilgang til denne siden
+      update_story_params?: Du har ikke tilgang til denne siden
+      show?: Historien er ikke publisert
+      update?: Det later til at denne historien ikke er din
+      destroy?: Det later til at denne historien ikke er din
+    nil_class_policy:
+      story_params?: denne siden finnes ikke
+      update_story_params?: denne siden finnes ikke
+      show?: Denne siden finnes ikke
+      update?: Denne siden finnes ikke
+      destroy?: Denne siden finnes ikke
+  story:
+    zero: ingen historie
+    one: 1 historie
+    other: '%{count} historier'
+  it_is:
+    zero: det er
+    one: det er
+    other: de er
+  activerecord:
+    attributes:
+      license:
+        license_name: Lisensnavn
+    errors:
+      models:
+        story_privacy:
+          attributes:
+            user_private:
+              inclusion: personvernsverdiene virker uriktige
+        license:
+          attributes:
+            license_name:
+              too_long: lisensnavnet kan ikke overstige %{count} tegn

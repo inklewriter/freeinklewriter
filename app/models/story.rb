@@ -1,18 +1,24 @@
 class Story < ApplicationRecord
 
 	after_create :assign_url_key
+	after_create :generate_privacy
 	after_save :process_stats, if: :data_is_present
 	after_save :process_rating, if: :data_is_present
 	
+	before_validation :set_a_default_title
 	before_save :sanitize_title
 	before_save :sanitize_author
 	# before_save :sanitize_stitches
 
 	belongs_to :user
 	has_one :story_stat, dependent: :destroy
+	has_one :story_privacy, dependent: :destroy
+	has_one :license, dependent: :destroy
+
+	accepts_nested_attributes_for :story_privacy, :license
 
 	validates :data, presence: true
-	
+	validates :title, presence: true
 
 	def sanitize_s
 		
@@ -76,6 +82,11 @@ class Story < ApplicationRecord
 		self.save	
 	end
 
+	def generate_privacy
+		self.build_story_privacy(user_private: "public")
+		self.story_privacy.save
+	end
+
 	def data_is_present
 		self.data.present?
 	end
@@ -105,6 +116,10 @@ class Story < ApplicationRecord
 			self.story_stat.save
 		end
 		
+	end
+
+	def set_a_default_title
+		self.title = "Untitled Story" unless self.title.present?
 	end
 
 	def sanitize_title

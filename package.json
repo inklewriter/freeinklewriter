@@ -1,5 +1,12 @@
 {
-  "name": "freeifwriter",
+  "name": "inklewriter",
+  "version": "1.0.0",
+  "description": "Inklewriter - Interactive fiction writing tool",
   "private": true,
-  "dependencies": {}
+  "scripts": {
+    "test": "npx qunit test/javascript/**/*_test.js"
+  },
+  "devDependencies": {
+    "qunit": "^2.24.2"
+  }
 }

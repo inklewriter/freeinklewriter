@@ -1,0 +1,47 @@
+#footer {
+	font-family: Baskerville, "Hoefler Text", Georgia, "Times New Roman", serif;
+	background-color: #A92C27;
+	padding: 15px 0;
+	font-size: 0.9em;
+	p {
+		color: #f8f8f8;
+		font-size: 1.6em;
+		display: inline-block;
+	}
+	a {
+		color: #f8f8f8;
+	}
+
+	#footer-logo {			
+		padding-top: 15px;
+		img {			
+			height: 80px;
+			display: block;			
+		}
+		a {
+			display: block;	
+			margin-top: 35px;
+			font-size: 0.8em;
+		}
+	}
+
+	#footer-presentation {
+		.action-link {
+    		color: #f8f8f8;
+			font-size: 1.4em;
+			text-decoration: none;
+			display: block;
+
+		}
+		.action-link:hover {
+            text-shadow: 0 0 2px white;
+		}
+	}
+
+	#footer-logo-disclaimer {
+		a {
+			font-size: 0.8em;
+			font-style: italic;
+		}
+	}
+}

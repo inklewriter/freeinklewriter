@@ -1,0 +1,77 @@
+<%= render 'layouts/header' %>
+<%= render 'layouts/menu' %>
+
+<div id="community-my-stories" class="main-container">
+	<div class="container">
+
+		<div class="row">
+			<div class="col-md-12">
+				<p>Hi <span class="user-data"><%= @user.email %></span></p>
+			</div>
+		</div>
+
+		<div id="stories">
+		
+			<% unless @user.stories.any? %>
+				<p>You are currently owning no story. Just switch to the main app and start creating your own stories !</p>
+			<% else %>
+				<p>You are currently owning <%= t('story', count: @user.stories.count) %>. Here <%= t('it_is', count: @user.stories.count) %> :</p>
+
+				<div class="row story-item-header">
+				
+	                <div class="col-md-5">
+	                    <span class="story-name">Title</span>
+	                </div> 
+	                <div class="col-md-2">
+	                    <span class="story-detail">Words</span>
+	                </div>
+	                <div class="col-md-1">
+	                    <span class="story-detail">Privacy Policy</span>
+	                </div>
+	                <div class="col-md-2">
+	                    <span class="story-detail">License</span>
+	                </div>
+	                <div class="col-md-1">
+	                    <span class="story-detail">Score</span>
+	                </div>
+
+	            </div>    
+	            
+
+	            <% @user.stories.each do |s| %>
+					<div class="row story-item">
+
+						<div class="col-md-5">
+							<%= link_to story_params_path(s.id) do %> 
+								<span class="story-name"><%= s.title %></span>
+							<% end %>							
+						</div>
+						
+						<div class="col-md-2">
+							<span class="story-detail"><%= s&.story_stat&.total_words.to_s %> words</span>
+						</div>
+						
+						<div class="col-md-1">
+							<span class="story-detail"><%= s.story_privacy.user_private if s.story_privacy.present? %></span>
+						</div>
+						
+						<div class="col-md-2">
+							<span class="story-detail"><%= s&.license&.license_name %></span>
+						</div>					
+
+						<div class="col-md-1">
+							<span class="story-detail"><%= s&.story_stat&.score.round(2) %> </span>
+						</div>
+
+					</div>	
+				<% end %>
+				
+			<% end %>
+
+			
+		</div>
+	</div>
+</div>
+
+
+<%= render 'layouts/footer' %>

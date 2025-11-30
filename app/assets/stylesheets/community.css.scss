@@ -1,0 +1,334 @@
+html {
+  font-family: Times, Times New Roman, Georgia, serif;
+  margin: 0;
+  padding: 0;  
+}
+
+
+// manual griding with css grids
+
+$numColumns: 12;
+$gutterWidth: 15px;
+  
+.row{
+  display: grid;
+  grid-template-columns: repeat($numColumns, 1fr); // Uniform columns. No need for rounded percentages to calculate widths.
+  grid-gap: $gutterWidth; // Actual gutter width. No need for negative margin hack.
+}
+// .show-grid [class^=col-]{
+//   padding-top: 10px;
+//   padding-bottom: 10px;
+//   background-color: #eee;
+//   background-color: rgba(86,61,124,.15);
+//   border: 1px solid #ddd;
+//   border: 1px solid rgba(86,61,124,.2);
+// }
+[class^=col-]{
+  grid-column-end: span $numColumns; //Full width fallback when no column size is define for the screen size.
+  padding: 10px;
+}
+
+// NESTED LOOP
+// Check out the compiled css. It is very repetitive, similar to Bootstrap Grid code
+// Loop through responsive breakpoints
+@each $size, $abbr in (0,xs),(768px,sm),(992px,md),(1200px,lg){
+  @media (min-width: $size){
+    // Loop through col classes
+    @for $i from 1 through $numColumns{
+      .col-#{$abbr}-#{$i}{
+        grid-column-end: span $i;
+      }
+    }
+  }
+}
+
+
+// static pages html
+
+body, html {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: 100%;
+  // font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+.container {
+	max-width: 1200px;
+	margin: 0 auto 0 auto;
+  padding: 0 12px;
+}
+
+.main-container {
+  min-height: calc(100% - 360px);
+}
+
+.user-data {
+  color: hsl(344.26, 17.391%, 54%);
+  font-style: italic;
+}
+
+#community-home {
+  #hello {
+    font-size: 2em;
+    font-style: italic;
+    // max-width: 800px;
+    a {
+      color: black;
+    }
+  }
+  #hello-image {
+    img {
+      padding: 0 15px;
+      width: auto;
+      max-height: 220px;
+    }
+  }
+}
+
+#community-my-stories {
+
+  #stories {
+    margin: 0 0 20px 0;
+  }
+
+  p {
+    font-size: 1.4em;
+  }
+  a {
+    text-decoration: none;
+    color: black; 
+  }
+
+  a:hover {
+    color: hsl(359, 60%, 50%);
+    
+  }
+
+  .row {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .story-item-header {
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+  }    
+
+  .story-item {
+    padding-top: 5px !important;
+    text-align: center;
+    word-break: break-word;
+    
+    .story-name {
+      font-size: 1.6em;      
+      border-bottom: 1px solid black;
+    }
+    .story-name:hover {
+      border-bottom: 1px solid hsl(359, 60%, 50%);
+    }
+
+    .story-detail {
+      font-size: 1.2em;
+      
+      position: relative;
+      top: 8px;
+    }
+  }
+
+  @media all and (min-width: 0px) and (max-width: 991px) {
+    .story-item-header{
+      display: none;
+    }
+  }
+  
+}
+
+#community-how-it-works {
+
+  #getting-started{
+    // width: 576px;
+    // margin: auto;
+    
+  }
+
+  .image-wrapper{
+    text-align: center;
+    width: 100%;
+  }
+
+
+  .comment {
+    font-size: 1.4em;
+    font-style: italic;
+  }
+
+  img {
+    // display: block;
+    // margin: 0 auto;
+    // max-width: 100%;
+    width: 100%;
+
+  }
+
+  .round-corners {
+    border-radius: 15px;
+  }
+
+  h2 {
+    font-size: 1.6em;
+  }
+  p {
+    display: block;
+    margin: 10px 0 !important;
+    // line-height: 1.6em;
+    margin: 0 0 10px;
+    font-size: 1.4em;
+    // font-style: italic;
+  }
+  .pre {
+    display: inline-block;
+    padding: 9.5px;
+    margin: 0 0 10px;
+    font-size: 1em;
+    line-height: 1.42857143;
+    color: #333;
+    word-break: break-all;
+    word-wrap: break-word;
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    max-width: 700px;
+    width: auto;
+  }
+  
+
+  .inklewriter-excerpt {
+      font-family: Baskerville, Times, serif;
+      color: #666;
+      padding: 20px;
+  }
+}
+
+#community-story-params {
+  font-size: 1.2em;
+  h2{
+    // display: inline-block;    
+    // border-bottom: 10px solid hsl(3.59, 70%, 60%);
+    // line-height: 0.35;    
+  }
+
+  #license-list {
+    margin: 20px 0;
+  }
+
+  #privacy-form {    
+    .field_with_errors {
+        display:  inline-block;
+    }
+  }
+
+  input[type=submit] {
+    margin: 10px 0px;
+    //background: hsl(120, 55.556%, 70%);
+    // background-color: hsl(78.98, 56.25%, 60%);
+    background-color: hsl(3.59, 70%, 60%);
+    border-radius: 23px;
+    // border: 1px solid #40cb3c;
+    // border: 1px solid hsl(120, 55.556%, 70%);
+    border: 1px solid transparent;
+    // color: #042;  
+    color: white;  
+    font-size: 18px;
+    // font-weight: bold;
+    padding: 8px 20px;
+    cursor: pointer;    
+  }
+
+  input[type=submit]:hover {
+    // background-color: hsl(120, 55.556%, 75%);
+    background-color: hsl(3.59, 70%, 70%);
+  }
+
+  input[type=text]{
+    display: block;
+    padding: 8px;
+    font-size: 1.2em;
+    margin-top: 8px;
+    border-radius: 8px;
+    color: #444;
+  }
+
+  .section-explanation {
+    margin: 10px 0px;
+    font-family: sans-serif;
+    background-color: hsl(0, 0%, 95%);
+    border-radius: 4px;
+    padding: 5px 10px;
+    -webkit-box-shadow: 6px 6px 9px -6px rgba(0,0,0,0.3); 
+    box-shadow: 6px 6px 9px -6px rgba(0,0,0,0.3);
+
+    .image {
+      text-align: center;
+      padding: 10px 0;
+    }
+
+    h3{
+      font-size: 1em;
+      color: hsl(0, 0%, 35%);
+      margin: 5px 0 10px 0;
+    }
+    p{
+      font-size: 0.9em;
+      color: hsl(0, 0%, 15%);
+    }
+    ul{
+      font-size: 0.9em;
+      color: hsl(0, 0%, 15%);
+    }
+    img {      
+      width: 60px;
+    }
+  }
+
+  .single_license {
+    vertical-align: top;
+    display: inline-block;
+    border: 5px solid black;
+    padding: 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    margin: 10px;
+    height: 300px;
+    width: 120px;
+    box-shadow: 10px 10px 20px 0 rgba(0,0,0,0.13);    
+    text-align: center;
+    img {
+      width: 40px;
+    }
+    p:nth-child(1){
+      font-style: "serif";
+      font-weight: bold;
+      border-bottom: 1px solid black;
+    }
+
+    a {
+      font-style: italic;
+      text-decoration: none;
+      color: hsl(0, 0%, 40%);
+    }
+  }
+
+  .single_license:hover {
+    transition: all 0.3s;
+    padding: 20px 50px;
+  }  
+  
+  .mute{
+    color:#666;
+    font-weight: normal;
+    // display: block;
+  }
+
+}

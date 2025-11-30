@@ -2,6 +2,17 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Communication Style
+
+**Be terse in responses:**
+- Keep explanations concise
+- Only provide detailed information when:
+  - User explicitly requests input/decisions
+  - Describing testing procedures and results
+  - Explaining errors or blockers
+- Avoid verbose summaries of what was done
+- Focus on actionable information
+
 ## Project Overview
 
 Inklewriter/Freeinklewriter is a reverse-engineered version of the inklewriter server - a web application for creating interactive fiction/branching narrative stories. Users can write, edit, and publish non-linear stories with choices, conditions, flags, and diverts.
@@ -59,6 +70,60 @@ rails test test/controllers/stories_controller_test.rb
 
 # Run system tests (requires Chrome)
 rails test:system
+```
+
+### Testing JavaScript Bundle Delivery
+
+After making changes to JavaScript source files, verify asset bundles are correctly compiled and served:
+
+```bash
+# Test inklewriter-main.js (write mode) is accessible
+curl -I http://localhost:3000/assets/inklewriter-source/inklewriter-main.js
+
+# Expected: HTTP/1.1 200 OK, Content-Type: application/javascript
+
+# Test inklewriter-readmode.js (read mode) is accessible
+curl -I http://localhost:3000/assets/inklewriter-source/inklewriter-readmode.js
+
+# Expected: HTTP/1.1 200 OK, Content-Type: application/javascript
+
+# Verify bundle sizes are reasonable (should be ~25k+ lines for main, ~17k+ for readmode)
+curl -s http://localhost:3000/assets/inklewriter-source/inklewriter-main.js | wc -l
+curl -s http://localhost:3000/assets/inklewriter-source/inklewriter-readmode.js | wc -l
+```
+
+**Note**: JavaScript tests should ONLY be run when JavaScript source files have been modified. The bundles are compiled from source files in `app/assets/javascripts/inklewriter-source/` using Sprockets.
+
+### Running JavaScript Unit Tests
+
+JavaScript unit tests are implemented using QUnit 2.24.2 for pure function testing.
+
+```bash
+# Run all JavaScript tests (via npm in Docker container)
+docker compose run --rm app npm test
+
+# Expected output: Test summary with pass/fail counts
+# Example: 56 tests, 56 passed, 0 failed
+```
+
+**Testing Constraints:**
+- Tests can ONLY test pure functions (no DOM, no AJAX, no browser APIs)
+- Tests are located in `test/javascript/`
+- Test files must end with `.test.js`
+- QUnit runs via Node.js CLI (`npx qunit`)
+
+**When to run JavaScript tests:**
+- After modifying JavaScript source files in `app/assets/javascripts/inklewriter-source/`
+- Before committing JavaScript changes
+- NOT needed for view/controller changes
+
+**After JavaScript changes, rebuild Docker and test:**
+```bash
+# Full workflow: rebuild image, restart containers, run tests
+docker build -t inklewriter:latest . && \
+docker compose down && \
+docker compose up -d && \
+docker compose run --rm app npm test
 ```
 
 ### Rails Commands
@@ -214,6 +279,7 @@ This project follows a TDD workflow. When implementing new features or fixing bu
 
 **IMPORTANT**: All tests MUST be run using docker-compose to ensure consistent environment with database access.
 
+
 ### Docker Test Workflow
 
 1. **Build the Docker image** (required after code changes):
@@ -253,6 +319,7 @@ This project follows a TDD workflow. When implementing new features or fixing bu
    docker build -t inklewriter:latest . && \
    docker compose down && \
    docker compose up -d && \
+   docker compose logs | head -n 100 && \
    docker compose run --rm app rails test
    ```
 
@@ -264,6 +331,7 @@ This project follows a TDD workflow. When implementing new features or fixing bu
 - **No persistent test containers** - tests run in volatile instances
 - **Database**: PostgreSQL runs in separate container (defined in docker-compose.yml)
 - **Image cache issue**: docker-compose may use old images even after rebuild - always force-recreate
+- **After running unit tests, always do some basic http testing.**
 
 ### Quick Test Commands
 
@@ -295,6 +363,103 @@ docker compose run --rm app rails db:migrate RAILS_ENV=test
 
 # Reset test database
 docker compose run --rm app rails db:test:prepare
+```
+
+### JavaScript Testing Workflow
+
+**Framework**: QUnit 2.24.2 (Node.js CLI)
+
+**Test Location**: `test/javascript/**/*_test.js`
+
+**CRITICAL Testing Requirements**:
+
+⚠️ **MANDATORY CONSTRAINTS - NO EXCEPTIONS:**
+- **ONLY test pure JavaScript functions** - functions that compute outputs from inputs with no side effects
+- **ABSOLUTELY NO DOM testing** - zero jQuery, zero element manipulation, zero event handlers
+- **ABSOLUTELY NO AJAX testing** - zero HTTP requests, zero server communication, zero async operations
+- **NO browser APIs** - no localStorage, no window object, no document object
+- **NO external dependencies** - tests must be self-contained with mocked/copied functions
+- **Focus EXCLUSIVELY on**: Pure business logic, data transformations, utility functions, algorithms
+
+**What CAN be tested:**
+- Data model getters/setters (e.g., `StoryModel.storyName()`, `StoryModel.setStoryName()`)
+- Pure utility functions (e.g., `wordCountOf()`, `commadString()`)
+- String/Array transformations (e.g., `String.camelCase()`, `Array.first()`)
+- Mathematical calculations and comparisons
+- Object/array manipulation without side effects
+- Flag/state logic without DOM interaction
+
+**What CANNOT be tested:**
+- Anything using `$()` or jQuery selectors
+- Functions that create/modify DOM elements
+- Event handlers (`click`, `tap`, `change`, etc.)
+- AJAX calls (`$.ajax`, `fetch`, etc.)
+- Functions that read/write to `localStorage`
+- Functions that use `window`, `document`, or browser APIs
+- Functions with side effects (file I/O, network, timers)
+
+**Running JavaScript Tests**:
+
+```bash
+# Run all JavaScript tests
+docker compose run --rm app npm test
+
+# Tests are executed using QUnit CLI via npx
+# The npm test script runs: npx qunit test/javascript/**/*_test.js
+```
+
+**JavaScript Test Workflow Rules - STRICTLY ENFORCED**:
+- **ALL JavaScript tests MUST pass** before ANY commit touching JS files
+- **Run ONLY when JavaScript code has changed** (not for every Ruby change)
+- **ALWAYS use docker-compose** - never run npm locally
+- **TDD REQUIRED**: Write tests FIRST before implementing new JavaScript features
+- **100% test pass rate** - zero tolerance for failing tests
+- **No test skipping** - do not use `QUnit.skip()` to bypass failures
+- **User acceptance required** - all tests must pass AND user must review before commit
+
+**Example Test Structure**:
+
+```javascript
+// test/javascript/example_test.js
+// Mock or copy the function to test
+function myFunction(input) {
+  return input * 2;
+}
+
+QUnit.module('Module Name', function(hooks) {
+  hooks.beforeEach(function() {
+    // Setup before each test
+  });
+
+  QUnit.test('Description of test', function(assert) {
+    assert.equal(myFunction(5), 10, 'Should double the input');
+  });
+});
+```
+
+**Current Test Coverage (56 tests total)**:
+- `test/javascript/sample_test.js`: QUnit framework verification (2 tests)
+- `test/javascript/storyModel_test.js`: StoryModel functions - core properties, flag parsing, conditionals, page calculations (32 tests)
+- `test/javascript/aux_test.js`: Utility functions and Array/String extensions (24 tests)
+
+**Testing JavaScript Bundle Delivery**:
+
+After making changes to JavaScript source files in `app/assets/javascripts/inklewriter-source/`:
+
+```bash
+# Verify bundles are served correctly
+curl -I http://localhost:3000/assets/inklewriter-source/inklewriter-main.js
+# Expected: HTTP/1.1 200 OK, Content-Type: application/javascript
+
+curl -I http://localhost:3000/assets/inklewriter-source/inklewriter-readmode.js
+# Expected: HTTP/1.1 200 OK, Content-Type: application/javascript
+
+# Check bundle sizes (lines of code)
+curl -s http://localhost:3000/assets/inklewriter-source/inklewriter-main.js | wc -l
+# Expected: ~25,000+ lines for main bundle
+
+curl -s http://localhost:3000/assets/inklewriter-source/inklewriter-readmode.js | wc -l
+# Expected: ~17,000+ lines for readmode bundle
 ```
 
 ## Commit Message Format

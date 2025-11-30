@@ -7,32 +7,16 @@ Rails.application.config.assets.version = '1.0'
 # Rails.application.config.assets.paths << Emoji.images_path
 # Add Yarn node_modules folder to the asset load path.
 Rails.application.config.assets.paths << Rails.root.join('node_modules')
-Rails.application.config.assets.paths << Rails.root.join('vendor', 'assets')
-
-Rails.application.config.assets.precompile += %w(*.png *.jpg *.jpeg *.gif *.svg *.ttf *.webp *.woff *.woff2 *.eot)
+# Add inklewriter source files to asset load path
+Rails.application.config.assets.paths << Rails.root.join('app', 'assets', 'javascripts', 'inklewriter-source')
 
 # Precompile additional assets.
 # application.js, application.css, and all non-JS/CSS in the app/assets
 # folder are already added.
 # Rails.application.config.assets.precompile += %w( admin.js admin.css )
-Rails.application.config.assets.precompile += %w( ifwriter-main.js )
-Rails.application.config.assets.precompile += %w( pages/index.js )
-Rails.application.config.assets.precompile += %w( stories/show.js )
-Rails.application.config.assets.precompile += %w( emails.css )
-Rails.application.config.assets.precompile += %w( devise.css )
-Rails.application.config.assets.precompile += %w( errors.css )
+
+# Inklewriter JavaScript bundles (compiled from source)
+Rails.application.config.assets.precompile += %w( inklewriter-main.js inklewriter-readmode.js )
+
+# Inklewriter converter (for .ink export format)
 Rails.application.config.assets.precompile += %w( inklewriter-convert.js )
-Rails.application.config.assets.precompile += %w( inking.css )
-Rails.application.config.assets.precompile += %w( inklewriter-read.js )
-Rails.application.config.assets.precompile += %w( inklewriter-write.js )
-Rails.application.config.assets.precompile += %w( pages.css )
-Rails.application.config.assets.precompile += %w( inking.css )
-Rails.application.config.assets.precompile += %w( stories.css )
-Rails.application.config.assets.precompile += %w( inklewriter.css )
-Rails.application.config.assets.precompile += %w( admin/adminpages.css )
-Rails.application.config.assets.precompile += %w( users/confirmations.css )
-Rails.application.config.assets.precompile += %w( users/sessions.css )
-Rails.application.config.assets.precompile += %w( users/registrations.css )
-Rails.application.config.assets.precompile += %w( users/unlocks.css )
-Rails.application.config.assets.precompile += %w( users/passwords.css )
-Rails.application.config.assets.precompile += %w( admin/adminpages/index.js )

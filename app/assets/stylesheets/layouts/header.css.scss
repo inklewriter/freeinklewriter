@@ -1,0 +1,73 @@
+#header {	
+	font-family: Baskerville, "Hoefler Text", Georgia, "Times New Roman", serif;
+	background-color: #A92C27;
+	padding: 7px 0;
+	position: relative;
+
+	.container {
+		position: relative;
+	}
+
+	#logo {
+		display: inline-block;
+		h1 {
+			padding: 0;
+			margin: 0;
+            font-weight: normal;
+		}
+		a {
+			color: #f8f8f8;
+			text-decoration: none;
+		}
+		a:hover {
+            text-shadow: 0 0 2px white;
+		}
+	}
+
+	#to-app {
+		display: inline-block;
+		margin-left: 20px;
+		background-color: hsl(359, 60%, 40%);
+		border-radius: 4px;
+		color: white;
+		padding: 3px 4px 2px 5px;
+		
+		font-size: 0.8em;
+		font-family: "sans-serif";
+		bottom: 4px;
+		position: relative;
+		a {
+			color: white;
+			text-decoration: none;
+		}
+	}
+
+	
+
+	#user-signed-in {		
+		padding-top: 12px;			
+		display: inline-block;
+		float: right;
+        color: #f8f8f8;
+		a {
+			padding: 0;
+			margin: 0;
+			display: inline-block;
+			font-weight: bold;
+			font-size: 1.2em;
+		}
+
+		a:hover {
+			text-decoration: none;
+            text-shadow: 0 0 2px white;
+
+		}
+		
+	}
+
+	#no-user {
+				
+		display: inline-block;
+		float: right;
+	}
+}
