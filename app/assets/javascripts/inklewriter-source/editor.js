@@ -3022,18 +3022,18 @@ var Editor = function() {
     var conditionsDescribed = function(owner, storyModelElement) {
     			
         var conjuctive = "";
-        var string = " only show if ";
+        var string = tr("CONDITIONS only show if");
         
         for (var i = 0 ; i < numberOfConditionals(storyModelElement, true) ; i++)
         {
             string += conjuctive + "<span class='logic'>" + conditionalByIndex(storyModelElement, true, i) + "</span>";
-            conjuctive = " and ";
+            conjuctive = tr("CONDITIONS and");
         }
-        conjuctive += "not ";
+        conjuctive += tr("CONDITIONS not");
         for ( var i = 0 ; i < numberOfConditionals(storyModelElement, false) ; i++)
         {
             string += conjuctive + "<span class='logic'>" + conditionalByIndex(storyModelElement, false, i)  + "</span>";
-            conjuctive = " and not ";
+            conjuctive = tr("CONDITIONS and not");
         }
         
 		return string;	
