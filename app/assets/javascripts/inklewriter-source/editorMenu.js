@@ -659,7 +659,11 @@ var EditorMenu = function() {
         }
 
         if (saveState != TUTORIAL) {
-            addMenuOption(tr("?"), jqAccountMenu, function() { window.open("http://www.inklestudios.com/inklewriter/getting-started") }, tr("Getting Started"));
+            if (is_featured('community_link')) {
+                addMenuOption(tr("community"), jqAccountMenu, function() { window.open("/community") }, tr("Community and story parameters"));
+            } else {
+                addMenuOption(tr("?"), jqAccountMenu, function() { window.open("http://www.inklestudios.com/inklewriter/getting-started") }, tr("Getting Started"));
+            }
         }
         
         
