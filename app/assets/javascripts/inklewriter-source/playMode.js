@@ -37,12 +37,12 @@ var Player = function() {
             // Normal read mode, when editing
             if( !readOnly ) {
                 removeDeadOptions();
-                this.jqPlayChunk.html("This page intentionally left blank.<br>(<a href='javascript:EditorMenu.enterEditMode();'>Continue the story from here</a>.)");
-            } 
-            
+                this.jqPlayChunk.html(tr("This page intentionally left blank.") + "<br>(<a href='javascript:EditorMenu.enterEditMode();'>" + tr("Continue the story from here") + "</a>.)");
+            }
+
             // Read only mode (e.g. from sharing)
             else {
-                this.jqPlayChunk.html("<div class='the_end'>End</div>");           
+                this.jqPlayChunk.html("<div class='the_end'>" + tr("End") + "</div>");
             }
             
             $("#read_area").append(this.jqPlayChunk);
@@ -86,18 +86,18 @@ var Player = function() {
                 
                 if (appendStitch.numberOfFlags() > 0) {
                     StoryModel.processFlagSetting(appendStitch, this.flagsCollected);
-                
+
                     if( !readOnly ) {
                         var jqList = this.jqFlags.find('ul');
                         for (var i = 0 ; i < appendStitch.numberOfFlags() ; i++) {
                             var flagText = appendStitch.flagByIndex(i);
                             var counterAlterRegex = /^(.*?)\s*(\+|\-)\s*(\b.*\b)\s*$/;
                             if ( matchSet = flagText.match(counterAlterRegex) ) {
-                            
-                                flagText += " (now " + StoryModel.getValueOfFlag(matchSet[1], this.flagsCollected) + ")";
-                            
+
+                                flagText += " (" + tr("now") + " " + StoryModel.getValueOfFlag(matchSet[1], this.flagsCollected) + ")";
+
                             }
-                            
+
                             jqList.append('<li>' + flagText + '</li>');
                         }
                         this.jqFlags.show();
@@ -117,11 +117,11 @@ var Player = function() {
         $("#read_area").append(this.jqPlayChunk);
        
         this.createOptionBlock();
-    
+
         // create rewind button (hidden by default)
-        this.jqRewindButton = $('<div class="rewindButton" tooltip="Rewind to here"></div>');
+        this.jqRewindButton = $('<div class="rewindButton" tooltip="' + tr("Rewind to here") + '"></div>');
         this.jqPlayChunk.append(this.jqRewindButton);
-        this.jqRewindButton.bind("mousedown tap", function() { 
+        this.jqRewindButton.bind("mousedown tap", function() {
             self.rewindToHere();
             saveGame();
         });
@@ -135,7 +135,7 @@ var Player = function() {
         } else {
             this.jqRewindButton.addClass("initial");
             if (readOnly) {
-        	   this.jqRewindButton.text("Start again");
+        	   this.jqRewindButton.text(tr("Start again"));
             }
         }
     
@@ -154,20 +154,20 @@ var Player = function() {
         if (this.stitches.last().options.length == 0)
         {
             // end!
-            this.jqTextBlock.append('<div class="the_end">End</div>');
+            this.jqTextBlock.append('<div class="the_end">' + tr("End") + '</div>');
             if( !readOnly ) {
-                this.jqTextBlock.append('<br>(<a href="javascript:EditorMenu.enterEditMode();">Go back to Write mode to continue</a>.)</div>');
-                
+                this.jqTextBlock.append('<br>(<a href="javascript:EditorMenu.enterEditMode();">' + tr("Go back to Write mode to continue") + '</a>.)</div>');
+
             } else {
-                
+
 	            this.jqTextBlock.find('.the_end').append("<div class='back_to_top'></div>");
 				this.jqTextBlock.find('.back_to_top').bind('click tap', function() {
 					scrollTo(chunks.first().jqPlayChunk);
-				});                
+				});
 
-                
-                $("#read_area").append("<div id='madeby'>Text &copy; the author. <a href='http://www.inklestudios.com/inklewriter'><strong>inklewriter</strong></a> &copy; <a href='http://www.inklestudios.com'><strong>inkle</strong></a></div>");
-                
+
+                $("#read_area").append("<div id='madeby'>" + tr("Text &copy; the author.") + " <a href='http://www.inklestudios.com/inklewriter'><strong>inklewriter</strong></a> © <a href='http://www.inklestudios.com'><strong>inkle</strong></a></div>");
+
             }
         } 
         else
@@ -266,9 +266,9 @@ var Player = function() {
             // Todo --> indicate the WRITE mode button with a popup
             this.jqPlayOption.addClass("disabled");
             if (optionLink.writeModeOnly )
-                this.jqPlayOption.attr("tooltip", "Switch to write mode to continue.");
-            else 
-                this.jqPlayOption.attr("tooltip", "This option has been disallowed by conditions.");
+                this.jqPlayOption.attr("tooltip", tr("Switch to writing mode to continue."));
+            else
+                this.jqPlayOption.attr("tooltip", tr("This option has been disallowed by conditions."));
         }
     };
 
@@ -417,7 +417,7 @@ var Player = function() {
             matchCount++;
             if (matchCount > 1000)
             {
-                alert("Error in conditional!");
+                alert(tr("Error in conditional!"));
                 break;
             }
             if (conditionalMatches.length > 0)
@@ -466,7 +466,7 @@ var Player = function() {
         else
             totWordCount = totWordCount - (totWordCount % 100) + 100;
 
-        $('#wordcount').text("About " + commadString(totWordCount) + " words");
+        $('#wordcount').text(tr("About &count words", {count: commadString(totWordCount)}));
     };
 
     var scrollTo = function(target) {
@@ -643,12 +643,12 @@ function NumToWords()
    {
         var prefix = "";
       if (n < 0 ) {
-        prefix = "minus ";
+        prefix = tr("minus") + " ";
         n = -n;
       }
       if (n == 0)
       {
-         return 'zero';
+         return tr('zero');
       }
 
       var str = _getIntAsWordsRecursively(n, 0);
@@ -724,9 +724,9 @@ function NumToWords()
       if (n < 1000)
       {
          // 100 <= n < 1000.
-         return _words.digits[Math.floor(n / 100) - 1] + ' hundred' +
+         return _words.digits[Math.floor(n / 100) - 1] + ' ' + tr("hundred") +
          (
-            (n % 100 == 0)? '': ' and ' + _getNonZeroNumberLessThanOneThousandAsWords(n % 100)
+            (n % 100 == 0)? '': ' ' + tr("and") + ' ' + _getNonZeroNumberLessThanOneThousandAsWords(n % 100)
          );
       }
 
@@ -737,17 +737,17 @@ function NumToWords()
 
    var _words =
    {
-      digits: ['one', 'two'   , 'three' , 'four' , 'five' , 'six'  , 'seven'  , 'eight' , 'nine'  ],
-      tens  : ['ten', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'],
+      digits: [tr('one'), tr('two'), tr('three'), tr('four'), tr('five'), tr('six'), tr('seven'), tr('eight'), tr('nine')],
+      tens  : [tr('ten'), tr('twenty'), tr('thirty'), tr('forty'), tr('fifty'), tr('sixty'), tr('seventy'), tr('eighty'), tr('ninety')],
       teens :
       [
-         'ten'    , 'eleven' , 'twelve'   , 'thirteen', 'fourteen',
-         'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'
+         tr('ten'), tr('eleven'), tr('twelve'), tr('thirteen'), tr('fourteen'),
+         tr('fifteen'), tr('sixteen'), tr('seventeen'), tr('eighteen'), tr('nineteen')
       ],
       illions:
       [
           // See http://en.wikipedia.org/wiki/Names_of_large_numbers.
-          'thousand'  , 'million'   , 'billion'  , 'trillion'
+          tr('thousand'), tr('million'), tr('billion'), tr('trillion')
       ]
    };
 }

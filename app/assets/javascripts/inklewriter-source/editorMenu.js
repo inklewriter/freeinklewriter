@@ -42,7 +42,7 @@ var EditorMenu = function() {
     var minAge = 13;
     var maxAge = 21;
     var competitionDeadline = new Date("April 15, 2012"); // Date() // <-- Today
-    var ageMessage = "Sorry, you must be aged between "+minAge+" and "+maxAge+" on the competition deadline date to enter!";
+    var ageMessage = tr("Sorry, you must be aged between &minAge and &maxAge on the competition deadline date to enter!", {minAge: minAge, maxAge: maxAge});
     
     var validateCompetitionAge = function(dateString) {
         var dateComponents = dateString.match(datePattern);
@@ -108,7 +108,7 @@ var EditorMenu = function() {
             message: parameters.message
         });
         
-        var mainButtonTitle = parameters.mainButtonTitle || "Open";
+        var mainButtonTitle = parameters.mainButtonTitle || tr("Open");
         
         var jqFileList = $('<ul id="fileList"></ul>');
         fileDialogue.addContent(jqFileList);
@@ -121,7 +121,7 @@ var EditorMenu = function() {
             }
         
             // Create files
-            var deleteHtml = parameters.hasDelete ? '<div class="delete button">X</div>' : '';
+            var deleteHtml = parameters.hasDelete ? '<div class="delete button">' + tr("X") + '</div>' : '';
             for(var storyId in allStories) {
                 var storyData = allStories[storyId];
                 if (storyData)
@@ -163,17 +163,17 @@ var EditorMenu = function() {
                     var storyId = jqChosenToDelete.data("storyId");
                     var storyData = EditorAccount.allStories()[storyId];
                     
-                    var thisName = "Untitled";
+                    var thisName = tr("Untitled");
                     if (storyData)
                         thisName = storyData.title;
 
                     var deleteConfirm = new Dialogue({
-                        title: "Delete story",
-                        message: "Are you sure you wish to delete the story "+thisName+"?"
+                        title: tr("Delete story"),
+                        message: tr("Are you sure you wish to delete the story "+thisName+"?")
                     })
                 
-                    deleteConfirm.addButton("Cancel");
-                    deleteConfirm.addButton("Delete", function() {
+                    deleteConfirm.addButton(tr("Cancel"));
+                    deleteConfirm.addButton(tr("Delete"), function() {
                     
                         // Close down this story editing session if we're deleting
                         // the one that we're currently editing.
@@ -195,7 +195,7 @@ var EditorMenu = function() {
         }; // populateFileList
         populateFileList();
         
-        fileDialogue.addButton("Cancel");
+        fileDialogue.addButton(tr("Cancel"));
         var openButton = fileDialogue.addButton(mainButtonTitle, function() {
             var jqSelected = jqFileList.find(".selected");
             var storyId = jqSelected.data("storyId");
@@ -216,8 +216,8 @@ var EditorMenu = function() {
             
             // Create file list dialogue
             var fileListDialogue = createFileListDialogue({
-                title: "Open",
-                message: "Choose the story to open",
+                title: tr("Open"),
+                message: tr("Choose a story to open"),
                 hasDelete: true,
                 choose: function(storyId) {
                     saveState = SAVED;
@@ -230,14 +230,14 @@ var EditorMenu = function() {
         }
         
         if( saveState >= OUT_OF_DATE && saveState < SAVED ) {
-            
+
             var confirm = new Dialogue({
-                title: "Unsaved changes",
-                message: "Saving is in progress. Are you sure you wish to continue and open a different story anyway?"
+                title: tr("Unsaved changes"),
+                message: tr("Saving in progress. Continue and open a different story anyway?")
             });
-            
-            confirm.addButton("Cancel");
-            confirm.addButton("Continue...", function() { confirm.close(); openImmediate();  } );
+
+            confirm.addButton(tr("Cancel"));
+            confirm.addButton(tr("Continue…"), function() { confirm.close(); openImmediate();  } );
             
         } else {
             openImmediate();
@@ -248,51 +248,48 @@ var EditorMenu = function() {
         
         // Show info dialogue
         var infoDialogue = new Dialogue({
-            title: "inkle writing competition",
-            message: "inkle is running an interactive fiction writing competition, open between \
-                      blah and blah. If you're aged between "+minAge+" and "+maxAge+" you're very welcome to enter! \
-                      For more information, go to <a href='http://www.inklestudios.com/competition'>our \
-                      main competition page</a>.<br/><br/>If you're ready to submit your entry, click enter!"
+            title: tr("inkle writing competition"),
+            message: tr("inkle is running an interactive fiction writing competition, open between blah and blah. If you're aged between &minAge and &maxAge you're very welcome to enter! For more information, go to <a href='http://www.inklestudios.com/competition'>our main competition page</a>.<br/><br/>If you're ready to submit your entry, click enter!", {minAge: minAge, maxAge: maxAge})
         });
-        
-        infoDialogue.addButton("Cancel");
-        infoDialogue.addButton("Enter", function() {
+
+        infoDialogue.addButton(tr("Cancel"));
+        infoDialogue.addButton(tr("Enter"), function() {
             infoDialogue.close();
             
             // Show file list dialogue
             var fileListDialogue = createFileListDialogue({
-                title: "Competition entry",
-                message: "Choose the story you'd like to enter in the competition",
-                mainButtonTitle: "Submit",
+                title: tr("Competition entry"),
+                message: tr("Choose the story you'd like to enter in the competition"),
+                mainButtonTitle: tr("Submit"),
                 choose: function(storyId) {
                     
                     var storyData = EditorAccount.allStories()[storyId];
                     
                     // Details form
                     var formDialogue = new Dialogue({
-                        title: "Entry form",
-                        message: "Your details"
+                        title: tr("Entry form"),
+                        message: tr("Your details")
                     });
-                    
-                    var firstNameField = formDialogue.addField("First name");
-                    var lastNameField  = formDialogue.addField("Last name");
-                    var dobField       = formDialogue.addField("Date of birth (DD/MM/YYYY)");
-                    
-                    formDialogue.addButton("Cancel");
-                    formDialogue.addButton("Submit", function() {
-                        
+
+                    var firstNameField = formDialogue.addField(tr("First name"));
+                    var lastNameField  = formDialogue.addField(tr("Last name"));
+                    var dobField       = formDialogue.addField(tr("Date of birth (DD/MM/YYYY)"));
+
+                    formDialogue.addButton(tr("Cancel"));
+                    formDialogue.addButton(tr("Submit"), function() {
+
                         if( !validateFirstName(firstNameField.value()) ) {
-                            formDialogue.setMessage("Please enter your first name");
+                            formDialogue.setMessage(tr("Please enter your first name"));
                             return;
                         }
-                        
+
                         else if( !validateLastName(lastNameField.value()) ) {
-                            formDialogue.setMessage("Please enter your last name");
+                            formDialogue.setMessage(tr("Please enter your last name"));
                             return;
                         }
-                        
+
                         else if ( !validateDateOfBirth(dobField.value()) ) {
-                            formDialogue.setMessage("Please specify the date in the format DD/MM/YYYY");
+                            formDialogue.setMessage(tr("Please specify the date in the format DD/MM/YYYY"));
                             return;
                         }
                         
@@ -303,21 +300,21 @@ var EditorMenu = function() {
                         
                         // Show confirmation dialogue
                         var submitConfirmDialogue = new Dialogue({
-                            title: "Submit entry",
-                            message: "Are you sure you wish to submit \""+storyData.title+"\" into inkle's competition?"
+                            title: tr("Submit entry"),
+                            message: tr("Are you sure you wish to submit \"&title\" into inkle's competition?", {title: storyData.title})
                         });
 
-                        submitConfirmDialogue.addButton("Cancel");
-                        submitConfirmDialogue.addButton("Submit", function() {
+                        submitConfirmDialogue.addButton(tr("Cancel"));
+                        submitConfirmDialogue.addButton(tr("Submit"), function() {
                             formDialogue.close();
                             submitConfirmDialogue.close();
 
                             // Show thank you dialogue
                             var thankYouDialogue = new Dialogue({
-                                title: "Thank you!",
-                                message: "Your story has been successfully entered into the competition. Good luck!"
+                                title: tr("Thank you!"),
+                                message: tr("Your story has been successfully entered into the competition. Good luck!")
                             });
-                            thankYouDialogue.addButton("Okay");
+                            thankYouDialogue.addButton(tr("Okay"));
                         });
                         
                     }) // formDialogue (Submit callback)
@@ -331,13 +328,13 @@ var EditorMenu = function() {
     var confirmSaveThenCall = function(actionAfterFunc) {
         if( saveState == UNSAVED ) {
             var confirm = new Dialogue({
-                title: "Save changes?",
-                message: "Would you like to log in and save changes to your work in progress before continuing?"
+                title: tr("Save changes?"),
+                message: tr("Log in and save changes before continuing?")
             });
 
-            confirm.addButton("Don't save", function() { confirm.close(); actionAfterFunc();  } );
-            confirm.addButton("Cancel");
-            confirm.addButton("Save", function() { 
+            confirm.addButton(tr("Do not save"), function() { confirm.close(); actionAfterFunc();  } );
+            confirm.addButton(tr("Cancel"));
+            confirm.addButton(tr("Save"), function() { 
                 confirm.close(); 
                 
                 // Signing in cancels the existing action
@@ -346,14 +343,14 @@ var EditorMenu = function() {
         }
         
         else if( saveState >= PENDING && saveState < SAVED ) {
-            
+
             var confirm = new Dialogue({
-                title: "Unsaved changes",
-                message: "Saving is in progress. Are you sure you wish to continue anyway?"
+                title: tr("Unsaved changes"),
+                message: tr("Saving in progress. Continue anyway?")
             });
-            
-            confirm.addButton("Continue", function() { confirm.close(); actionAfterFunc();  } );
-            confirm.addButton("Cancel");
+
+            confirm.addButton(tr("Continue"), function() { confirm.close(); actionAfterFunc();  } );
+            confirm.addButton(tr("Cancel"));
         }
         
         // No unsaved work - create a new story instantly
@@ -375,13 +372,13 @@ var EditorMenu = function() {
         var libButton = $("#libraryButton");
         if (Editor.toggleLibrary()) {
             libButton.addClass('toggledto');
-            libButton.attr("tooltip", "Close the contents list");
-            
+            libButton.attr("tooltip", tr("Close the contents list"));
+
         } else {
             libButton.removeClass('toggledto');
-            libButton.attr("tooltip", "Open the contents list");
+            libButton.attr("tooltip", tr("Open the contents list"));
         }
-        
+
     }    
     
     var launchMapView = function() {
@@ -398,18 +395,18 @@ var EditorMenu = function() {
         var jsonURL = htmlURL + ".json";
         var inkURL = htmlURL + ".ink";
 
-        var content = '<p><a href="' + htmlURL + '" target="_blank">Play the story in a browser</a>.</p>' +
+        var content = '<p><a href="' + htmlURL + '" target="_blank">' + tr("Play the story in a web browser") + '</a>.</p>' +
             '<input type="text" onClick="this.select();" class="selectInput" value="' + htmlURL + '" />' +
-            '<p><a href="' + jsonURL + '" target="_blank">Get the story in JSON format.</a></p>' +
+            '<p><a href="' + jsonURL + '" target="_blank">' + tr("Get the story in JSON format") + '</a></p>' +
             '<input type="text" onClick="this.select();" class="selectInput" value="' + jsonURL + '" />' +
-            '<p><a href="' + inkURL + '" target="_blank">Get the story in Inklestudio\'s Ink format.</a></p>' +
+            '<p><a href="' + inkURL + '" target="_blank">' + tr("Get the story in Inklestudio's Ink format") + '</a></p>' +
             '<input type="text" onClick="this.select();" class="selectInput" value="' + inkURL + '" />' +
             '<br><br>';
 
         var shareDialogue = new Dialogue({
-            title: "Share '" + StoryModel.storyName() + "'",
+            title: tr("Share '&name'", {name: StoryModel.storyName()}),
             message: content,
-            footer: "Caution, the JSON format exported here is not usable in Ink."
+            footer: tr("Caution! the JSON format exported here is not usable in Ink.")
         });
 
         $("input.selectInput").css({
@@ -421,10 +418,10 @@ var EditorMenu = function() {
             margin: "0px 0px 20px"
         });
 
-        shareDialogue.addButton("Okay");
+        shareDialogue.addButton(tr("OK"));
 
         // Feature 7: Fixed URL Sharing - Add "Read now" button to open story in new tab
-        shareDialogue.addButton("Read now", function() {
+        shareDialogue.addButton(tr("Read now"), function() {
             window.open(window.location.protocol + "//" + window.location.host + "/stories/" + EditorAccount.currentStoryId());
         });
     }
@@ -438,8 +435,8 @@ var EditorMenu = function() {
         };
 
         var settingsDialogue = new Dialogue({
-            title: "Settings",
-            message: "Scale of the editor:"
+            title: tr("Settings"),
+            message: tr("Editor size:")
         });
 
         // actual system to select this. Um...
@@ -470,7 +467,7 @@ var EditorMenu = function() {
 
         populateScalesList();
 
-        settingsDialogue.addContent("<p>Read settings:</p>");
+        settingsDialogue.addContent("<p>" + tr("Read settings:") + "</p>");
         
         var jqReadOptions = $("<div class='optionSet'></div>");
         settingsDialogue.addContent(jqReadOptions);  
@@ -484,15 +481,15 @@ var EditorMenu = function() {
             });
         };
 
-        createReadOption("mirroring", "display option once chosen", "optionMirroring");
-        createReadOption("checkpoints", "provide more rewind points", "allowCheckpoints");
+        createReadOption("mirroring", tr("display option once chosen"), "optionMirroring");
+        createReadOption("checkpoints", tr("provide more rewind points"), "allowCheckpoints");
 
-        settingsDialogue.addButton("Okay", function() {
+        settingsDialogue.addButton(tr("OK"), function() {
             EditorMenu.requireSave();
             settingsDialogue.close();
         });
 
-        settingsDialogue.addButton("Cancel", function() {
+        settingsDialogue.addButton(tr("Cancel"), function() {
             Editor.changeTextSize(originalSettings.scaleSize);
             StoryModel.optionMirroring = originalSettings.optionMirroring;
             EditorMenu.requireSave();
@@ -529,8 +526,8 @@ var EditorMenu = function() {
 
 // Entering edit mode is slow
         var loading = new Dialogue({
-            title: "Working",
-            message: "Please wait a moment..."
+            title: tr("Working…"),
+            message: tr("Please wait a moment…")
         });
         
         // Timeout allows the dialogue to appear before we get busy rendering other things
@@ -584,29 +581,29 @@ var EditorMenu = function() {
 
 
 
-        if (!playMode)  {    
+        if (!playMode)  {
             if (Editor.settings.graphing)
-                addMenuOption("map", jqEditorMenu, EditorMenu.launchMapView, "Open the map");
-      
+                addMenuOption(tr("map"), jqEditorMenu, EditorMenu.launchMapView, tr("Open the map"));
+
             if (Editor.toggleLibrary(true)) {
-                addMenuOption("<span id='libraryButton' class='toggledto'>contents</span>", jqEditorMenu, EditorMenu.toggleLibraryView, "Close contents list");            
+                addMenuOption("<span id='libraryButton' class='toggledto'>" + tr("contents") + "</span>", jqEditorMenu, EditorMenu.toggleLibraryView, tr("Close content list"));
             } else {
-                addMenuOption("<span id='libraryButton'>contents</span>", jqEditorMenu, EditorMenu.toggleLibraryView, "Open contents list");            
+                addMenuOption("<span id='libraryButton'>" + tr("contents") + "</span>", jqEditorMenu, EditorMenu.toggleLibraryView, tr("Open the content list"));
             }
         }
     
         
         if (!playMode) {
-            addMenuOption("<span class='toggledto'>write</span>", jqEditorMenu);
-            addMenuOption("read", jqEditorMenu, EditorMenu.enterPlayMode, "Read your story"); 
+            addMenuOption("<span class='toggledto'>" + tr("write") + "</span>", jqEditorMenu);
+            addMenuOption(tr("read"), jqEditorMenu, EditorMenu.enterPlayMode, tr("Read your story"));
         }
         else {
-            addMenuOption("write", jqEditorMenu, EditorMenu.enterEditMode, "Write your story");
-            addMenuOption("<span class='toggledto'>read</span>", jqEditorMenu); 
+            addMenuOption(tr("write"), jqEditorMenu, EditorMenu.enterEditMode, tr("Write your story"));
+            addMenuOption("<span class='toggledto'>" + tr("read") + "</span>", jqEditorMenu);
         }
 
         if (!($.browser.msie && parseInt($.browser.version, 10) <= 8)) {
-            addMenuOption("<span style='font-size:24px;'>&#9881;</span>", jqEditorMenu, EditorMenu.showSettingsDialogue, "Settings");
+            addMenuOption("<span style='font-size:24px;'>&#9881;</span>", jqEditorMenu, EditorMenu.showSettingsDialogue, tr("Settings"));
         }
         
         setSaveState(saveState);
@@ -623,46 +620,46 @@ var EditorMenu = function() {
         
         // Logged in
         if( EditorAccount.signedIn() ) {
-            
+
             // We need a username and the sign out link
 //            jqAccountMenu.prepend('<div class="menuOption">'+EditorAccount.username()+'</div>');
-            addMenuOption("sign out", jqAccountMenu, signOut, "Sign out");
+            addMenuOption(tr("sign out"), jqAccountMenu, signOut, tr("Sign out"));
         }
-        
+
         // Logged out
         else {
             // We need a "sign in" element
-            addMenuOption("sign in", jqAccountMenu, EditorAccount.signIn, "Sign in to your account");
+            addMenuOption(tr("sign in"), jqAccountMenu, EditorAccount.signIn, tr("Sign in to your account"));
         }
-        
-                        
-        addMenuOption("new", jqAccountMenu, EditorMenu.createNew, "Start a new story");
-        
+
+
+        addMenuOption(tr("new"), jqAccountMenu, EditorMenu.createNew, tr("Start a new story"));
+
         if( EditorAccount.signedIn() ) {
-            addMenuOption("open", jqAccountMenu, EditorMenu.open, "Open one of your saved stories");
-            addMenuOption("import", jqAccountMenu, EditorMenu.importStory, "Import a story from another instance");
+            addMenuOption(tr("open"), jqAccountMenu, EditorMenu.open, tr("Open one of your saved stories"));
+            addMenuOption(tr("import"), jqAccountMenu, EditorMenu.importStory, tr("Import a story from another instance"));
 //            addMenuOption("competition", jqAccountMenu, EditorMenu.competition);
         }
 
 
         if (saveState != TUTORIAL) {
-            addMenuOption("tutorial", jqAccountMenu, EditorMenu.loadTutorial, "Load the tutorial");
-            
-            // we can't share the tutorial        
+            addMenuOption(tr("tutorial"), jqAccountMenu, EditorMenu.loadTutorial, tr("Load the tutorial"));
+
+            // we can't share the tutorial
             if( EditorAccount.signedIn() ) {
                 // if not yet saved, hide the button completely
                 if (saveState > UNSAVED) {
-                    addMenuOption("share", jqAccountMenu, EditorMenu.showShareDialogue, "Share your story");
+                    addMenuOption(tr("share"), jqAccountMenu, EditorMenu.showShareDialogue, tr("Share your story"));
                 }
             } else {
-                addMenuOption("share", jqAccountMenu, EditorAccount.signIn, "Sign in to share your story");
+                addMenuOption(tr("share"), jqAccountMenu, EditorAccount.signIn, tr("Sign in to share your story"));
             }
         } else {
-            addMenuOption("restart tutorial", jqAccountMenu, EditorMenu.loadTutorial, "Restart the tutorial");            
+            addMenuOption(tr("tutorial"), jqAccountMenu, EditorMenu.loadTutorial, tr("Restart the tutorial"));
         }
-        
+
         if (saveState != TUTORIAL) {
-            addMenuOption("?", jqAccountMenu, function() { window.open("http://www.inklestudios.com/inklewriter/getting-started") }, "Getting Started");
+            addMenuOption(tr("?"), jqAccountMenu, function() { window.open("http://www.inklestudios.com/inklewriter/getting-started") }, tr("Getting Started"));
         }
         
         
@@ -675,29 +672,29 @@ var EditorMenu = function() {
         var jqSaveMessage = $("#saveStateMessage");
         
         if( newState === UNSAVED ) {
-            jqSaveMessage.text("Sign in to save");
+            jqSaveMessage.text(tr("Sign in to save"));
         } else if( newState >= OUT_OF_DATE && newState <= PENDING ) {
-            jqSaveMessage.text("Saving soon...");
+            jqSaveMessage.text(tr("Saving soon…"));
         } else if( newState === SENDING_TO_SERVER ) {
-            jqSaveMessage.text("Saving...");
+            jqSaveMessage.text(tr("Saving…"));
         } else if( newState === SAVED ) {
-            jqSaveMessage.text("Saved.");
+            jqSaveMessage.text(tr("Saved."));
         } else if( newState == NO_SAVE_REQUIRED ) {
             jqSaveMessage.text("");
         } else if ( newState == TUTORIAL ) {
-            jqSaveMessage.text("Tutorial in progress...");
+            jqSaveMessage.text(tr("Tutorial in progress"));
         } else {
-            jqSaveMessage.text("Error. Save state unknown.");
+            jqSaveMessage.text(tr("Error. Unknown save state."));
         }
         if (EditorAccount.username())
-            jqSaveMessage.prepend( "Logged in as " + EditorAccount.username() + " -- ");
+            jqSaveMessage.prepend( tr("Logged in as &name — ", {name: EditorAccount.username()}) );
             
         // Is a save message required?
         if( !EditorAccount.signedIn() || newState === TUTORIAL || newState === SAVED || newState === NO_SAVE_REQUIRED ) {
             window.onbeforeunload = null;
         } else {
             window.onbeforeunload = function() {
-                var message = 'inklewriter has unsaved changes';
+                var message = tr('Unsaved changes in Inklewriter');
                 return message;
             };
         }
@@ -854,12 +851,12 @@ var EditorMenu = function() {
         if( EditorAccount.signedIn() ) {
             confirmSaveThenCall( function() {
                 var confirmation = new Dialogue({
-                    title: "Sign out",
-                    message: "Are you sure you wish to sign out "+EditorAccount.username()+"?"
+                    title: tr("Sign out"),
+                    message: tr("Sign out &name?", {name: EditorAccount.username()})
                 });
-                
-                confirmation.addButton("Cancel");
-                confirmation.addButton("Sign out", function() {
+
+                confirmation.addButton(tr("Cancel"));
+                confirmation.addButton(tr("Sign out"), function() {
                     EditorAccount.signOut();
     //                Editor.clear();
                     Editor.loadDefaultStory();
@@ -884,16 +881,16 @@ var EditorMenu = function() {
 
     var importStory = function() {
         var dialogue = new Dialogue({
-            title: "Import",
-            message: "Paste your story to import in JSON format.",
-            footer: "After import, your story will be added to your account. Use the <b>Open</b> button to select it from the list and edit it."
+            title: tr("Import"),
+            message: tr("Paste your story to import it in JSON format."),
+            footer: tr("After importing, your story will be added to your account. Use the <b>Open</b> button to select it from the list and edit it.")
         });
 
         var form = $('<form><textarea rows=20 cols=45></textarea></form>');
 
         dialogue.addContent(form);
-        dialogue.addButton("Cancel");
-        dialogue.addButton("Import story", function() {
+        dialogue.addButton(tr("Cancel"));
+        dialogue.addButton(tr("Import story"), function() {
             var story = $(".dialogue textarea").val();
 
             // Validate JSON format
@@ -901,7 +898,7 @@ var EditorMenu = function() {
                 JSON.parse(story);
             } catch(e) {
                 console.log("Invalid JSON format:", e);
-                alert("Oops, your JSON format is invalid!");
+                alert(tr("Oops, your JSON format is invalid!"));
                 return;
             }
 
@@ -917,7 +914,7 @@ var EditorMenu = function() {
                     dialogue.close();
                 },
                 error: function(t, n, r) {
-                    alert("Could not save new story. Try again?");
+                    alert(tr("Could not save new story. Try again?"));
                 }
             }).done(function(e) {
                 console.log("Sending (importing) done.");

@@ -8,8 +8,8 @@ StoryModel.loading = false;
 // this is for debugging. If you want to turn on ref-count checking, set this to true in the console!
 StoryModel.watchRefCounts = false;
 
-StoryModel._defaultStoryName = "Untitled Story";
-StoryModel._defaultAuthorName = "Anonymous";
+StoryModel._defaultStoryName = tr("Untitled Story");
+StoryModel._defaultAuthorName = tr("Anonymous");
 
 StoryModel._storyName = StoryModel._defaultStoryName;
 StoryModel._authorName = StoryModel._defaultAuthorName;

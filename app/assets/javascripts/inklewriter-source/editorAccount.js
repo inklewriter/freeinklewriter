@@ -85,8 +85,8 @@ var EditorAccount = function() {
     
     var validateEmail = function(emailAddress) {
         var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-        var atInklewriterPattern = /^[a-zA-Z0-9._-]+@inklewriter$/;
-        return emailPattern.test(emailAddress) || atInklewriterPattern.test(emailAddress);
+        var atinklewriterPattern = /^[a-zA-Z0-9._-]+@inklewriter$/;
+        return emailPattern.test(emailAddress) || atinklewriterPattern.test(emailAddress);
     }
     
     var validatePassword = function(password) {
@@ -186,7 +186,7 @@ var EditorAccount = function() {
                }
                
                if( parameters.progress ) {
-                   parameters.progress("Signed in. Retrieving stories...");
+                   parameters.progress(tr("Signed in. Retrieving stories..."));
                }
                
                // Fetch story data for this user
@@ -274,37 +274,37 @@ var EditorAccount = function() {
         }
         
         var registerDialogue = new Dialogue({
-            title: "Create new account",
-            message: "Please enter your email address, and your desired password.",
-            footer: "<a href='javascript:EditorAccount.popupLoginHelp()'>Don't have an email address?</a>\n"
+            title: tr("Create New Account"),
+            message: tr("Please enter your e-mail address, and your desired password."),
+            footer: "<a href='javascript:EditorAccount.popupLoginHelp()'>" + tr("Don't have an email address?") + "</a>\n"
         });
         currentDialogue = registerDialogue;
         
-        var emailField    = registerDialogue.addField("Email");
-        var passwordField = registerDialogue.addSecureField("Password");
+        var emailField    = registerDialogue.addField(tr("Email"));
+        var passwordField = registerDialogue.addSecureField(tr("Password"));
 
         emailField.focus();
         
-        var cancelButton = registerDialogue.addButton("Cancel");
-        registerDialogue.addButton("Register", function() {
+        var cancelButton = registerDialogue.addButton(tr("Cancel"));
+        registerDialogue.addButton(tr("Register"), function() {
             
             var registerButton = this;
             
             // Validate email
             if( !validateEmail(emailField.value()) ) {
-                registerDialogue.setMessage("Please enter a valid email address!");
+                registerDialogue.setMessage(tr("Please enter a valid e-mail address!"));
             }
-            
+
             // Validate password
             else if( !validatePassword(passwordField.value()) ) {
-                registerDialogue.setMessage("Please enter a valid password - must be at least 6 characters long!");
+                registerDialogue.setMessage(tr("Please enter a password that is at least 6 characters."));
             }
             
             // Try and register...
             else {
                 
                 // Start creating account...
-                registerDialogue.setMessage("Creating account...");
+                registerDialogue.setMessage(tr("Creating account..."));
                 registerButton.disable();
                 
                 registerWithUsernameAndPassword(
@@ -315,15 +315,15 @@ var EditorAccount = function() {
                             EditorMenu.update();
                             registerDialogue.close();
                             var thankYouDialogue = new Dialogue({
-                                title: "Thank you",
-                                message: "We hope you enjoy writing in inklewriter!"
+                                title: tr("Thank you"),
+                                message: tr("Hope you enjoy writing in Inklewriter.")
                             });
-                            thankYouDialogue.addButton("Okay");
+                            thankYouDialogue.addButton(tr("Okay"));
                             
                             EditorMenu.processSignedInTasks();
                         },
                         failure: function(message) {
-                            registerDialogue.setMessage("Sorry, "+message.replace("username", "email") + " (<a href='http://writer.inklestudios.com/users/password/new'>Reset?<\a>)");
+                            registerDialogue.setMessage(tr("Sorry, an &error occurred.", {error: message.replace("username", "email")}) + " (<a href='http://writer.inklestudios.com/users/password/new'>" + tr("Reset?") + "<\a>)");
                             registerButton.enable();
                         }
                     });
@@ -340,43 +340,43 @@ var EditorAccount = function() {
         
         if (!navigator.cookieEnabled) {
             var cantSignInDialogue = new Dialogue({
-                title: "Cookies Are Disabled!",
-                message: "We've detected that cookies are disabled for your browser. To sign in, you will need to enable cookies, either in general, or for this site specifically."
+                title: tr("Cookies are turned off!"),
+                message: tr("Turn on cookies in general, or for this site to sign in.")
             });
-            var cancelButton = cantSignInDialogue.addButton("Okay");
+            var cancelButton = cantSignInDialogue.addButton(tr("Okay"));
             return;
             
         } else {
-            
+
             var signInDialogue = new Dialogue({
-                title: "Sign in",
-                message: "Welcome! Please enter your sign in details.",
-                footer: "<br><a href='javascript:EditorAccount.popupPasswordRecovery()' style='' class='aside_help'>Forgotten password?</a>\n"
+                title: tr("Sign in"),
+                message: tr("Welcome. Please enter your username and password."),
+                footer: "<br><a href='javascript:EditorAccount.popupPasswordRecovery()' style='' class='aside_help'>" + tr("Forgotten password?") + "</a>\n"
             });
             currentDialogue = signInDialogue;
             
-            signInDialogue.addContent("(or <a href='javascript:EditorAccount.openRegisterDialogue()'>Create New Account</a>)");
-            
-            var emailField    = signInDialogue.addField("Email");
-            var passwordField = signInDialogue.addSecureField("Password");
+            signInDialogue.addContent("(" + tr("or") + " <a href='javascript:EditorAccount.openRegisterDialogue()'>" + tr("Create New Account") + "</a>)");
+
+            var emailField    = signInDialogue.addField(tr("Email"));
+            var passwordField = signInDialogue.addSecureField(tr("Password"));
             
             emailField.focus();
             
-            var cancelButton = signInDialogue.addButton("Cancel");
-            signInDialogue.addButton("Sign in", function() {
+            var cancelButton = signInDialogue.addButton(tr("Cancel"));
+            signInDialogue.addButton(tr("Sign in"), function() {
                 
                 var signInButton = this;
                 
                 if( !validateEmail(emailField.value()) ) {
-                    signInDialogue.setMessage("Please enter a valid email address!")
+                    signInDialogue.setMessage(tr("Please enter a valid e-mail address!"))
                 }
-                
-                else if( !validatePassword(passwordField.value()) ) { 
-                    signInDialogue.setMessage("Please check that you've entered your password correctly!")
+
+                else if( !validatePassword(passwordField.value()) ) {
+                    signInDialogue.setMessage(tr("Please check your password is entered correctly."))
                 }
-                
+
                 else {
-                    signInDialogue.setMessage("Signing in...");
+                    signInDialogue.setMessage(tr("Signing in..."));
                     
                     signInButton.disable();
                     
@@ -385,7 +385,7 @@ var EditorAccount = function() {
                         passwordField.value(),
                         {
                             success: function() {
-                                signInDialogue.setMessage("Success!");
+                                signInDialogue.setMessage(tr("Success."));
                                 
                                 EditorMenu.processSignedInTasks();
                                 
@@ -396,16 +396,16 @@ var EditorAccount = function() {
                                 }
                             },
                             progress: function(message) {
-                                signInDialogue.setMessage(message);
+                                signInDialogue.setMessage(tr("Signing in…"));
                             },
                             failure: function(message) {
-                                
+
                                 signInButton.enable();
-                                
+
                                 if( message === "invalid login parameters" ) {
-                                    signInDialogue.setMessage("Could not sign you in. Please check your email and password...");
+                                    signInDialogue.setMessage(tr("Could not sign in. Please check your username (e-mail address) and password…"));
                                 } else {
-                                    signInDialogue.setMessage("Sorry, "+message);
+                                    signInDialogue.setMessage(tr("Sorry, an &error occurred.", {error: message}));
                                 }
                             }
                         });
@@ -418,13 +418,13 @@ var EditorAccount = function() {
     var popupLoginHelp = function() {
         
         var popupHelpDialogue = new Dialogue({
-            title: "No Email?",
-            message: "Don't worry! You can still sign up for <b>inklewriter</b>: just choose a username and enter <b>username@inklewriter</b> in the email box.</p><p>You'll still be able to share your stories, but don't forget your password, as we won't be able to send a reminder."
+            title: tr("No Email?"),
+            message: tr("You can still sign up for <b>inklewriter</b>: Choose a username and enter <b>username@inklewriter</b> in the e-mail box.") + "</p><p>" + tr("You will still be able to share your stories, but if you forget your password sending you a reminder is impossible.")
         });
 
         currentDialogue = popupHelpDialogue;
-        
-        var okayButton = popupHelpDialogue.addButton("Okay", function() {
+
+        var okayButton = popupHelpDialogue.addButton(tr("Okay"), function() {
             popupHelpDialogue.close(true);
         });       
     }
@@ -496,17 +496,17 @@ var EditorAccount = function() {
             // Sign out, but preserving current story data in localStorage
             if( EditorMenu.unsavedChanges() ) {
                 
-                var signedOutMessage = navigator.cookieEnabled ? "<p>You have been disconnected from inklewriter, perhaps because of an extended period of inactivity.</p> <p>Please sign in again to save your unsaved changes.</p>" : "<p>You have been disconnected from inklewriter because your browser has cookies disabled. Please enable cookies for this site to sign in</p>";
+                var signedOutMessage = navigator.cookieEnabled ? "<p>" + tr("You have been disconnected from Inklewriter, perhaps because of an extended period of inactivity.") + "</p> <p>" + tr("Please sign in again to save your unsaved changes.") + "</p>" : "<p>" + tr("Turn on cookies in your web browser to reconnect to Inklewriter.") + "</p>";
 
                 // Feature 9: Google Analytics Fixes - Disabled GA to prevent errors when unavailable
                 // _gaq.push(['_trackEvent', 'Lost Connection to Server', 'Signed out']);
 
                 var confirmation = new Dialogue({
-                    title: "Signed out",
+                    title: tr("Signed out"),
                     message: signedOutMessage
                 });
 
-                confirmation.addButton("Sign in", function() {
+                confirmation.addButton(tr("Sign in"), function() {
                     // Make sure absolute latest version is saved in localStorage
                     EditorMenu.requireSave();
                     session.stories["local"] = session.stories[session.currentStoryId]
@@ -527,13 +527,13 @@ var EditorAccount = function() {
 
             // Full sign out
             else {
-                
+
                 var confirmation = new Dialogue({
-                    title: "Disconnected",
-                    message: "You have been disconnected from inklewriter, perhaps because of an extended period of inactivity."
+                    title: tr("Disconnected"),
+                    message: tr("You have been disconnected from Inklewriter, perhaps because of an extended period of inactivity.")
                 });
-                
-                confirmation.addButton("Okay", function() {
+
+                confirmation.addButton(tr("Okay"), function() {
                     clearSession();
                     window.location = rootServerUrl;
                 });
@@ -737,15 +737,14 @@ var EditorAccount = function() {
     // Feature 6: Password Reset Modal
     var popupPasswordRecovery = function() {
         var dialogue = new Dialogue({
-            title: "Forgotten your password?",
-            message: "Don't worry! We will send you a link with instructions on how to reset it. \
-              In case you subscribed with a <b>username@inklewriter</b> email address, you will have to create a new account and reimport your stories."
+            title: tr("Forgot your password?"),
+            message: tr("Instructions with a link to reset it will be e-mailed to you.") + " " + tr("In case you subscribed with a <b>username@inklewriter</b> e-mail address, you will have to create a new account and reimport your stories.")
         });
-        var emailField = dialogue.addField("Your email");
-        dialogue.addButton("Cancel");
-        var validateButton = dialogue.addButton("Submit", function() {
+        var emailField = dialogue.addField(tr("Your e-mail address"));
+        dialogue.addButton(tr("Cancel"));
+        var validateButton = dialogue.addButton(tr("Submit"), function() {
             if (!(emailField.value())) {
-                dialogue.setMessage("Please provide your email");
+                dialogue.setMessage(tr("Please provide your e-mail address"));
                 return;
             }
             validateButton.disable();
@@ -753,7 +752,7 @@ var EditorAccount = function() {
                 "utf8": "✓",
                 "user": {
                     "email": emailField.value(),
-                    "commit": "Send me reset password instructions"
+                    "commit": "Send me instructions to reset my password"
                 }
             };
             $.ajax({
@@ -764,7 +763,7 @@ var EditorAccount = function() {
                 data: jQuery.stringifyJSON(data),
                 success: function(jqXHR, textStatus, errorThrown) {
                     if ("errors" in jqXHR) {
-                        errMsg = "The email you provided is not in the database or is invalid.";
+                        errMsg = tr("The e-mail address you provided is not in the database or invalid.");
                         dialogue.setMessage(errMsg);
                         validateButton.enable();
                         return;
@@ -772,16 +771,16 @@ var EditorAccount = function() {
                     dialogue.close();
                     console.log("j", jqXHR, "t", textStatus, "e", errorThrown, "d", data);
                     var okayDialogue = new Dialogue({
-                        title: "Check your email",
-                        message: "We have sent you the informations and a confirmation link."
+                        title: tr("Check your e-mail"),
+                        message: tr("You have been sent some info and a confirmation link.")
                     });
-                    okayDialogue.addButton("Okay", function() {
+                    okayDialogue.addButton(tr("Okay"), function() {
                         okayDialogue.close();
                     });
                 },
                 error: function(jqXHR, textStatus, errorThrown, data) {
                     console.log(jqXHR, textStatus, errorThrown, data);
-                    alert("An error occured... Something might be wrong with the server.");
+                    alert(tr("An error occurred… Something might be wrong with the server."));
                     validateButton.enable();
                 }
             });

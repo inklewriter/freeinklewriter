@@ -65,24 +65,24 @@ var Editor = function() {
                 if (!discludeNormalLinks) {
                     
                     // e.g. "2 options. 1 loose end."
-                    var optionPl = stats.numLinked == 1 ? "link" : "links";
+                    var optionPl = stats.numLinked == 1 ? tr("link") : tr("links");
                     if( stats.numLinked > 0 ) {
                         jqStatsMessage.append(stats.numLinked + " " + optionPl + ".");
                     }
                 }
                 var looseEndIdx = 0;
                 if( stats.numLooseEnds > 0 ) {
-                    var endPl = stats.numLooseEnds > 1 ? "ends " : "end ";
-                    jqStatsMessage.append(" " + stats.numLooseEnds + " loose "+endPl+"(");
+                    var endPl = stats.numLooseEnds > 1 ? tr("ends ") : tr("end ");
+                    jqStatsMessage.append(" " + stats.numLooseEnds + " " + tr("loose ") + endPl + "(");
                     var conjunctive = "";
                     
                     stats.looseEnds.each( function() {
                         
-                        var jqLabel = $("<span optIdx = "+looseEndIdx +" class='shortcut' tooltip='Write from here'></span>");
+                        var jqLabel = $("<span optIdx = "+looseEndIdx +" class='shortcut' tooltip='" + tr("Write from here") + "'></span>");
                         if (this.text() !== "") {
                             jqLabel.text(conjunctive + this.text())
                         } else {
-                            jqLabel.text(conjunctive + "...");
+                            jqLabel.text(conjunctive + tr("..."));
                         }                        
 
                         jqLabel.bind('click tap', function() {
@@ -113,7 +113,7 @@ var Editor = function() {
             
             // No options - the end
             if( stats.deadEnd ) {
-                var jqLabel = $("<span class='shortcut' tooltip='Continue from here'>End.</span>");
+                var jqLabel = $("<span class='shortcut' tooltip='" + tr("Continue from here") + "'>" + tr("End.") + "</span>");
                 jqLabel.bind('click tap', function() {
                     // if in graph mode...
                     $('#graphContainer').remove();                        
@@ -160,7 +160,7 @@ var Editor = function() {
                                     <div class="paper-mid"></div> \
                                     <div class="paper-bottom"></div> \
                                  </div> \
-                                 <div class="pageBox" tooltip="Click to edit the section name"> </div> \
+                                 <div class="pageBox" tooltip="' + tr("Click to edit the section name") + '"> </div> \
                                  <div class="flagBox"> \
                                     <div id="flagBoxBackgroundLeft"> \
                                         <img src="/img/bookmark-left.png"></img> \
@@ -171,7 +171,7 @@ var Editor = function() {
                                     <ul id="flags"> \
                                     </ul> \
                                  </div> \
-                                 <div class="stitchImage" tooltip="Click to edit this image"><img/></div/> \
+                                 <div class="stitchImage" tooltip="' + tr("Click to edit this image") + '"><img/></div/> \
                                  <div class="stitchText" contentEditable="true">'+stitchText+'</div>' +
                                  conditionalHtml()  +
                               '</div>');
@@ -394,7 +394,7 @@ var Editor = function() {
         {
             self.setUpPageButton();
             if (stitch._backlinks.length > 1) {
-                this.jqStitchBox.prepend("<div class='backlinks'>" + stitch._backlinks.length + " links in</div>");
+                this.jqStitchBox.prepend("<div class='backlinks'>" + tr("&count links in", {count:stitch._backlinks.length}) + "</div>");
             }
             
             
@@ -516,7 +516,7 @@ var Editor = function() {
         
         // Add new detach button
         if( allow && jqExistingUnjoinButton.length == 0 ) {
-            var jqUnjoinButton = $('<div class="unjoinButton" tooltip="Unlink these two paragraphs">Unlink</div>');
+            var jqUnjoinButton = $('<div class="unjoinButton" tooltip="' + tr("Unlink these two paragraphs") + '">' + tr("Unlink") + '</div>');
             
             var stitchBoxBeforeStitchBox = this.ownerChunk.stitchBoxes.prev(stitchBox);
             
@@ -534,7 +534,7 @@ var Editor = function() {
                 // rewind to the chunk of the (lower) stitch
                 // detach it
                 
-                if (!confirm("Unlink these two paragraphs? This will create a new loose end here. Unattached paragraphs will still appear in the contents list.")) 
+                if (!confirm(tr("Unlink these two paragraphs? This will create a new loose end here. Unattached paragraphs will still appear in the content list."))) 
                     return false;
                 
                 var detachBox = null;
@@ -725,8 +725,8 @@ var Editor = function() {
 	
 
         // "Add" option at bottom
-        var flagDiv = function() { 
-            return "<div class='icon'></div><span class='entertext add'>Add marker</span>";
+        var flagDiv = function() {
+            return "<div class='icon'></div><span class='entertext add'>" + tr("Add a marker") + "</span>";
         }
 
         // Create individual flag
@@ -864,7 +864,7 @@ var Editor = function() {
             var textChanged = false;
 	        var pageLabelText = stitchBox.stitch.pageLabelText();
 	    
-	        var jqPageLabel = $("<div><div class='page_button minus' tooltip='Remove this label'></div><div class='page_label' contenteditable='true'> " + pageLabelText + "</div></div>");
+	        var jqPageLabel = $("<div><div class='page_button minus' tooltip='" + tr("Remove this label") + "'></div><div class='page_label' contenteditable='true'> " + pageLabelText + "</div></div>");
 	        
 	        var jqLabelText = jqPageLabel.find(".page_label");
 	        jqLabelText.bind("keydown", function(event) {
@@ -1115,7 +1115,7 @@ var Editor = function() {
     
     Chunk.prototype.addRewindButton = function() {
         var chunk = this;
-        this.jqRewindButton = $('<div class="rewindButton noText" tooltip="Rewind to here"></div>');
+        this.jqRewindButton = $('<div class="rewindButton noText" tooltip="' + tr("Rewind to here") + '"></div>');
         this.stitchBoxes.first().jqStitchBox.append(this.jqRewindButton);
         
         this.jqRewindButton.bind("mousedown", function() { 
@@ -1542,8 +1542,8 @@ var Editor = function() {
         self.textChanged = false;
         this.jqOption = $('<div class="option">'
                             +'<div contentEditable="true" class="optionText">'+storyOption.text()+'</div>'
-                            +'<div class="linkDeleteButton" tooltip="Delete this option"></div>'
-                            +'<div class="followLinkButton disabled" tooltip="Follow this option"></div>' + conditionalHtml() +'</div>');
+                            +'<div class="linkDeleteButton" tooltip="' + tr("Delete this option") + '"></div>'
+                            +'<div class="followLinkButton disabled" tooltip="' + tr("Follow this option") + '"></div>' + conditionalHtml() +'</div>');
         this.jqOption.data("option", this);      
         $(".options").append(this.jqOption);
         
@@ -1853,16 +1853,16 @@ var Editor = function() {
 
     var setupWidgets = function() {
     
-        widgets.boldWidget = new Widget("bold", "boldType", "Bold");
-        widgets.italicWidget = new Widget("italic", "italicType", "Italic");
-        widgets.runOnWidget = new Widget("runOn", "appendEllipsis", "Run paragraphs together");
-        widgets.pageNumberWidget = new Widget("newSection", "pageNumber", "Insert new section");    
+        widgets.boldWidget = new Widget("bold", "boldType", tr("Bold"));
+        widgets.italicWidget = new Widget("italic", "italicType", tr("Italic"));
+        widgets.runOnWidget = new Widget("runOn", "appendEllipsis", tr("Run paragraphs together"));
+        widgets.pageNumberWidget = new Widget("newSection", "pageNumber", tr("Insert new section"));    
 
         if (settings.conditionals)
-            widgets.addConditionalToWhatever = new Widget("addCondition", "conditionalElement", "Insert a condition to test");
+            widgets.addConditionalToWhatever = new Widget("addCondition", "conditionalElement", tr("Insert a condition to test"));
 
         if (settings.images)
-            widgets.imageWidget = new Widget("insertImage", "insertImage", "Insert an image");
+            widgets.imageWidget = new Widget("insertImage", "insertImage", tr("Insert an image"));
     }
     
     var Widget = function(id, func, ttip) {
@@ -1949,17 +1949,18 @@ var Editor = function() {
        		var startingImage = currentStitchBox.stitch.image();
 
 			var imageDialogue = new Dialogue({
-				title: "Choose Image",
-				message: "Please enter the web address of your image."
+				title: tr("Choose Image"),
+				message: tr("Please enter the web address of your image.")
 			});
 			
 			imageDialogue.$.append("<img id='imagepreview'/>");
 			var jqImagePreview = imageDialogue.$.find('img');
-		
-			var imageURL = imageDialogue.addField("Image");
 
-			
-			if (startingImage) 
+
+			var imageURL = imageDialogue.addField(tr("Please enter the URL of your image."));
+
+
+			if (startingImage)
 				imageURL.value(startingImage);
 
 			var acceptImage = function(URL) {
@@ -1969,7 +1970,7 @@ var Editor = function() {
 				useButton.enable();
 			}
 
-			var useButton = imageDialogue.addButton("Use", function() {
+			var useButton = imageDialogue.addButton(tr("Use"), function() {
 				if (imageURL.value() === "") {
 					return;
 				}
@@ -1985,7 +1986,7 @@ var Editor = function() {
 				jqImagePreview.hide();
 			} else {
 				acceptImage(imageURL.value());
-				imageDialogue.addButton("Remove", function() {
+				imageDialogue.addButton(tr("Remove"), function() {
 				
 					addOrRemoveImage(currentStitchBox.stitch, null);
 					
@@ -2022,7 +2023,7 @@ var Editor = function() {
 				}, 0);
 			});
 			
-			imageDialogue.addButton("Cancel");
+			imageDialogue.addButton(tr("Cancel"));
 			
 
         }
@@ -2069,11 +2070,11 @@ var Editor = function() {
         // More important than stats - show if stitch is orphaned
         if( this.unused ) {
             // Add button to delete the unused element
-            stitchContent += '<div class="deleteButton stitchButton" tooltip="Delete this paragraph"></div>';
+            stitchContent += '<div class="deleteButton stitchButton" tooltip="' + tr("Delete this paragraph") + '"></div>';
         }
          
         // button for searching
-        stitchContent += '<div class="rewindStitchListButton stitchButton" tooltip="Rewind to here"></div>';
+        stitchContent += '<div class="rewindStitchListButton stitchButton" tooltip="' + tr("Rewind to here") + '"></div>';
 
         // button for linking
 //        stitchContent += '<div class="linkButton stitchButton" tooltip="Join up with this paragraph"></div>';
@@ -2173,7 +2174,7 @@ var Editor = function() {
         } else {
             if (!this.unused) {
                 if (chunkOfStitch) {       
-                    this.jqStitchRow.attr("tooltip", "Edit this paragraph");
+                    this.jqStitchRow.attr("tooltip", tr("Edit this paragraph"));
                     this.jqStitchRow.bind('click tap', function(event) {
                         var toStitchBox = stitchBoxContainingStitch(self.stitch);
                         if (toStitchBox) {
@@ -2183,7 +2184,7 @@ var Editor = function() {
                         return false;
                     });
                 } else {
-                    this.jqStitchRow.attr("tooltip", "Jump to this paragraph");
+                    this.jqStitchRow.attr("tooltip", tr("Jump to this paragraph"));
                     this.jqStitchRow.bind('click tap', function(event) {
                             return searchForStitch(stitch);
                     });
@@ -2248,7 +2249,7 @@ var Editor = function() {
                     
                         jqGhostBoxOptions += '<div class="option ghost">'
                             +'<div contentEditable="true" class="optionText">'+ghostStitch.options[i].text()+'</div>'
-                            +'<div class="followLinkButton disabled" tooltip="Follow this option"></div>'
+                            +'<div class="followLinkButton disabled" tooltip="' + tr("Follow this option") + '"></div>'
                         +'</div>';
                 }
                 lastGhostStitch = ghostStitch;
@@ -2301,7 +2302,7 @@ var Editor = function() {
             // Consider A, B -> C
             // I have A -> C in the flow
             // I join C to B, thereby creating a loop BCBCB... which I'm not warned about..!
-                if (!confirm("Linking to this paragraph will form a loop. Are you sure you want to do this?")) {
+                if (!confirm(tr("Linking to this paragraph will form a loop. Are you sure you want to do this?"))) {
                     return false;
                 }
             }
@@ -2349,7 +2350,7 @@ var Editor = function() {
         {
            
             // closed
-            this.jqStitchRow = $('<tr class="page"><td><div class="collapser"><div class="tri_button">' + trisymbol + '</div> ' + pageHeader + '<div class="important inline"></div></div><div class="searchButton stitchButton" tooltip="Jump to this section"></div></td></tr>');
+            this.jqStitchRow = $('<tr class="page"><td><div class="collapser"><div class="tri_button">' + trisymbol + '</div> ' + pageHeader + '<div class="important inline"></div></div><div class="searchButton stitchButton" tooltip="' + tr("Jump to this section") + '"></div></td></tr>');
             
             this.jqStitchRow.bind('click tap', function() {
                 StitchList.closedPages.remove(self.pNumLabel);
@@ -2384,15 +2385,15 @@ var Editor = function() {
         if (looseEndsCount + hardEndsCount > 0) {
             var infoText = "";
             if (looseEndsCount > 0) {
-                infoText += looseEndsCount + " loose ";
-                infoText += looseEndsCount == 1 ? "end" : "ends";
+                infoText += looseEndsCount + " " + tr("loose ");
+                infoText += looseEndsCount == 1 ? tr("end") : tr("ends");
                 if (hardEndsCount > 0) {
                     infoText += ", "
                 }
              }
              if (hardEndsCount > 0) {
                 infoText += hardEndsCount + " ";
-                infoText += hardEndsCount == 1 ? "end": "ends";
+                infoText += hardEndsCount == 1 ? tr("end"): tr("ends");
              }
             this.jqStitchRow.find(".important").text(infoText);
         }
@@ -2403,8 +2404,8 @@ var Editor = function() {
 
     searchForStitch = function(stitch) {
         var loading = new Dialogue({
-             title: "Searching",
-            message: "Please wait a moment..."
+             title: tr("Searching"),
+            message: tr("Please wait a moment...")
         });
         
         // stupid Timeout to ensure the dialogue gets onto screen before we start work
@@ -2480,7 +2481,7 @@ var Editor = function() {
                 runSearch($(this).find('#searchTerm').text());
             });
        
-            StitchList.jqHeader.find('.text').attr("tooltip", "Click to collapse all sections.");
+            StitchList.jqHeader.find('.text').attr("tooltip", tr("Click to collapse all sections."));
             StitchList.jqHeader.find('.text').bind('click tap', function() {
                 StitchList.closedPages = [];
                 for (var i = 0 ; i < StoryModel.stitches.length ; i++ ) {
@@ -2623,12 +2624,12 @@ var Editor = function() {
         // update the main header with loose ends
         var threadText = "";
         if (StoryModel.looseEndCount > 0) {
-            threadText += StoryModel.looseEndCount + " loose end";
+            threadText += StoryModel.looseEndCount + " " + tr("loose end");
             if ( StoryModel.looseEndCount > 1) threadText += "s";
             if (StoryModel.endCount > 0) threadText += " and "
         }
         if (StoryModel.endCount > 0) {
-            threadText += StoryModel.endCount + " end";
+            threadText += StoryModel.endCount + " " + tr("end");
             if ( StoryModel.endCount > 1) threadText += "s";
         }
         // where?
@@ -2868,7 +2869,7 @@ var Editor = function() {
         StitchList.broughtInAutomatically = !StitchList.expanded;
         StitchList.expand();       
         
-        Editor.joinButton.text("Choose the paragraph you want next by clicking it in the contents.");
+        Editor.joinButton.text(tr("Choose the paragraph you want next by clicking it in the contents."));
         Editor.joinButton.addClass("larger");
         
         Editor.joinButton.unbind('click tap');
@@ -2901,7 +2902,7 @@ var Editor = function() {
     var cancelJoinCreation = function() {
         if ( Editor.joiningMode ) {
             Editor.joiningMode = false;
-            Editor.joinButton.text("Join to an existing paragraph");
+            Editor.joinButton.text(tr("Join to an existing paragraph"));
             Editor.joinButton.unbind('click tap');
             $('#read_area').find(".instructionArrow").remove();
             
@@ -2949,7 +2950,7 @@ var Editor = function() {
         targetStitch._stitchBox.jqStitchBox.find('.backlinks').remove();
         
         if (targetStitch._backlinks.length > 1)
-	        targetStitch._stitchBox.jqStitchBox.prepend("<div class='backlinks'>" + targetStitch._backlinks.length + " links in</div>");
+	        targetStitch._stitchBox.jqStitchBox.prepend("<div class='backlinks'>" + tr("&count links in", {count:targetStitch._backlinks.length}) + "</div>");
         
         // joining might justify a new page button
         if (newStitchBox.stitch) {
@@ -2975,7 +2976,7 @@ var Editor = function() {
     
      	
     var conditionalHtml = function() {
-        return "<div class='conditionalText' tooltip='Edit logic'><div class='collapser'></div><div class='message'></div></div>";
+        return "<div class='conditionalText' tooltip='" + tr("Edit logic") + "'><div class='collapser'></div><div class='message'></div></div>";
     }
 
     
@@ -3007,7 +3008,7 @@ var Editor = function() {
             {
                 jqOwner.removeClass('conditionalised');            
                 owner.jqCondElement.removeClass("active");
-                owner.jqCondElement.find(".message").text(" Add conditions ");
+                owner.jqCondElement.find(".message").text(tr("Add conditions"));
             }
         } else {
             owner.jqCondElement.hide();
@@ -3079,9 +3080,9 @@ var Editor = function() {
                         toggleConditionEditor(owner, jqOwner, storyModelElement);                        
                     });
                     
-                    jqCondBlock.append(createConditionalList(owner, jqOwner, storyModelElement, "Passed these markers", true, "left", setHeightOfConditionalText));
+                    jqCondBlock.append(createConditionalList(owner, jqOwner, storyModelElement, tr("Passed these markers"), true, "left", setHeightOfConditionalText));
 
-                    jqCondBlock.append(createConditionalList(owner, jqOwner, storyModelElement, "Not passed these markers", false, "right", setHeightOfConditionalText));
+                    jqCondBlock.append(createConditionalList(owner, jqOwner, storyModelElement, tr("Not passed these markers"), false, "right", setHeightOfConditionalText));
     
                     jqCondElement.append(jqCondBlock);
                     jqCondElement.addClass("expanded");
@@ -3167,7 +3168,7 @@ var Editor = function() {
             jqConditionalList.append(createFlagNameDiv(conditionalByIndex(storyModelElement, requiredType, idx)));
         }
         
-        var jqPlusButton = $("<div class='flag_name newFlag'><div class='add entertext'><div class='flag_button plus'></div><span id='actualFlag'>Add marker</span></div></div>");
+        var jqPlusButton = $("<div class='flag_name newFlag'><div class='add entertext'><div class='flag_button plus'></div><span id='actualFlag'>" + tr("Add a marker") + "</span></div></div>");
         
         jqConditionalList.append(jqPlusButton);
         
@@ -3252,7 +3253,7 @@ var Editor = function() {
         $("#read_area").append("<div class='eventAbsorber'></div>");          
         var jqAbsorber = $("#read_area").find('.eventAbsorber');
                 
-        var title = (flagText == "") ? "Add marker" : "Edit marker";
+        var title = (flagText == "") ? tr("Add a marker") : tr("Edit a marker");
         
         this.jqPopup = $('<div id="flagEntryPopup"><div class="title">' + title + '</div><div class="entry" contentEditable="true"></div><div class="suggestions"></div><div class="nubbin"></div></div>');
 
@@ -3370,7 +3371,7 @@ self.navigateSuggestions = {
                     self.jqSuggestions.append(self.suggestionSet[i].lineObject.jqLine);   
                 }
             } else {
-               self.jqSuggestions.append('<div class="hint"><p>Enter a name for a new marker.</p><p>You will then be able to test for this marker later on in the story.</p></div>'); 
+               self.jqSuggestions.append('<div class="hint"><p>' + tr("Enter a name for a new marker.") + '</p><p>' + tr("You will then be able to find later uses of this marker in the story.") + '</p></div>'); 
             }
         }
 
@@ -3721,9 +3722,9 @@ self.navigateSuggestions = {
     
         clear();
         
-        var jqStoryNameField = '<div contentEditable=true tooltip="Your story title goes here" id="storyNameField" class="titleField">'+StoryModel.storyName()+'</div>';
-        
-        var jqAuthorNameField = '<div contentEditable=true tooltip="Your name goes here" id="authorNameField" class="titleField">'+StoryModel.authorName()+'</div>';
+        var jqStoryNameField = '<div contentEditable=true tooltip="' + tr("Your story title goes here") + '" id="storyNameField" class="titleField">'+StoryModel.storyName()+'</div>';
+
+        var jqAuthorNameField = '<div contentEditable=true tooltip="' + tr("Your name goes here") + '" id="authorNameField" class="titleField">'+StoryModel.authorName()+'</div>';
         
         
         $("#storyNameField")
@@ -3790,16 +3791,16 @@ self.navigateSuggestions = {
                                             +jqStoryNameField + "<br>" 
                                             +jqAuthorNameField+
                                             '<div class="options"></div>\
-                                                 <div class="button stitchLinkButton newJoinButton" tooltip="Join this paragraph to another">\
+                                                 <div class="button stitchLinkButton newJoinButton" tooltip="' + tr("Join this paragraph to another") + '">\
                                                 initial text goes unseen\
                                             </div>\
-                                            <div class="button stitchLinkButton newOptionButton" tooltip="Add a new option to this paragraph (shift-return)">\
-                                                Add option\
+                                            <div class="button stitchLinkButton newOptionButton" tooltip="' + tr("Add a new option to this paragraph (shift-return)") + '">\
+                                                ' + tr("Add an option") + '\
                                             </div>\
                                             <div id="paddingDiv"></div>\
                                         </div>\
                                         <div id="stitch_list_area"  class="collapsed">\
-                                            <div class="header"><span class="text">Contents</span>\
+                                            <div class="header"><span class="text">' + tr("Contents") + '</span>\
                                             <div class="wc"></div>\
                                             </div>\
                                             <div id="stitch_list_scrolling">\
@@ -3855,8 +3856,8 @@ self.navigateSuggestions = {
     var loadDefaultStory = function() {
 
         StoryModel.clear();
-        StoryModel.setStoryName("Untitled Story");
-        StoryModel.initialStitch = StoryModel.createStitch("Once upon a time...");
+        StoryModel.setStoryName(tr("Untitled Story"));
+        StoryModel.initialStitch = StoryModel.createStitch(tr("Once upon a time..."));
         StoryModel.initialStitch.pageNumberLabel(1);
         StoryModel.updateGraphModel();
 

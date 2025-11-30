@@ -38,15 +38,15 @@ var Splash = function() {
         jqSplash = $("<div class='splash'><div id='bg'></div> \
                             <div id='content'> \
                                 <div id='header'>\
-                                    <p id='welcome-message'>Welcome to</p>\
+                                    <p id='welcome-message'>"+tr("Welcome to")+"</p>\
                                     <img draggable=false id='splash-logo' src='/img/splash-logo-beta.png'></img>\
                                 </div> \
                                 <div id='menu'>\
-                                    <p style='padding-top: 10px; color: red; font-weight: bold;'>WARNING: inklewriter is shutting down soon! <a style='color: red;' href='https://www.inklestudios.com/inklewriter/shutdown'>Read more about how and when</a>.</p>\
+                                    <p style='padding-top: 10px; color: red; font-weight: bold;'>"+tr("WARNING: inklewriter is shutting down soon!")+" <a style='color: red;' href='https://www.inklestudios.com/inklewriter/shutdown'>"+tr("Read more about how and when")+"</a>.</p>\
                                     <ul>\
-                                        <li><div class='button' id='tutorial'>get started</div>\
-                                        <li><div class='button' id='new'>new</div></li>\
-                                        <li><div class='button' id='sign-in'>sign in</div></li>\
+                                        <li><div class='button' id='tutorial'>"+tr("get started")+"</div>\
+                                        <li><div class='button' id='new'>"+tr("new")+"</div></li>\
+                                        <li><div class='button' id='sign-in'>"+tr("sign in")+"</div></li>\
                                     </ul>\
                                     <img draggable=false id='splash-splats' src='/img/splash-splats.png'></img>\
                                 </div> \
