@@ -20,6 +20,8 @@ services:
     networks:
       - inklenet
     env_file: .env
+    environment:
+      FEATURE_TEST: "1"
     image: inklewriter:latest
     volumes:
         - .:/usr/src/app

@@ -70,6 +70,8 @@ group :test do
   gem 'selenium-webdriver', '>= 4.0.0.rc1'
   # Easy installation and use of webdrivers to run system tests with Chrome
   gem 'webdrivers'
+  # Modify ENV in tests
+  gem 'climate_control'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

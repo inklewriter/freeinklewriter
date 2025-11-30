@@ -236,6 +236,17 @@ The StoriesController uses recursive methods to build story previews by followin
 - `story_stats`: story_id (FK), stitches, words counts, feature flags, quality score
 - `admins`: user_id (FK)
 
+## Feature Flags
+
+Use environment variables `FEATURE_{NAME}=1` in `.env` to toggle UI features. Rails exposes them to JavaScript via `features_list` array and `is_featured(name)` function.
+
+```javascript
+// In editorMenu.js, editorAccount.js, etc.
+if (is_featured('community_link')) {
+    addMenuOption(tr("community"), jqMenu, function() { window.open("/community") }, tr("Community"));
+}
+```
+
 ## Environment Variables
 
 Required variables (see `.env.sample`):

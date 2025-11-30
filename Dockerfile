@@ -1,7 +1,8 @@
 FROM ruby:3.3.0-alpine
 
 WORKDIR /usr/src/app
-COPY Gemfile* /usr/src/app/ 
+
+# Install system dependencies (cached unless packages change)
 RUN apk add --update \
   build-base \
   nodejs \
@@ -12,9 +13,11 @@ RUN apk add --update \
   sqlite-dev \
   tzdata \
   yarn \
-  && rm -rf /var/cache/apk/* \
-  && cd /usr/src/app \
-  && bundle install
+  && rm -rf /var/cache/apk/*
+
+# Install Ruby gems (cached unless Gemfile changes)
+COPY Gemfile* /usr/src/app/
+RUN bundle install
 
 COPY package*.json /usr/src/app/
 RUN npm install
