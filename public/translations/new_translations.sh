@@ -1,7 +1,7 @@
 #!/bin/bash
 panic(){ echo $@ >&2; exit 1;}
 [[ -z "$1" ]] && panic "Exit. Missing parameter"
-file="${1}/inklewriter-write.js"
+file="${1}"
 [[ ! -f "$file" ]] && panic "Exit. Invalid path"
 
 echo '{"fr":{"a":"a"'; 

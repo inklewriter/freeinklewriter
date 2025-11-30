@@ -1,0 +1,57 @@
+ERRORS in editor.js (text was changed instead of just wrapped):
+
+1. "Please enter the web address of your image." → "Please enter the URL of your image."
+2. "Add marker" → "Add a marker" 
+3. "Linking to this paragraph will form a loop. Are you sure you want to do this?" → "Are you sure you want to link to this paragraph? This will form a loop."
+4. "Searching" → "Searching…"
+5. "Please wait a moment..." → "Please wait a moment…"
+6. "Click to collapse all sections." → "Click to collapse all sections"
+7. "Edit logic" → "Edit the logic"
+8. "Passed these markers" → "Passed these markers:"
+9. "Not passed these markers" → "Not passed these markers:"
+10. "Add marker" → "Add a marker" (duplicate)
+11. "Add marker" → "Add a marker" (in title check)
+12. "Edit marker" → "Edit a marker"
+13. "You will then be able to test for this marker later on in the story." → "You will then be able to find later uses of this marker in the story."
+14. "Join this paragraph to another" → "Join this paragraph up with another"
+15. "Add option" → "Add an option"
+16. "Once upon a time..." → "Once upon a time…"
+
+ERRORS in editorAccount.js (text was changed):
+
+1. "email" → "e-mail" (multiple instances)
+2. "Email" → "E-mail" (field label)
+3. "Don't have an email address?" → "No e-mail address?"
+4. "Please enter a valid password - must be at least 6 characters long!" → "Please enter a password that is at least 6 characters."
+5. "Okay" → "OK"
+6. "Reset?" → "Reset password?"
+7. "Cookies Are Disabled!" → "Cookies are turned off!"
+8. "We've detected that cookies are disabled for your browser. To sign in, you will need to enable cookies, either in general, or for this site specifically." → "Turn on cookies in general, or for this site to sign in."
+9. "Welcome! Please enter your sign in details." → "Welcome. Please enter your username and password."
+10. "Create New Account" → "Create new account"
+11. "Please check that you've entered your password correctly!" → "Please check your password is entered correctly."
+12. "Success!" → "Success."
+13. "Could not sign you in. Please check your email and password..." → "Could not sign in. Please check your username (e-mail address) and password…"
+14. "No Email?" → "No e-mail?"
+15. "inklewriter" → "Inklewriter" (capitalization)
+16. "You have been disconnected from inklewriter..." → "You have been disconnected from Inklewriter..."
+
+ERRORS in playMode.js (text was changed):
+
+1. "End" → "The End" (multiple instances)
+2. "Go back to Write mode to continue" → "Go back to writing mode to continue"
+3. "Switch to write mode to continue." → "Switch to writing mode to continue."
+4. "Text &copy; the author." → "Text © the author."
+
+ERRORS in splash.js (text was changed):
+
+1. "Read more about how and when" → "Learn more"
+
+ERRORS in editorMenu.js (text was changed):
+
+1. "X" → "×" (delete button)
+2. "Untitled" was already wrapped (but value check needed)
+3. "Are you sure you wish to delete the story "+thisName+"?" → "Delete the story?" (removed variable)
+4. "Choose the story to open" → "Choose a story to open"
+5. "Saving is in progress. Are you sure you wish to continue and open a different story anyway?" → "Saving in progress. Continue and open a different story anyway?"
+6. "Continue..." → "Continue…"
