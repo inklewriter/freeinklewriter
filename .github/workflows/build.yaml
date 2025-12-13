@@ -1,101 +1,138 @@
-name: Converted Workflow
+name: Build, Test and Release
+
 on:
   push:
     branches:
       - master
-      - dev
-  pull_request:
-    branches:
-      - master
+
 jobs:
-  build:
-    services:
-      db:
-        image: postgres:11
-        ports: ['5432:5432']
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-        env:
-          POSTGRES_DB: travis_ci
-          POSTGRES_HOST: localhost
-          POSTGRES_PORT: 5433
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: anything
-    env:
-      PGHOST: localhost
-      PGPORT: 5432
-      PGUSER: postgres
-      PGPASSWORD: anything
-      POSTGRES_DB: travis_ci
-      POSTGRES_HOST: localhost
-      POSTGRES_PORT: 5433
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: anything
-      SECRET_KEY_BASE: development_secret
-      
-    runs-on: '${{ matrix.os }}'
-    strategy:
-      matrix:
-        os:
-          - ubuntu-22.04
+  test-and-release:
+    runs-on: ubuntu-22.04
+
     steps:
       - uses: actions/checkout@v3
-      - name: Setup Ruby
-        uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.0.4
-          bundler-cache: true 
-      - run: RAILS_ENV=test bundle exec rake db:create
-      - run: RAILS_ENV=test bundle exec rake --trace db:migrate
-      - run: bundle exec rake db:test:prepare
-      - run: cp .env.sample .env
-      - run: docker volume create --name=inkledb
-      - run: docker-compose up -d 
-      - run: docker-compose stop
-      -
-        name: Login to Docker Hub
+          fetch-depth: 0  # Fetch all history for versioning
+
+      - name: Build Docker image
+        run: docker build -t albancrommer/inklewriter:candidate .
+
+      - name: Start test environment
+        run: |
+          cp .env.sample .env
+          docker compose up -d
+
+      - name: Wait for services to be ready
+        run: |
+          echo "Waiting for PostgreSQL to be ready..."
+          docker compose logs db | grep "database system is ready to accept connections" || sleep 5
+          docker compose logs db | grep "database system is ready to accept connections" || sleep 5
+          docker compose logs db | grep "database system is ready to accept connections" || sleep 5
+          echo "Waiting for Rails app to be ready..."
+          until docker compose logs app | grep "Listening on"; do
+            echo "App not ready yet..."
+            sleep 3
+          done
+          echo "✅ All services ready"
+
+      - name: Run Rails tests
+        run: |
+          docker compose exec -T app bash -c "
+            RAILS_ENV=test bundle exec rake db:create db:migrate &&
+            bundle exec rails test
+          "
+
+      - name: Run JavaScript tests
+        run: docker compose exec -T app npm test
+
+      - name: Run E2E smoke tests
+        run: |
+          echo "Testing asset bundle delivery..."
+
+          # Test main bundle accessibility
+          docker compose exec -T app curl -f -I http://localhost:3000/assets/inklewriter-source/inklewriter-main.js
+
+          # Test readmode bundle accessibility
+          docker compose exec -T app curl -f -I http://localhost:3000/assets/inklewriter-source/inklewriter-readmode.js
+
+          # Verify bundle sizes
+          MAIN_LINES=$(docker compose exec -T app curl -s http://localhost:3000/assets/inklewriter-source/inklewriter-main.js | wc -l)
+          READMODE_LINES=$(docker compose exec -T app curl -s http://localhost:3000/assets/inklewriter-source/inklewriter-readmode.js | wc -l)
+
+          echo "Main bundle: $MAIN_LINES lines (expected: ~25,000+)"
+          echo "Readmode bundle: $READMODE_LINES lines (expected: ~17,000+)"
+
+          if [ "$MAIN_LINES" -lt 20000 ]; then
+            echo "❌ Main bundle too small, likely not compiled correctly"
+            exit 1
+          fi
+
+          if [ "$READMODE_LINES" -lt 15000 ]; then
+            echo "❌ Readmode bundle too small, likely not compiled correctly"
+            exit 1
+          fi
+
+          echo "✅ Asset bundles verified"
+
+      - name: Cleanup test environment
+        if: always()
+        run: docker compose down -v
+
+      - name: Determine next version
+        id: version
+        run: |
+          # Get latest tag, default to 0.0.0 if none exists
+          LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
+          echo "Latest tag: $LATEST_TAG"
+
+          # Strip 'v' prefix and split version
+          VERSION=${LATEST_TAG#v}
+          IFS='.' read -r MAJOR MINOR PATCH <<< "$VERSION"
+
+          # Increment patch version
+          PATCH=$((PATCH + 1))
+          NEW_VERSION="${MAJOR}.${MINOR}.${PATCH}"
+
+          echo "New version: $NEW_VERSION"
+          echo "version=$NEW_VERSION" >> $GITHUB_OUTPUT
+          echo "tag=v$NEW_VERSION" >> $GITHUB_OUTPUT
+
+      - name: Create and push git tag
+        env:
+          VERSION_TAG: ${{ steps.version.outputs.tag }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git tag -a "$VERSION_TAG" -m "Release $VERSION_TAG"
+          git push origin "$VERSION_TAG"
+
+      - name: Tag candidate image as release
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: docker tag albancrommer/inklewriter:candidate albancrommer/inklewriter:${VERSION}
+
+      - name: Login to Docker Hub
         uses: docker/login-action@v2
         with:
           username: albancrommer
-          password: ${{ secrets.DOCKER_TOKEN }}      
-      -   
-        name: Push to Registry and CD
+          password: ${{ secrets.DOCKER_TOKEN }}
+
+      - name: Tag and push Docker images
         env:
-          CD_TOKEN: ${{ secrets.CD_TOKEN }} 
+          VERSION: ${{ steps.version.outputs.version }}
         run: |
           COMMIT=${GITHUB_SHA::8}
-          echo "ref_type:'$GITHUB_REF_TYPE' ref_name:'$GITHUB_REF_NAME'"
-          if [[ "$GITHUB_REF_TYPE" == "branch" ]]; then
-            case "$GITHUB_REF_NAME" in  
-              "master")
-                TAG="latest"
-                ;;
-              "dev")
-                TAG="dev"
-                CD="stageme.inklewriter.com"
-                ;;
-            esac
-          elif [[ $GITHUB_REF_TYPE == "tag" ]]; then 
-            TAG="$GITHUB_REF_NAME"
-          fi
-          if [[ -n "$TAG" ]]; then
-            IMAGE_ID=$(docker image list | grep albancrommer/inklewriter | head -n 1 | awk '{print $3}')
-            echo "Pushing local image '$IMAGE_ID' to dockerhub with tag '$TAG' and SHA:'$COMMIT'"
-            echo "Local images:"
-            echo docker tag "${IMAGE_ID}" "albancrommer/inklewriter:${COMMIT}";
-            docker tag "${IMAGE_ID}" "albancrommer/inklewriter:${COMMIT}";
-            echo docker push "albancrommer/inklewriter:${COMMIT}";
-            docker push "albancrommer/inklewriter:${COMMIT}";
-            echo docker tag "${IMAGE_ID}" "albancrommer/inklewriter:${TAG}";
-            docker tag "${IMAGE_ID}" "albancrommer/inklewriter:${TAG}";
-            echo docker push "albancrommer/inklewriter:${TAG}";
-            docker push "albancrommer/inklewriter:${TAG}";
-          fi
-          if [[ -n "$CD" ]]; then 
-            URL="https://${CD}/webhooks"
-            echo "Requesting deployment for branch/tag '$GITHUB_REF_NAME' on '$URL' with token '${CD_TOKEN::4}'"
-            curl -X POST -H "Content-Length: 0"  -H "Token: ${CD_TOKEN}" "${URL}"
-          fi
+
+          # Tag with version and latest
+          docker tag albancrommer/inklewriter:${VERSION} albancrommer/inklewriter:latest
+          docker tag albancrommer/inklewriter:${VERSION} albancrommer/inklewriter:${COMMIT}
+
+          # Push all tags
+          docker push albancrommer/inklewriter:${VERSION}
+          docker push albancrommer/inklewriter:latest
+          docker push albancrommer/inklewriter:${COMMIT}
+
+          echo "✅ Pushed images:"
+          echo "  - albancrommer/inklewriter:${VERSION}"
+          echo "  - albancrommer/inklewriter:latest"
+          echo "  - albancrommer/inklewriter:${COMMIT}"
