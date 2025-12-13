@@ -20,8 +20,6 @@ services:
     networks:
       - inklenet
     env_file: .env
-    environment:
-      FEATURE_TEST: "1"
     image: albancrommer/inklewriter:candidate
     volumes:
         - .:/usr/src/app
