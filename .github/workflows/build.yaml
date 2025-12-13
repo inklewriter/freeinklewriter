@@ -35,14 +35,36 @@ jobs:
       - name: Wait for services to be ready
         run: |
           echo "Waiting for PostgreSQL to be ready..."
-          docker compose logs db | grep "database system is ready to accept connections" || sleep 5
-          docker compose logs db | grep "database system is ready to accept connections" || sleep 5
-          docker compose logs db | grep "database system is ready to accept connections" || sleep 5
-          echo "Waiting for Rails app to be ready..."
-          until docker compose logs app | grep "Listening on"; do
-            echo "App not ready yet..."
+          for i in {1..10}; do
+            if docker compose logs db | grep -q "database system is ready to accept connections"; then
+              echo "✅ PostgreSQL ready"
+              break
+            fi
+            echo "Waiting for PostgreSQL... ($i/10)"
             sleep 3
           done
+
+          echo "Waiting for Rails app to be ready..."
+          for i in {1..30}; do
+            if docker compose logs app | grep -q "Listening on"; then
+              echo "✅ Rails app ready"
+              break
+            fi
+            if docker compose logs app | grep -qE "(Error|FATAL|Abort)"; then
+              echo "❌ App failed to start. Logs:"
+              docker compose logs app | tail -50
+              exit 1
+            fi
+            echo "Waiting for app... ($i/30)"
+            sleep 3
+          done
+
+          if ! docker compose logs app | grep -q "Listening on"; then
+            echo "❌ App didn't start within timeout. Logs:"
+            docker compose logs app
+            exit 1
+          fi
+
           echo "✅ All services ready"
 
       - name: Run Rails tests
