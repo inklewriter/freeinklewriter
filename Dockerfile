@@ -16,9 +16,10 @@ RUN apk add --update \
   yarn \
   && rm -rf /var/cache/apk/*
 
-# Create non-privileged user
+# Create non-privileged user and give ownership of workdir
 RUN addgroup -g 1000 inkle && \
-    adduser -D -u 1000 -G inkle inkle
+    adduser -D -u 1000 -G inkle inkle && \
+    chown -R inkle:inkle /usr/src/app
 
 # Install Ruby gems (cached unless Gemfile changes)
 COPY --chown=inkle:inkle Gemfile* /usr/src/app/
