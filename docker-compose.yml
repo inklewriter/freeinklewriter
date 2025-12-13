@@ -22,7 +22,7 @@ services:
     env_file: .env
     environment:
       FEATURE_TEST: "1"
-    image: inklewriter:latest
+    image: albancrommer/inklewriter:candidate
     volumes:
         - .:/usr/src/app
     ports:
