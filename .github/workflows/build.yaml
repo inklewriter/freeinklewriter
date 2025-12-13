@@ -14,8 +14,18 @@ jobs:
         with:
           fetch-depth: 0  # Fetch all history for versioning
 
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
       - name: Build Docker image
-        run: docker build -t albancrommer/inklewriter:candidate .
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: false
+          load: true
+          tags: albancrommer/inklewriter:candidate
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
       - name: Start test environment
         run: |
