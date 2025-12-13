@@ -5,6 +5,7 @@ WORKDIR /usr/src/app
 # Install system dependencies (cached unless packages change)
 RUN apk add --update \
   build-base \
+  curl \
   nodejs \
   npm \
   postgresql-client \
