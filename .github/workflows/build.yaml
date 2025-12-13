@@ -37,27 +37,27 @@ jobs:
 
       - name: Run Rails tests
         run: |
-          docker compose exec -T app bash -c "
+          docker compose exec -T app sh -c "
             RAILS_ENV=test bundle exec rake db:create db:migrate &&
             bundle exec rails test
           "
 
       - name: Run JavaScript tests
-        run: docker compose exec -T app npm test
+        run: docker compose exec -T app sh -c "npm test"
 
       - name: Run E2E smoke tests
         run: |
           echo "Testing asset bundle delivery..."
 
           # Test main bundle accessibility
-          docker compose exec -T app curl -f -I http://localhost:3000/assets/inklewriter-source/inklewriter-main.js
+          docker compose exec -T app sh -c "curl -f -I http://localhost:3000/assets/inklewriter-source/inklewriter-main.js"
 
           # Test readmode bundle accessibility
-          docker compose exec -T app curl -f -I http://localhost:3000/assets/inklewriter-source/inklewriter-readmode.js
+          docker compose exec -T app sh -c "curl -f -I http://localhost:3000/assets/inklewriter-source/inklewriter-readmode.js"
 
           # Verify bundle sizes
-          MAIN_LINES=$(docker compose exec -T app curl -s http://localhost:3000/assets/inklewriter-source/inklewriter-main.js | wc -l)
-          READMODE_LINES=$(docker compose exec -T app curl -s http://localhost:3000/assets/inklewriter-source/inklewriter-readmode.js | wc -l)
+          MAIN_LINES=$(docker compose exec -T app sh -c "curl -s http://localhost:3000/assets/inklewriter-source/inklewriter-main.js" | wc -l)
+          READMODE_LINES=$(docker compose exec -T app sh -c "curl -s http://localhost:3000/assets/inklewriter-source/inklewriter-readmode.js" | wc -l)
 
           echo "Main bundle: $MAIN_LINES lines (expected: ~25,000+)"
           echo "Readmode bundle: $READMODE_LINES lines (expected: ~17,000+)"

@@ -1,4 +1,4 @@
-version: '2'
+# Docker Compose file for Inklewriter
 
 volumes:
   inkledb:
