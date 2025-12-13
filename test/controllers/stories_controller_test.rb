@@ -123,15 +123,14 @@ class StoriesControllerTest < ActionDispatch::IntegrationTest
       "editorData" => { "authorName" => "Test" }
     }
 
-    # Currently the controller allows nil title (no validation)
-    # This creates a story with nil title
+    # When title is nil, model sets default "Untitled Story" via before_save callback
     assert_difference('Story.count', 1) do
       post stories_path, params: { data: story_data }
     end
 
     assert_response :created
     created_story = Story.last
-    assert_nil created_story.title
+    assert_equal "Untitled Story", created_story.title
   end
 
   # UPDATE action tests
