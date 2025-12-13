@@ -62,15 +62,19 @@ jobs:
           # Install curl in the Alpine container
           docker compose exec -T app sh -c "apk add --no-cache curl"
 
+          # Warm up Sprockets by accessing home page (triggers asset compilation)
+          docker compose exec -T app sh -c "curl -s http://localhost:3000/ > /dev/null"
+          sleep 2
+
           # Test main bundle accessibility
           docker compose exec -T app sh -c "curl -f -I http://localhost:3000/assets/inklewriter-source/inklewriter-main.js"
 
           # Test readmode bundle accessibility
           docker compose exec -T app sh -c "curl -f -I http://localhost:3000/assets/inklewriter-source/inklewriter-readmode.js"
 
-          # Verify bundle sizes
-          MAIN_LINES=$(docker compose exec -T app sh -c "curl -s http://localhost:3000/assets/inklewriter-source/inklewriter-main.js" | wc -l)
-          READMODE_LINES=$(docker compose exec -T app sh -c "curl -s http://localhost:3000/assets/inklewriter-source/inklewriter-readmode.js" | wc -l)
+          # Verify bundle sizes (use longer timeout for Sprockets concatenation)
+          MAIN_LINES=$(docker compose exec -T app sh -c "curl -s --max-time 30 http://localhost:3000/assets/inklewriter-source/inklewriter-main.js" | wc -l)
+          READMODE_LINES=$(docker compose exec -T app sh -c "curl -s --max-time 30 http://localhost:3000/assets/inklewriter-source/inklewriter-readmode.js" | wc -l)
 
           echo "Main bundle: $MAIN_LINES lines (expected: ~25,000+)"
           echo "Readmode bundle: $READMODE_LINES lines (expected: ~17,000+)"
