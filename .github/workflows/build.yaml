@@ -49,6 +49,9 @@ jobs:
         run: |
           echo "Testing asset bundle delivery..."
 
+          # Install curl in the Alpine container
+          docker compose exec -T app sh -c "apk add --no-cache curl"
+
           # Test main bundle accessibility
           docker compose exec -T app sh -c "curl -f -I http://localhost:3000/assets/inklewriter-source/inklewriter-main.js"
 
