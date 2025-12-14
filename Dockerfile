@@ -3,7 +3,7 @@ ARG BASE_IMAGE=ruby:3.3.0-alpine
 
 FROM $BASE_IMAGE 
 
-ARG APP_PATH="/usr/src/app"
+ENV APP_PATH="/usr/src/app"
 ARG USER_ID=1001
 ARG GROUP_ID=1001
 
@@ -41,14 +41,15 @@ RUN --mount=type=cache,target=/root/.npm \
 
 # Copy application code and set ownership
 COPY . .
-RUN chmod +x $APP_PATH/entrypoint.sh && \
+COPY entrypoint.sh /usr/bin
+RUN chmod +x /usr/bin/entrypoint.sh && \
     chown -R inkle:inkle $APP_PATH
 
 # Switch to non-privileged user
 USER inkle
 
 
-ENTRYPOINT ["$APP_PATH/entrypoint.sh"]
+ENTRYPOINT ["entrypoint.sh"]
 EXPOSE 3000
 
 # Start the main process.
