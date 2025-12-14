@@ -160,5 +160,11 @@
     "You have been disconnected from Inklewriter, perhaps because of an extended period of inactivity.": "Ви були відключені від Inklewriter, можливо, через тривалий період бездіяльності.",
     "You will still be able to share your stories, but if you forget your password sending you a reminder is impossible.": "Ви все одно зможете поділитися своїми історіями, але якщо ви забудете пароль, надіслати вам нагадування буде неможливо.",
     "Your e-mail address": "Ваша електронна адреса",
-    "You will then be able to find later uses of this marker in the story.": "Тоді ви зможете знайти пізніше використання цього маркера в історії."
+    "You will then be able to find later uses of this marker in the story.": "Тоді ви зможете знайти пізніше використання цього маркера в історії.",
+    "CONDITIONS and": " та ",
+    "CONDITIONS and not": " та не ",
+    "CONDITIONS not": "не ",
+    "CONDITIONS only show if": " показати якщо тільки ",
+    "Not passed these markers": "Не пройшов ці позначки",
+    "Passed these markers": "Пройшов цв позначки"
 }
