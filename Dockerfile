@@ -14,32 +14,31 @@ RUN --mount=type=cache,target=/var/cache/apk apk add --update \
   yarn \
   && rm -rf /var/cache/apk/*
 
-# Create non-privileged user and give ownership of workdir
+# Create non-privileged user and prepare workdir
 RUN addgroup -g 1000 inkle && \
-    adduser -D -u 1000 -G inkle inkle && \
-    mkdir -p /usr/src/app/ && \
-    chown inkle:inkle /usr/src/app/
+    adduser -D -u 1000 -G inkle inkle
 
 WORKDIR /usr/src/app
 
-# Switch to non-privileged user
-USER inkle
-
-COPY --chown=inkle:inkle package*.json /usr/src/app/
-RUN --mount=type=cache,target=/tmp/npm \
-    npm install --loglevel=verbose
-# Install Ruby gems (cached unless Gemfile changes)
-COPY --chown=inkle:inkle Gemfile* /usr/src/app/
+# Install Ruby gems as root (cached unless Gemfile changes)
+COPY Gemfile* /usr/src/app/
 RUN --mount=type=cache,target=/usr/local/bundle/cache \
-    --mount=type=cache,target=/usr/src/app/vendor/cache \
     bundle install && \
     bundle clean --force
 
+# Install Node packages as root
+COPY package*.json /usr/src/app/
+RUN --mount=type=cache,target=/root/.npm \
+    npm install
 
-COPY --chown=inkle:inkle . .
+# Copy application code and set ownership
+COPY . .
+COPY entrypoint.sh /usr/bin/
+RUN chmod +x /usr/bin/entrypoint.sh && \
+    chown -R inkle:inkle /usr/src/app
 
-COPY --chown=inkle:inkle entrypoint.sh /usr/bin/
-RUN chmod +x /usr/bin/entrypoint.sh
+# Switch to non-privileged user
+USER inkle
 
 ENTRYPOINT ["entrypoint.sh"]
 EXPOSE 3000
