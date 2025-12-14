@@ -33,7 +33,7 @@ COPY --chown=inkle:inkle Gemfile* /usr/src/app/
 RUN --mount=type=cache,target=/usr/local/bundle/cache \
     --mount=type=cache,target=/usr/src/app/vendor/cache \
     bundle cache && \
-    bundle installi --production && \
+    bundle install --production && \
     bundle clean --force
 
 
