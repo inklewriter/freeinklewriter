@@ -41,7 +41,7 @@ RUN --mount=type=cache,target=/root/.npm \
 
 # Copy application code and set ownership
 COPY . .
-RUN chmod +x /usr/bin/entrypoint.sh && \
+RUN chmod +x $APP_PATH/entrypoint.sh && \
     chown -R inkle:inkle $APP_PATH
 
 # Switch to non-privileged user
