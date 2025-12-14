@@ -21,7 +21,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: .
-          push: true 
+          push: false 
           load: true
           tags: albancrommer/inklewriter:candidate
           cache-from: type=gha
