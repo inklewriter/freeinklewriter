@@ -3,4 +3,5 @@
 
 services:
   app:
+    user: "0:0"  # run as root 
     volumes: []  # Override to remove volume mount from base compose file
