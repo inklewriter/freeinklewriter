@@ -26,6 +26,8 @@ RUN --mount=type=cache,target=/var/cache/apk apk add --update \
 RUN addgroup -g ${GROUP_ID} inkle && \
     adduser -D -u ${USER_ID} -G inkle inkle
 
+WORKDIR $APP_PATH
+
 # Install Ruby gems as root (cached unless Gemfile changes)
 COPY Gemfile* $APP_PATH/
 RUN --mount=type=cache,target=/usr/local/bundle/cache \
@@ -44,7 +46,6 @@ RUN chmod +x /usr/bin/entrypoint.sh && \
 
 # Switch to non-privileged user
 USER inkle
-WORKDIR $APP_PATH
 
 
 ENTRYPOINT ["$APP_PATH/entrypoint.sh"]
