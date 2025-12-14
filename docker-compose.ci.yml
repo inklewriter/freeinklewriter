@@ -1,0 +1,6 @@
+# Docker Compose override for CI - no volume mounts
+# Usage: docker compose -f docker-compose.yml -f docker-compose.ci.yml up
+
+services:
+  app:
+    volumes: []  # Override to remove volume mount from base compose file

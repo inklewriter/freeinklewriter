@@ -21,6 +21,7 @@ services:
       - inklenet
     env_file: .env
     image: albancrommer/inklewriter:candidate
+    user: "1000:1000"
     volumes:
         - .:/usr/src/app
     ports:

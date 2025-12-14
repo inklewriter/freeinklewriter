@@ -30,7 +30,7 @@ jobs:
       - name: Start test environment
         run: |
           cp .env.sample .env
-          docker compose up -d
+          docker compose -f docker-compose.yml -f docker-compose.ci.yml up -d
 
       - name: Wait for services to be ready
         run: |
