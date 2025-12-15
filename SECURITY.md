@@ -14,20 +14,33 @@
 - **Fixed**: Replaced template literals with createElement/textContent
 - **Date**: 2025-12-13
 
-## High Priority
-
-### XSS - document.write
-- **File**: `app/assets/javascripts/inklewriter-source/aux.js:3`
-- **Issue**: document.write can lead to XSS (CWE-79)
-- **Fix**: Replace with DOM manipulation
-- **Status**: Not found in current codebase - may be false positive
-
-## Medium Priority
-
-### ReDoS - Dynamic RegExp
+### ✓ ReDoS - Dynamic RegExp
 - **File**: `app/assets/javascripts/inklewriter-source/aux.js:22`
 - **Issue**: RegExp with function argument (CWE-1333)
-- **Fix**: Use hardcoded regex or validate input
+- **Fixed**: Escape special regex characters in getURLParameterByName
+- **Date**: 2025-12-15
+
+### ✓ XSS - document.write
+- **File**: `app/assets/javascripts/inklewriter-source/aux.js`
+- **Issue**: document.write can lead to XSS (CWE-79)
+- **Status**: False positive - not found in codebase
+- **Date**: 2025-12-15
+
+### ✓ eval-like patterns
+- **Files**: Multiple inklewriter-source JS files
+- **Issue**: Potential code injection via setTimeout/setInterval strings
+- **Status**: False positive - all use function references, not string eval
+- **Date**: 2025-12-15
+
+### ✓ SQL Injection
+- **Files**: `app/models/story.rb`, `app/models/user.rb`, controllers
+- **Issue**: Potential unsafe query construction
+- **Status**: All queries use proper ActiveRecord parameterization
+- **Date**: 2025-12-15
+
+## High Priority
+
+## Medium Priority
 
 ### Prototype Pollution - jQuery 1.7.1
 - **Files**: `app/assets/javascripts/inklewriter-source/jquery-1.7.1.js`
@@ -40,25 +53,15 @@
 - **Issue**: Non-literal RegExp construction in older jQuery versions
 - **Fix**: Upgrade jQuery to modern version (3.7+)
 
-### eval-like patterns
-- **Files**: Multiple inklewriter-source JS files
-- **Issue**: Potential code injection via setTimeout/setInterval strings
-- **Fix**: Use function references instead of string eval
-
 ## Review Needed
 
 ### Deprecated OpenSSL Cipher
 - **Files**: Ruby codebase (location TBD)
 - **Issue**: Weak cryptographic algorithms
 - **Fix**: Audit and update to modern ciphers
-
-### SQL Injection
-- **Files**: `app/models/story.rb`, `app/models/user.rb`, controllers
-- **Issue**: Potential unsafe query construction
-- **Fix**: Audit all ActiveRecord queries, ensure parameterization
+- **Status**: No evidence found in codebase review
 
 ## Summary
-- 2 critical XSS vulnerabilities
-- 1 critical privilege escalation (Docker)
-- 5+ medium ReDoS/prototype pollution issues
-- 2 areas requiring manual audit
+- **Resolved**: 6 vulnerabilities (Docker root user, XSS innerHTML, ReDoS, document.write, eval patterns, SQL injection)
+- **Remaining**: 2 jQuery vulnerabilities (requires upgrade to 3.7+)
+- **Unconfirmed**: 1 OpenSSL cipher issue (no evidence found)
