@@ -3727,60 +3727,60 @@ self.navigateSuggestions = {
         var jqAuthorNameField = '<div contentEditable=true tooltip="' + tr("Your name goes here") + '" id="authorNameField" class="titleField">'+StoryModel.authorName()+'</div>';
         
         
-        $("#storyNameField")
-        .live("blur", function() {
+        $(document).on("blur", "#storyNameField", function() {
             var newName = $(this).text().replace(/\n/g,"");
             if (newName !== StoryModel.storyName() ) {
                 StoryModel.setStoryName( newName );
                 EditorMenu.requireSave();
             }
-        })
+        });
+
         // Pressing return or escape in story name field
-        .live("keydown", function(event) {
+        $(document).on("keydown", "#storyNameField", function(event) {
             // Return key or escape key
-            if( event.which === 13 || event.which === 27 ) { 
+            if( event.which === 13 || event.which === 27 ) {
                 event.preventDefault();
-                
+
                 // Revert to original name when escape key pressed
                 if( event.which === 27 ) {
                     $(this).text( StoryModel.storyName() );
                 } else {
                     $(this).blur();
                 }
-                
+
                 return false;
             }
-            
+
             return true;
-        })
+        });
     
-        $("#authorNameField")
-        .live("blur", function() {
+        $(document).on("blur", "#authorNameField", function() {
             var newName = $(this).text();
             if (newName !== StoryModel.authorName() ) {
                 StoryModel.setAuthorName( newName );
                 EditorMenu.requireSave();
             }
 
-        })
-        // Pressing return or escape in story name field
-        .live("keydown", function(event) {
+        });
+
+        // Pressing return or escape in author name field
+        $(document).on("keydown", "#authorNameField", function(event) {
             // Return key or escape key
-            if( event.which === 13 || event.which === 27 ) { 
+            if( event.which === 13 || event.which === 27 ) {
                 event.preventDefault();
-                
+
                 // Revert to original name when escape key pressed
                 if( event.which === 27 ) {
                     $(this).text( StoryModel.authorName() );
                 } else {
                     $(this).blur();
                 }
-                
+
                 return false;
             }
-            
+
             return true;
-        })
+        });
         
         
         //jqEditorMenu.append('<em id="saveStateMessage"></em>');
