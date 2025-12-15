@@ -38,20 +38,21 @@
 - **Status**: All queries use proper ActiveRecord parameterization
 - **Date**: 2025-12-15
 
+### ✓ Prototype Pollution - jQuery 1.7.1
+- **Files**: `app/assets/javascripts/inklewriter-source/jquery-1.7.1.js`
+- **Issue**: jQuery 1.7.1 has known prototype pollution vulnerabilities (CWE-915)
+- **Fixed**: Upgraded jQuery from 1.7.1 to 3.7.1
+- **Date**: 2025-12-15
+
+### ✓ ReDoS - jQuery internals
+- **Files**: `app/assets/javascripts/inklewriter-source/jquery-1.7.1.js`
+- **Issue**: Non-literal RegExp construction in older jQuery versions
+- **Fixed**: Upgraded jQuery from 1.7.1 to 3.7.1
+- **Date**: 2025-12-15
+
 ## High Priority
 
 ## Medium Priority
-
-### Prototype Pollution - jQuery 1.7.1
-- **Files**: `app/assets/javascripts/inklewriter-source/jquery-1.7.1.js`
-- **Issue**: jQuery 1.7.1 has known prototype pollution vulnerabilities (CWE-915)
-- **Fix**: Upgrade jQuery from 1.7.1 to latest (3.7+)
-- **Note**: Requires compatibility testing with inklewriter codebase
-
-### ReDoS - jQuery internals
-- **Files**: `app/assets/javascripts/inklewriter-source/jquery-1.7.1.js`
-- **Issue**: Non-literal RegExp construction in older jQuery versions
-- **Fix**: Upgrade jQuery to modern version (3.7+)
 
 ## Review Needed
 
