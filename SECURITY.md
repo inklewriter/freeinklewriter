@@ -29,15 +29,16 @@
 - **Issue**: RegExp with function argument (CWE-1333)
 - **Fix**: Use hardcoded regex or validate input
 
-### Prototype Pollution - jQuery
-- **Files**: `app/assets/javascripts/inklewriter-source/jquery-1.5.js:4518, 4536, 4551, 4577`
-- **Issue**: Object prototype modification (CWE-915)
-- **Fix**: Upgrade jQuery from 1.5 to latest (3.7+)
+### Prototype Pollution - jQuery 1.7.1
+- **Files**: `app/assets/javascripts/inklewriter-source/jquery-1.7.1.js`
+- **Issue**: jQuery 1.7.1 has known prototype pollution vulnerabilities (CWE-915)
+- **Fix**: Upgrade jQuery from 1.7.1 to latest (3.7+)
+- **Note**: Requires compatibility testing with inklewriter codebase
 
 ### ReDoS - jQuery internals
-- **Files**: `app/assets/javascripts/inklewriter-source/jquery-1.5.js:2295, 2507, 3163`
-- **Issue**: Non-literal RegExp construction
-- **Fix**: Upgrade jQuery to modern version
+- **Files**: `app/assets/javascripts/inklewriter-source/jquery-1.7.1.js`
+- **Issue**: Non-literal RegExp construction in older jQuery versions
+- **Fix**: Upgrade jQuery to modern version (3.7+)
 
 ### eval-like patterns
 - **Files**: Multiple inklewriter-source JS files
