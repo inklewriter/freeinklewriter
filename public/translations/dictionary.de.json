@@ -160,5 +160,9 @@
     "You have been disconnected from Inklewriter, perhaps because of an extended period of inactivity.": "Sie wurden von inklewriter getrennt, vielleicht aufgrund einer längeren Inaktivität.",
     "You will still be able to share your stories, but if you forget your password sending you a reminder is impossible.": "Sie können weiterhin Ihre Beiträge veröffentlichen, aber vergessen Sie Ihr Passwort nicht, denn wir können Ihnen keine Erinnerung schicken.",
     "Your e-mail address": "Ihre E-Mail-Adresse",
-    "You will then be able to find later uses of this marker in the story.": "Sie können dann im weiteren Verlauf der Geschichte auf diese Markierung testen."
+    "You will then be able to find later uses of this marker in the story.": "Sie können dann im weiteren Verlauf der Geschichte auf diese Markierung testen.",
+    "CONDITIONS and": " und ",
+    "CONDITIONS and not": " und nicht ",
+    "CONDITIONS not": "nicht ",
+    "CONDITIONS only show if": " nur anzeigen falls "
 }
