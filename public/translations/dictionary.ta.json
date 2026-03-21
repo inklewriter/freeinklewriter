@@ -160,5 +160,11 @@
     "You have been disconnected from Inklewriter, perhaps because of an extended period of inactivity.": "நீங்கள் இன்க்ல்ரைட்டரிடமிருந்து துண்டிக்கப்பட்டுள்ளீர்கள், ஒருவேளை செயலற்ற காலத்தின் காரணமாக இருக்கலாம்.",
     "You will still be able to share your stories, but if you forget your password sending you a reminder is impossible.": "உங்கள் கதைகளை நீங்கள் இன்னும் பகிர்ந்து கொள்ள முடியும், ஆனால் உங்கள் கடவுச்சொல்லை மறந்துவிட்டால், உங்களுக்கு நினைவூட்டலை அனுப்புவது சாத்தியமில்லை.",
     "Your e-mail address": "உங்கள் மின்னஞ்சல் முகவரி",
-    "You will then be able to find later uses of this marker in the story.": "இந்த மார்க்கரின் பின்னர் கதையில் நீங்கள் கண்டுபிடிக்க முடியும்."
+    "You will then be able to find later uses of this marker in the story.": "இந்த மார்க்கரின் பின்னர் கதையில் நீங்கள் கண்டுபிடிக்க முடியும்.",
+    "CONDITIONS and": " மற்றும் ",
+    "CONDITIONS and not": " மற்றும் இல்லை ",
+    "CONDITIONS not": "இல்லை ",
+    "CONDITIONS only show if": " இருந்தால் மட்டும் காட்டு ",
+    "Not passed these markers": "இந்த குறிப்பான்களை கடக்கவில்லை",
+    "Passed these markers": "இந்த குறிப்பான்களை கடந்து சென்றது"
 }
