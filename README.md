@@ -29,11 +29,11 @@ Help translate Inklewriter at [Hosted Weblate](https://hosted.weblate.org/projec
 
 ### docker-compose 
 
-```
+```bash
 git clone https://github.com/inklewriter/freeinklewriter
 cd freeinklewriter
-cp .env.template .env
-docker-compose run
+cp .env.sample .env
+docker-compose up
 ```
 Open your browser on http://localhost:3000
 
