@@ -1,36 +1,9 @@
 // Tests for StoryModel - core story data management
 // Testing only pure functions without DOM/AJAX dependencies
 
-// Mock the StoryModel object structure based on the source code
-const StoryModel = {
-  _defaultStoryName: "Untitled Story",
-  _defaultAuthorName: "Anonymous",
-  _storyName: "Untitled Story",
-  _authorName: "Anonymous",
-  stitches: [],
-  flagIndex: [],
-  initialStitch: null,
-  maxPage: 0,
-  maxPreferredPageLength: 8,
-  optionMirroring: true,
-  allowCheckpoints: false,
-  endCount: 0,
-  looseEndCount: 0,
-  loading: false,
-  watchRefCounts: false,
-
-  storyName: function() { return this._storyName; },
-  authorName: function() { return this._authorName; },
-  setStoryName: function(name) { this._storyName = name; },
-  setAuthorName: function(name) { this._authorName = name; },
-
-  clear: function() {
-    this.stitches = [];
-    this.flagIndex = [];
-    this.setStoryName(this._defaultStoryName);
-    this.setAuthorName(this._defaultAuthorName);
-  }
-};
+import { loadSourceFile } from './helpers/load_source.js';
+loadSourceFile('aux');        // sets up Array/String extensions
+loadSourceFile('storyModel'); // StoryModel now available as a global
 
 QUnit.module('StoryModel', function(hooks) {
   hooks.beforeEach(function() {
@@ -116,44 +89,6 @@ QUnit.module('StoryModel', function(hooks) {
       'Default loose end count should be 0');
   });
 });
-
-// Add extractFlagNameFromExpression function for testing
-StoryModel.extractFlagNameFromExpression = function(flagText) {
-  var grabFlagNameRegex = /^(.*?)\s*(\=|\+|\-|\>|\<|\!\=|$)/;
-  return flagText.match(grabFlagNameRegex)[1];
-};
-
-// Add numberOfConditionals function for testing
-StoryModel.numberOfConditionals = function(obj, testValue) {
-  if (testValue)
-    return obj._ifConditions.length;
-  return obj._notIfConditions.length;
-};
-
-// Add conditionedOnThis function for testing
-StoryModel.conditionedOnThis = function(obj, flagName, testValue) {
-  if (testValue) return (obj._ifConditions.indexOf(flagName) > -1);
-  return (obj._notIfConditions.indexOf(flagName) > -1);
-};
-
-// Add conditionalByIndex function for testing
-StoryModel.conditionalByIndex = function(obj, testValue, idx) {
-  if (idx < 0 || idx >= StoryModel.numberOfConditionals(obj, testValue))
-    return "";
-  if (testValue)
-    return obj._ifConditions[idx];
-  return obj._notIfConditions[idx];
-};
-
-// Add pageSize function for testing
-StoryModel.pageSize = function(pageNum) {
-  var count = 0;
-  for (var i = 0; i < StoryModel.stitches.length; i++) {
-    if (StoryModel.stitches[i].pageNumber && StoryModel.stitches[i].pageNumber() == pageNum)
-      count++;
-  }
-  return count;
-};
 
 QUnit.module('StoryModel Flag Functions', function() {
 

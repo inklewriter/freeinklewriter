@@ -1,66 +1,8 @@
 // Tests for aux.js utility functions
 // Testing only pure functions without DOM/AJAX dependencies
 
-// Mock utility functions from aux.js
-function wordCountOf(x) {
-  if (x) {
-    var words = x.match(/\S+/g);
-    if (words) return words.length;
-  }
-  return 0;
-}
-
-function commadString(x) {
-  // convert to a string, with commas on every thousand words
-  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-}
-
-function convertStringToBooleanIfAppropriate(pass) {
-  if (pass === "true") return true;
-  if (pass === "false") return false;
-  return pass;
-}
-
-// Array prototype extensions
-Array.prototype.contains = function(element) {
-  var elementIdx = this.indexOf(element);
-  if( elementIdx >= 0 )
-    return true;
-  else
-    return false;
-}
-
-Array.prototype.first = function() {
-  if( this.length > 0 )
-    return this[0];
-  else
-    return null;
-}
-
-Array.prototype.last = function() {
-  if( this.length > 0 )
-    return this[this.length-1];
-  else
-    return null;
-}
-
-Array.prototype.add = function(element) {
-  if (!this.contains(element))
-    this.push(element);
-}
-
-Array.prototype.remove = function(element) {
-  var elementIdx = this.indexOf(element);
-  if( elementIdx >= 0 ) {
-    this.splice(elementIdx, 1);
-  }
-}
-
-String.prototype.camelCase = function() {
-  return this.replace(/[^A-Za-z\s]/g, '').replace(/(?:^\w|[A-Z]|\b\w)/g, function(letter, index) {
-    return index == 0 ? letter.toLowerCase() : letter.toUpperCase();
-  }).replace(/\s+/g, '');
-}
+import { loadSourceFile } from './helpers/load_source.js';
+loadSourceFile('aux');
 
 QUnit.module('aux.js Utility Functions', function() {
 
