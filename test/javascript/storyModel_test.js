@@ -7,11 +7,7 @@ loadSourceFile('storyModel'); // StoryModel now available as a global
 
 QUnit.module('StoryModel', function(hooks) {
   hooks.beforeEach(function() {
-    // Reset StoryModel to default state before each test
-    StoryModel._storyName = StoryModel._defaultStoryName;
-    StoryModel._authorName = StoryModel._defaultAuthorName;
-    StoryModel.stitches = [];
-    StoryModel.flagIndex = [];
+    global.$ = { trim: (s) => s.trim() };
   });
 
   QUnit.test('Default story name is "Untitled Story"', function(assert) {
@@ -88,122 +84,120 @@ QUnit.module('StoryModel', function(hooks) {
     assert.equal(StoryModel.looseEndCount, 0,
       'Default loose end count should be 0');
   });
-});
 
-QUnit.module('StoryModel Flag Functions', function() {
+  QUnit.module('Flag Functions', function(hooks) {
+    QUnit.test('extractFlagNameFromExpression() extracts simple flag name', function(assert) {
+      assert.equal(StoryModel.extractFlagNameFromExpression("hasKey"), "hasKey",
+        'Should extract simple flag name');
+    });
 
-  QUnit.test('extractFlagNameFromExpression() extracts simple flag name', function(assert) {
-    assert.equal(StoryModel.extractFlagNameFromExpression("hasKey"), "hasKey",
-      'Should extract simple flag name');
+    QUnit.test('extractFlagNameFromExpression() extracts flag from equality', function(assert) {
+      assert.equal(StoryModel.extractFlagNameFromExpression("score = 10"), "score",
+        'Should extract flag name from equality expression');
+    });
+
+    QUnit.test('extractFlagNameFromExpression() extracts flag from comparison', function(assert) {
+      assert.equal(StoryModel.extractFlagNameFromExpression("health > 50"), "health",
+        'Should extract flag name from comparison');
+    });
+
+    QUnit.test('extractFlagNameFromExpression() extracts flag from not-equal', function(assert) {
+      assert.equal(StoryModel.extractFlagNameFromExpression("status != dead"), "status",
+        'Should extract flag name from not-equal expression');
+    });
+
+    QUnit.test('extractFlagNameFromExpression() captures leading whitespace', function(assert) {
+      assert.equal(StoryModel.extractFlagNameFromExpression("  playerName  = John"), "  playerName",
+        'Regex captures leading whitespace before operator');
+    });
   });
 
-  QUnit.test('extractFlagNameFromExpression() extracts flag from equality', function(assert) {
-    assert.equal(StoryModel.extractFlagNameFromExpression("score = 10"), "score",
-      'Should extract flag name from equality expression');
+  QUnit.module('Conditional Functions', function(hooks) {
+    var mockObj;
+
+    hooks.beforeEach(function() {
+      mockObj = {
+        _ifConditions: ['hasKey', 'isAlive'],
+        _notIfConditions: ['isDead', 'isHungry']
+      };
+    });
+
+    QUnit.test('numberOfConditionals() returns count of if-conditions', function(assert) {
+      assert.equal(StoryModel.numberOfConditionals(mockObj, true), 2,
+        'Should return 2 if-conditions');
+    });
+
+    QUnit.test('numberOfConditionals() returns count of not-if-conditions', function(assert) {
+      assert.equal(StoryModel.numberOfConditionals(mockObj, false), 2,
+        'Should return 2 not-if-conditions');
+    });
+
+    QUnit.test('conditionedOnThis() finds flag in if-conditions', function(assert) {
+      assert.ok(StoryModel.conditionedOnThis(mockObj, 'hasKey', true),
+        'Should find hasKey in if-conditions');
+    });
+
+    QUnit.test('conditionedOnThis() finds flag in not-if-conditions', function(assert) {
+      assert.ok(StoryModel.conditionedOnThis(mockObj, 'isDead', false),
+        'Should find isDead in not-if-conditions');
+    });
+
+    QUnit.test('conditionedOnThis() returns false for missing flag', function(assert) {
+      assert.notOk(StoryModel.conditionedOnThis(mockObj, 'notPresent', true),
+        'Should return false for missing flag');
+    });
+
+    QUnit.test('conditionalByIndex() returns correct if-condition by index', function(assert) {
+      assert.equal(StoryModel.conditionalByIndex(mockObj, true, 0), 'hasKey',
+        'Should return first if-condition');
+      assert.equal(StoryModel.conditionalByIndex(mockObj, true, 1), 'isAlive',
+        'Should return second if-condition');
+    });
+
+    QUnit.test('conditionalByIndex() returns correct not-if-condition by index', function(assert) {
+      assert.equal(StoryModel.conditionalByIndex(mockObj, false, 0), 'isDead',
+        'Should return first not-if-condition');
+    });
+
+    QUnit.test('conditionalByIndex() returns empty string for invalid index', function(assert) {
+      assert.equal(StoryModel.conditionalByIndex(mockObj, true, -1), '',
+        'Should return empty string for negative index');
+      assert.equal(StoryModel.conditionalByIndex(mockObj, true, 99), '',
+        'Should return empty string for out-of-bounds index');
+    });
   });
 
-  QUnit.test('extractFlagNameFromExpression() extracts flag from comparison', function(assert) {
-    assert.equal(StoryModel.extractFlagNameFromExpression("health > 50"), "health",
-      'Should extract flag name from comparison');
-  });
+  QUnit.module('StoryModel Page Functions', function(hooks) {
+    hooks.beforeEach(function() {
+      // Mock stitches with page numbers
+      StoryModel.stitches = [
+        { pageNumber: function() { return 1; } },
+        { pageNumber: function() { return 1; } },
+        { pageNumber: function() { return 2; } },
+        { pageNumber: function() { return 1; } },
+        { pageNumber: function() { return 3; } }
+      ];
+    });
 
-  QUnit.test('extractFlagNameFromExpression() extracts flag from not-equal', function(assert) {
-    assert.equal(StoryModel.extractFlagNameFromExpression("status != dead"), "status",
-      'Should extract flag name from not-equal expression');
-  });
+    QUnit.test('pageSize() counts stitches on page 1', function(assert) {
+      assert.equal(StoryModel.pageSize(1), 3,
+        'Should count 3 stitches on page 1');
+    });
 
-  QUnit.test('extractFlagNameFromExpression() captures leading whitespace', function(assert) {
-    assert.equal(StoryModel.extractFlagNameFromExpression("  playerName  = John"), "  playerName",
-      'Regex captures leading whitespace before operator');
-  });
-});
+    QUnit.test('pageSize() counts stitches on page 2', function(assert) {
+      assert.equal(StoryModel.pageSize(2), 1,
+        'Should count 1 stitch on page 2');
+    });
 
-QUnit.module('StoryModel Conditional Functions', function(hooks) {
-  var mockObj;
+    QUnit.test('pageSize() returns 0 for non-existent page', function(assert) {
+      assert.equal(StoryModel.pageSize(99), 0,
+        'Should return 0 for non-existent page');
+    });
 
-  hooks.beforeEach(function() {
-    mockObj = {
-      _ifConditions: ['hasKey', 'isAlive'],
-      _notIfConditions: ['isDead', 'isHungry']
-    };
-  });
-
-  QUnit.test('numberOfConditionals() returns count of if-conditions', function(assert) {
-    assert.equal(StoryModel.numberOfConditionals(mockObj, true), 2,
-      'Should return 2 if-conditions');
-  });
-
-  QUnit.test('numberOfConditionals() returns count of not-if-conditions', function(assert) {
-    assert.equal(StoryModel.numberOfConditionals(mockObj, false), 2,
-      'Should return 2 not-if-conditions');
-  });
-
-  QUnit.test('conditionedOnThis() finds flag in if-conditions', function(assert) {
-    assert.ok(StoryModel.conditionedOnThis(mockObj, 'hasKey', true),
-      'Should find hasKey in if-conditions');
-  });
-
-  QUnit.test('conditionedOnThis() finds flag in not-if-conditions', function(assert) {
-    assert.ok(StoryModel.conditionedOnThis(mockObj, 'isDead', false),
-      'Should find isDead in not-if-conditions');
-  });
-
-  QUnit.test('conditionedOnThis() returns false for missing flag', function(assert) {
-    assert.notOk(StoryModel.conditionedOnThis(mockObj, 'notPresent', true),
-      'Should return false for missing flag');
-  });
-
-  QUnit.test('conditionalByIndex() returns correct if-condition by index', function(assert) {
-    assert.equal(StoryModel.conditionalByIndex(mockObj, true, 0), 'hasKey',
-      'Should return first if-condition');
-    assert.equal(StoryModel.conditionalByIndex(mockObj, true, 1), 'isAlive',
-      'Should return second if-condition');
-  });
-
-  QUnit.test('conditionalByIndex() returns correct not-if-condition by index', function(assert) {
-    assert.equal(StoryModel.conditionalByIndex(mockObj, false, 0), 'isDead',
-      'Should return first not-if-condition');
-  });
-
-  QUnit.test('conditionalByIndex() returns empty string for invalid index', function(assert) {
-    assert.equal(StoryModel.conditionalByIndex(mockObj, true, -1), '',
-      'Should return empty string for negative index');
-    assert.equal(StoryModel.conditionalByIndex(mockObj, true, 99), '',
-      'Should return empty string for out-of-bounds index');
-  });
-});
-
-QUnit.module('StoryModel Page Functions', function(hooks) {
-
-  hooks.beforeEach(function() {
-    // Mock stitches with page numbers
-    StoryModel.stitches = [
-      { pageNumber: function() { return 1; } },
-      { pageNumber: function() { return 1; } },
-      { pageNumber: function() { return 2; } },
-      { pageNumber: function() { return 1; } },
-      { pageNumber: function() { return 3; } }
-    ];
-  });
-
-  QUnit.test('pageSize() counts stitches on page 1', function(assert) {
-    assert.equal(StoryModel.pageSize(1), 3,
-      'Should count 3 stitches on page 1');
-  });
-
-  QUnit.test('pageSize() counts stitches on page 2', function(assert) {
-    assert.equal(StoryModel.pageSize(2), 1,
-      'Should count 1 stitch on page 2');
-  });
-
-  QUnit.test('pageSize() returns 0 for non-existent page', function(assert) {
-    assert.equal(StoryModel.pageSize(99), 0,
-      'Should return 0 for non-existent page');
-  });
-
-  QUnit.test('pageSize() handles empty stitches array', function(assert) {
-    StoryModel.stitches = [];
-    assert.equal(StoryModel.pageSize(1), 0,
-      'Should return 0 when no stitches exist');
+    QUnit.test('pageSize() handles empty stitches array', function(assert) {
+      StoryModel.stitches = [];
+      assert.equal(StoryModel.pageSize(1), 0,
+        'Should return 0 when no stitches exist');
+    });
   });
 });
