@@ -45,10 +45,10 @@ QUnit.module('EditorAccount', (hooks) => {
             mock.stub(window.location, 'search').get(() => `?storyID=${url_key}`);
 
             EditorAccount.fetchStories();
-            assert.equal(url_key, EditorAccount.currentStoryId())
-        })
+            assert.equal(url_key, EditorAccount.currentStoryId());
+        });
 
-        QUnit.test('loads most recent story when available', (assert) => {
+        QUnit.test('loads most recent story when no url param provided', (assert) => {
             const url_key = "123";
             const now = new Date();
             const yesterday = new Date(now.getDate() - 1);
@@ -57,8 +57,8 @@ QUnit.module('EditorAccount', (hooks) => {
             });
 
             EditorAccount.fetchStories();
-            assert.equal(url_key, EditorAccount.currentStoryId())
-        })
+            assert.equal(url_key, EditorAccount.currentStoryId());
+        });
 
         QUnit.test('creates a new story when none available', (assert) => {
             const url_key = "123";
@@ -71,7 +71,7 @@ QUnit.module('EditorAccount', (hooks) => {
 
             EditorAccount.fetchStories();
 
-            assert.ok(createNewStub.calledOnce)
-        })
-    })
-})
+            assert.ok(createNewStub.calledOnce);
+        });
+    });
+});
