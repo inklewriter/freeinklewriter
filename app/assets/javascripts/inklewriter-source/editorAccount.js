@@ -112,7 +112,6 @@ var EditorAccount = function() {
                 
                console.log("Successfully fetched "+storyArray.length+" stories.")
 
-
                 loadLatestModifiedOrRequestedStory();
                 
                if( parameters && parameters.success ) {
@@ -158,7 +157,13 @@ var EditorAccount = function() {
         if (requestedID && session.stories[requestedID]) {
                 return loadStoryId(requestedID);
         }
-        return loadStoryId( latestModifiedStoryId() );
+
+        const id = latestModifiedStoryId();
+        if (id) {
+            return loadStoryId(id);
+        }
+
+        return EditorMenu.createNew();
     }
     
     var signInWithUsernameAndPassword = function(username, password, parameters) {
