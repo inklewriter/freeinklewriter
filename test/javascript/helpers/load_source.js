@@ -12,4 +12,3 @@ export const loadSourceFile = (filename) => {
 
 // Stub globals the source files depend on
 global.tr = (s) => s;
-global.$ = { trim: (s) => s.trim() };
