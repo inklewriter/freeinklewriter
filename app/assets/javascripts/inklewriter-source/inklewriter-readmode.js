@@ -12,6 +12,7 @@
 //= require storyModel
 //= require dialogue
 //= require editorAccount
+//= require storyEngine
 //= require playMode
 //= require tooltip
 //= require_tree ./rangy-1.2.2
