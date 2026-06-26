@@ -17,32 +17,32 @@ class NumToWords {
         };
     }
 
-            function _getIntAsWordsRecursively(n, nThousandsExponent) {
-            var str = _getNonZeroNumberLessThanOneThousandAsWords(n % 1000);
-            if (str != '' && nThousandsExponent > 0)
-                str += ' ' + _words.illions[nThousandsExponent - 1];
-            if (n < 1000) return str;
-            return _getIntAsWordsRecursively(Math.floor(n / 1000), nThousandsExponent + 1) +
-                ((str == '') ? '' : ', ' + str);
-        }
+    _getIntAsWordsRecursively(n, nThousandsExponent) {
+        var str = _getNonZeroNumberLessThanOneThousandAsWords(n % 1000);
+        if (str != '' && nThousandsExponent > 0)
+            str += ' ' + _words.illions[nThousandsExponent - 1];
+        if (n < 1000) return str;
+        return _getIntAsWordsRecursively(Math.floor(n / 1000), nThousandsExponent + 1) +
+            ((str == '') ? '' : ', ' + str);
+    }
 
-        function _getNonZeroNumberLessThanOneThousandAsWords(n) {
-            if (n == 0) return '';
-            if (n < 10) return _words.digits[n - 1];
-            if (n < 20) return _words.teens[n - 10];
-            if (n < 100) return _words.tens[Math.floor(n / 10) - 1] + ((n % 10 == 0) ? '' : '-' + _words.digits[n % 10 - 1]);
-            if (n < 1000) return _words.digits[Math.floor(n / 100) - 1] + ' ' + tr("hundred") +
-                ((n % 100 == 0) ? '' : ' ' + tr("and") + ' ' + _getNonZeroNumberLessThanOneThousandAsWords(n % 100));
-            return n;
-        }
+    _getNonZeroNumberLessThanOneThousandAsWords(n) {
+        if (n == 0) return '';
+        if (n < 10) return _words.digits[n - 1];
+        if (n < 20) return _words.teens[n - 10];
+        if (n < 100) return _words.tens[Math.floor(n / 10) - 1] + ((n % 10 == 0) ? '' : '-' + _words.digits[n % 10 - 1]);
+        if (n < 1000) return _words.digits[Math.floor(n / 100) - 1] + ' ' + tr("hundred") +
+            ((n % 100 == 0) ? '' : ' ' + tr("and") + ' ' + _getNonZeroNumberLessThanOneThousandAsWords(n % 100));
+        return n;
+    }
 
-        var _words = {
-            digits: [tr('one'), tr('two'), tr('three'), tr('four'), tr('five'), tr('six'), tr('seven'), tr('eight'), tr('nine')],
-            tens: [tr('ten'), tr('twenty'), tr('thirty'), tr('forty'), tr('fifty'), tr('sixty'), tr('seventy'), tr('eighty'), tr('ninety')],
-            teens: [tr('ten'), tr('eleven'), tr('twelve'), tr('thirteen'), tr('fourteen'),
-            tr('fifteen'), tr('sixteen'), tr('seventeen'), tr('eighteen'), tr('nineteen')],
-            illions: [tr('thousand'), tr('million'), tr('billion'), tr('trillion')]
-        };
+    _words = {
+        digits: [tr('one'), tr('two'), tr('three'), tr('four'), tr('five'), tr('six'), tr('seven'), tr('eight'), tr('nine')],
+        tens: [tr('ten'), tr('twenty'), tr('thirty'), tr('forty'), tr('fifty'), tr('sixty'), tr('seventy'), tr('eighty'), tr('ninety')],
+        teens: [tr('ten'), tr('eleven'), tr('twelve'), tr('thirteen'), tr('fourteen'),
+        tr('fifteen'), tr('sixteen'), tr('seventeen'), tr('eighteen'), tr('nineteen')],
+        illions: [tr('thousand'), tr('million'), tr('billion'), tr('trillion')]
+    };
 }
 
 
