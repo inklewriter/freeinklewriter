@@ -279,23 +279,3 @@ class StoryEngine {
         localStorage[this.saveKey()] = JSON.stringify(stitchNameList);
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
