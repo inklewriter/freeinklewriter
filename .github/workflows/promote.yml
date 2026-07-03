@@ -1,0 +1,92 @@
+name: Promote to Production
+
+on:
+  push:
+    branches:
+      - master
+
+permissions:
+  contents: write
+
+jobs:
+  promote:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Resolve source SHA from dev
+        id: source
+        run: |
+          # If this push is a merge commit, its second parent is the dev tip
+          # that was merged in — that's the SHA whose image dev-build.yml
+          # already built and pushed. Otherwise (e.g. fast-forward, direct
+          # push) fall back to the pushed commit itself.
+          PARENT_COUNT=$(git cat-file -p HEAD | grep -c '^parent ')
+          if [ "$PARENT_COUNT" -ge 2 ]; then
+            SOURCE_SHA=$(git rev-parse HEAD^2)
+          else
+            SOURCE_SHA=$(git rev-parse HEAD)
+          fi
+          echo "source_sha=${SOURCE_SHA}" >> "$GITHUB_OUTPUT"
+          echo "Resolved source SHA: ${SOURCE_SHA}"
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: albancrommer
+          password: ${{ secrets.DOCKER_TOKEN }}
+
+      - name: Pull dev-built image
+        id: pull
+        run: |
+          if docker pull albancrommer/inklewriter:${{ steps.source.outputs.source_sha }}; then
+            echo "found=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "found=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Set up Docker Buildx
+        if: steps.pull.outputs.found == 'false'
+        uses: docker/setup-buildx-action@v2
+
+      - name: Build image (fallback, no matching dev image found)
+        if: steps.pull.outputs.found == 'false'
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: false
+          load: true
+          tags: albancrommer/inklewriter:${{ steps.source.outputs.source_sha }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Get next version
+        id: version
+        uses: ietf-tools/semver-action@v1
+        with:
+          token: ${{ github.token }}
+          branch: master
+
+      - name: Create and push git tag
+        run: |
+          git tag ${{ steps.version.outputs.version_tag }}
+          git push origin ${{ steps.version.outputs.version_tag }}
+
+      - name: Tag and push release images
+        env:
+          VERSION: ${{ steps.version.outputs.version_tag }}
+          SOURCE_SHA: ${{ steps.source.outputs.source_sha }}
+        run: |
+          docker tag albancrommer/inklewriter:${SOURCE_SHA} albancrommer/inklewriter:${VERSION}
+          docker tag albancrommer/inklewriter:${SOURCE_SHA} albancrommer/inklewriter:latest
+
+          docker push albancrommer/inklewriter:${VERSION}
+          docker push albancrommer/inklewriter:latest
+
+          echo "Pushed images:"
+          echo "  - albancrommer/inklewriter:${VERSION}"
+          echo "  - albancrommer/inklewriter:latest"
+          echo "  - albancrommer/inklewriter:${SOURCE_SHA} (already pushed by dev-build)"

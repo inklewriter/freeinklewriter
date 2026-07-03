@@ -1,18 +1,20 @@
-name: Build, Test and Release
+name: Test
 
 on:
   push:
     branches:
+      - dev
+  pull_request:
+    branches:
+      - dev
       - master
 
 jobs:
-  test-and-release:
+  test:
     runs-on: ubuntu-22.04
 
     steps:
       - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0  # Fetch all history for versioning
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
@@ -21,15 +23,16 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: .
-          push: false 
+          push: false
           load: true
-          tags: albancrommer/inklewriter:candidate
+          tags: albancrommer/inklewriter:ci
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
       - name: Start test environment
         run: |
           cp .env.sample .env
+          sed -i 's#albancrommer/inklewriter:candidate#albancrommer/inklewriter:ci#' docker-compose.yml
           docker compose -f docker-compose.yml -f docker-compose.ci.yml up -d
 
       - name: Wait for services to be ready
@@ -37,7 +40,7 @@ jobs:
           echo "Waiting for PostgreSQL to be ready..."
           for i in {1..10}; do
             if docker compose logs db | grep -q "database system is ready to accept connections"; then
-              echo "✅ PostgreSQL ready"
+              echo "PostgreSQL ready"
               break
             fi
             echo "Waiting for PostgreSQL... ($i/10)"
@@ -47,11 +50,11 @@ jobs:
           echo "Waiting for Rails app to be ready..."
           for i in {1..30}; do
             if docker compose logs app | grep -q "Listening on"; then
-              echo "✅ Rails app ready"
+              echo "Rails app ready"
               break
             fi
             if docker compose logs app | grep -qE "(Error|FATAL|Abort)"; then
-              echo "❌ App failed to start. Logs:"
+              echo "App failed to start. Logs:"
               docker compose logs app | tail -50
               exit 1
             fi
@@ -60,12 +63,12 @@ jobs:
           done
 
           if ! docker compose logs app | grep -q "Listening on"; then
-            echo "❌ App didn't start within timeout. Logs:"
+            echo "App didn't start within timeout. Logs:"
             docker compose logs app
             exit 1
           fi
 
-          echo "✅ All services ready"
+          echo "All services ready"
 
       - name: Run Rails tests
         run: |
@@ -81,87 +84,33 @@ jobs:
         run: |
           echo "Testing asset bundle delivery..."
 
-          # Check RAILS_ENV
           docker compose exec -T app sh -c "echo RAILS_ENV=\$RAILS_ENV"
 
           # Warm up Sprockets by accessing home page (triggers asset compilation)
           docker compose exec -T app sh -c "curl -s http://localhost:3000/ > /dev/null"
           sleep 2
 
-          # Test main bundle accessibility
           docker compose exec -T app sh -c "curl -f -I http://localhost:3000/assets/inklewriter-source/inklewriter-main.js"
-
-          # Test readmode bundle accessibility
           docker compose exec -T app sh -c "curl -f -I http://localhost:3000/assets/inklewriter-source/inklewriter-readmode.js"
 
-          # Verify bundle sizes (use longer timeout for Sprockets concatenation)
           MAIN_LINES=$(docker compose exec -T app sh -c "curl -s --max-time 30 http://localhost:3000/assets/inklewriter-source/inklewriter-main.js" | wc -l)
           READMODE_LINES=$(docker compose exec -T app sh -c "curl -s --max-time 30 http://localhost:3000/assets/inklewriter-source/inklewriter-readmode.js" | wc -l)
 
           echo "Main bundle: $MAIN_LINES lines"
           echo "Readmode bundle: $READMODE_LINES lines"
 
-          # In development: expect ~25k+ and ~17k+ lines (concatenated)
-          # In production: expect single-digit lines (minified)
-          # Just verify bundles are accessible and non-empty
           if [ "$MAIN_LINES" -lt 1 ]; then
-            echo "❌ Main bundle is empty"
+            echo "Main bundle is empty"
             exit 1
           fi
 
           if [ "$READMODE_LINES" -lt 1 ]; then
-            echo "❌ Readmode bundle is empty"
+            echo "Readmode bundle is empty"
             exit 1
           fi
 
-          echo "✅ Asset bundles verified"
+          echo "Asset bundles verified"
 
       - name: Cleanup test environment
         if: always()
         run: docker compose down -v
-
-      - name: Determine next version
-        id: version
-        uses: mathieudutour/github-tag-action@v6.2
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          default_bump: patch
-          dry_run: true
-
-      - name: Create and push git tag
-        uses: mathieudutour/github-tag-action@v6.2
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          custom_tag: ${{ steps.version.outputs.new_version }}
-          tag_prefix: ""
-
-      - name: Tag candidate image as release
-        env:
-          VERSION: ${{ steps.version.outputs.new_version }}
-        run: docker tag albancrommer/inklewriter:candidate albancrommer/inklewriter:${VERSION}
-
-      - name: Login to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: albancrommer
-          password: ${{ secrets.DOCKER_TOKEN }}
-
-      - name: Tag and push Docker images
-        env:
-          VERSION: ${{ steps.version.outputs.new_version }}
-        run: |
-          COMMIT=${GITHUB_SHA::8}
-
-          # Tag with version and latest
-          docker tag albancrommer/inklewriter:${VERSION} albancrommer/inklewriter:latest
-          docker tag albancrommer/inklewriter:${VERSION} albancrommer/inklewriter:${COMMIT}
-
-          # Push all tags
-          docker push albancrommer/inklewriter:${VERSION}
-          docker push albancrommer/inklewriter:latest
-          docker push albancrommer/inklewriter:${COMMIT}
-
-          echo "✅ Pushed images:"
-          echo "  - albancrommer/inklewriter:${VERSION}"
-          echo "  - albancrommer/inklewriter:latest"
-          echo "  - albancrommer/inklewriter:${COMMIT}"
