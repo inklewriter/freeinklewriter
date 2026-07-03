@@ -42,20 +42,40 @@ document.addEventListener('DOMContentLoaded', function() {
 	      	})
 
       }).then(r => r.json())
-        .then(r => {        	
+        .then(r => {
         	console.log(r.message);
         	if(r["story_selection"]){
-        		document.querySelector('#search-results').innerHTML = "";
+        		const results = document.querySelector('#search-results');
+        		results.innerHTML = "";
         		r.story_selection.forEach( function(s) {
-        			document.querySelector('#search-results').innerHTML += 
-        			`<p>
-        				<span class="id">${s[0]}</span>
-        				<span class="title">${s[1]}</span>
-        				<span class="author">${s[2]}</span>
-        				<span class="email">${s[3]}</span>
-        				<span class="score">${s[4]}</span>
-        			</p>
-        			`
+        			const p = document.createElement('p');
+
+        			const id = document.createElement('span');
+        			id.className = 'id';
+        			id.textContent = s[0];
+        			p.appendChild(id);
+
+        			const title = document.createElement('span');
+        			title.className = 'title';
+        			title.textContent = s[1];
+        			p.appendChild(title);
+
+        			const author = document.createElement('span');
+        			author.className = 'author';
+        			author.textContent = s[2];
+        			p.appendChild(author);
+
+        			const email = document.createElement('span');
+        			email.className = 'email';
+        			email.textContent = s[3];
+        			p.appendChild(email);
+
+        			const score = document.createElement('span');
+        			score.className = 'score';
+        			score.textContent = s[4];
+        			p.appendChild(score);
+
+        			results.appendChild(p);
         		});
         	};
         });

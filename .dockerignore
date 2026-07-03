@@ -1,0 +1,40 @@
+# Git
+.git
+.gitignore
+
+# Logs
+*.log
+log/
+
+# Temporary files
+tmp/
+
+# Development/test databases
+*.sqlite3
+*.sqlite3-*
+
+# Environment files
+.env
+.env.*
+
+# Editor files
+.vscode/
+.idea/
+
+# Docker
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# CI/CD
+.github/
+
+# Documentation
+README.md
+CLAUDE.md
+
+# Kubernetes
+manifests/
+
+# Zip
+/*.zip

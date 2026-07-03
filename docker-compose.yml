@@ -1,4 +1,4 @@
-version: '2'
+# Docker Compose file for Inklewriter
 
 volumes:
   inkledb:
@@ -20,9 +20,8 @@ services:
     networks:
       - inklenet
     env_file: .env
-    environment:
-      FEATURE_TEST: "1"
-    image: inklewriter:latest
+    image: albancrommer/inklewriter:candidate
+    user: "1000:1000"
     volumes:
         - .:/usr/src/app
     ports:

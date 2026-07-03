@@ -19,7 +19,9 @@ function cleanWordPaste( in_word_text ) {
 
 function getURLParameterByName(name) {
     // get parameter from the URL string
-    var match = RegExp('[?&]' + name + '=([^&]*)')
+    // Escape special regex characters to prevent ReDoS (CWE-1333)
+    var escapedName = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    var match = RegExp('[?&]' + escapedName + '=([^&]*)')
                     .exec(window.location.search);
     return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
 }

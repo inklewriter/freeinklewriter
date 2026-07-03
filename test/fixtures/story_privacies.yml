@@ -1,13 +1,10 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  user_private: false
-  flagged_for_privacy: false
-  admin_private: false
+  user_private: public
   story: one
 
 two:
-  user_private: false
-  flagged_for_privacy: false
-  admin_private: false
+  user_private: private
+  bypass_token: test-token-123
   story: two

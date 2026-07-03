@@ -50,3 +50,6 @@ kubernetes.yaml
 # Temporary archives and patches
 *.zip
 patch*.sh
+manifests/
+dirty/
+scan_results.json

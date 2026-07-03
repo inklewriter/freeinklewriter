@@ -1,0 +1,146 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app
+  labels:
+    app: inklewriter
+    component: web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: inklewriter
+      component: web
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: inklewriter
+        component: web
+    spec:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+      containers:
+        - name: app
+          image: albancrommer/inklewriter:0.1.0
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsNonRoot: true
+            capabilities:
+              drop:
+                - ALL
+          ports:
+            - name: http
+              containerPort: 3000
+              protocol: TCP
+          env:
+            - name: POSTGRES_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: inklewriter-config
+                  key: POSTGRES_HOST
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: inklewriter-secrets
+                  key: postgres-user
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: inklewriter-secrets
+                  key: postgres-password
+            - name: PGDATA
+              valueFrom:
+                configMapKeyRef:
+                  name: inklewriter-config
+                  key: PGDATA
+            - name: SECRET_KEY_BASE
+              valueFrom:
+                secretKeyRef:
+                  name: inklewriter-secrets
+                  key: secret-key-base
+            - name: RAILS_ENV
+              valueFrom:
+                configMapKeyRef:
+                  name: inklewriter-config
+                  key: RAILS_ENV
+            - name: RAILS_LOG_TO_STDOUT
+              valueFrom:
+                configMapKeyRef:
+                  name: inklewriter-config
+                  key: RAILS_LOG_TO_STDOUT
+            - name: MAILING_ADDRESS
+              valueFrom:
+                configMapKeyRef:
+                  name: inklewriter-config
+                  key: MAILING_ADDRESS
+            - name: MAILING_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: inklewriter-config
+                  key: MAILING_PORT
+            - name: MAILING_USER
+              valueFrom:
+                secretKeyRef:
+                  name: inklewriter-secrets
+                  key: mailing-user
+            - name: MAILING_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: inklewriter-secrets
+                  key: mailing-password
+            - name: MAILING_DOMAIN
+              valueFrom:
+                configMapKeyRef:
+                  name: inklewriter-config
+                  key: MAILING_DOMAIN
+            - name: ACTION_MAILER_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: inklewriter-config
+                  key: ACTION_MAILER_HOST
+            - name: USE_FREEDESKTOP_PLACEHOLDER
+              valueFrom:
+                configMapKeyRef:
+                  name: inklewriter-config
+                  key: USE_FREEDESKTOP_PLACEHOLDER
+            - name: AIRBRAKE_PROJECT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: inklewriter-secrets
+                  key: airbrake-project-id
+            - name: AIRBRAKE_PROJECT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: inklewriter-secrets
+                  key: airbrake-project-key
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "250m"
+            limits:
+              memory: "2Gi"
+              cpu: "2000m"
+          livenessProbe:
+            httpGet:
+              path: /health.json
+              port: 3000
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /health.json
+              port: 3000
+            initialDelaySeconds: 45
+            periodSeconds: 5
+            timeoutSeconds: 3
+            failureThreshold: 3
+      restartPolicy: Always

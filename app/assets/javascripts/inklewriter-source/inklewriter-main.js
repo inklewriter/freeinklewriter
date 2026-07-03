@@ -7,7 +7,7 @@
 //
 
 // INCLUDE ALL DEPENDENCIES
-//= require jquery-1.7.1
+//= require jquery-3.7.1
 //= require jquery-stringify
 //= require translation
 //= require storage

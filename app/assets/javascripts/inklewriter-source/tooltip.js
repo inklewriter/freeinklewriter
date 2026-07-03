@@ -69,8 +69,8 @@ ToolTip.prototype.removeTip = function() {
 }
 
 
-$('[tooltip]').live("mouseenter", function(event) {
-    
+$(document).on("mouseenter", '[tooltip]', function(event) {
+
     var self = $(this);
     if (self.attr("id") != "tooltip")
         var tip = new ToolTip( self.attr("tooltip"), self, event );
