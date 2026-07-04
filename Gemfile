@@ -76,5 +76,9 @@ group :test do
   gem 'climate_control'
 end
 
+# Rails 7.1's test-unit railtie is incompatible with minitest 6's
+# LineFiltering#run signature change; pin to the last 5.x line.
+gem 'minitest', '~> 5.25'
+
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
