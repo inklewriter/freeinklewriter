@@ -602,10 +602,12 @@ var EditorMenu = function() {
             addMenuOption("<span class='toggledto'>" + tr("read") + "</span>", jqEditorMenu);
         }
 
+/* @alban 2026-07-04 : Kept for reference, but msie and $.browser are deprecated
+ * @todo remove me, probably
         if (!($.browser.msie && parseInt($.browser.version, 10) <= 8)) {
             addMenuOption("<span style='font-size:24px;'>&#9881;</span>", jqEditorMenu, EditorMenu.showSettingsDialogue, tr("Settings"));
         }
-        
+*/
         setSaveState(saveState);
     }
     
