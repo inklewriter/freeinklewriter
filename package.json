@@ -5,9 +5,11 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "npx qunit test/javascript/**/*_test.js"
+    "test": "npx qunit test/javascript/**/*_test.js",
+    "ptest": "pnpx qunit test/javascript/**/*_test.js"
   },
   "devDependencies": {
-    "qunit": "^2.24.2"
+    "qunit": "^2.24.2",
+    "sinon": "^22.0.0"
   }
 }
