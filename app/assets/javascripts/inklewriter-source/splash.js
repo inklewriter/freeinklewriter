@@ -35,24 +35,28 @@ var Splash = function() {
         jqAbsorber = $("<div class='eventAbsorber'></div>");
         $("body").append(jqAbsorber);
         
-        jqSplash = $("<div class='splash'><div id='bg'></div> \
-                            <div id='content'> \
-                                <div id='header'>\
-                                    <p id='welcome-message'>"+tr("Welcome to")+"</p>\
-                                    <img draggable=false id='splash-logo' src='/img/splash-logo-beta.png'></img>\
-                                </div> \
-                                <div id='menu'>\
-                                    <p style='padding-top: 10px; color: red; font-weight: bold;'>"+tr("WARNING: inklewriter is shutting down soon!")+" <a style='color: red;' href='https://www.inklestudios.com/inklewriter/shutdown'>"+tr("Read more about how and when")+"</a>.</p>\
-                                    <ul>\
-                                        <li><div class='button' id='tutorial'>"+tr("get started")+"</div>\
-                                        <li><div class='button' id='new'>"+tr("new")+"</div></li>\
-                                        <li><div class='button' id='sign-in'>"+tr("sign in")+"</div></li>\
-                                    </ul>\
-                                    <img draggable=false id='splash-splats' src='/img/splash-splats.png'></img>\
-                                </div> \
-                            </div> \
-                        </div>");
-        
+        jqSplash = $("<div class='splash'>\
+    <div id='bg'></div>\
+    <div id='content'>\
+        <div id='header'>\
+            <p id='welcome-message'>Welcome to\
+                </p> <img draggable=false id='splash-logo' src='/img/splash-logo-free.png'></img>\
+        </div>\
+        <div id='menu'>\
+            <p style='padding-top: 10px; color: red; font-weight: bold;'>Inklewriter is free software. <a href='https://www.inklestudios.com/2019/03/11/inklewriter-is-back-online'>Here's why.</a>\
+            <ul>\
+                <li>\
+                    <div class='button' id='tutorial'>get started</div>\
+                    <li>\
+                        <div class='button' id='new'>new</div>\
+                </li>\
+                <li>\
+                    <div class='button' i d='sign-in'>sign in</div>\
+                </li>\
+            </ul> <img draggable=false id='splash-splats' src='/img/splash-splats.png'></img>\
+        </div>\
+    </div>\
+</div>");     
         // Add
         $("body").append(jqSplash);
         jqSplash.focus();
