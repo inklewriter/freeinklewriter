@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Inklewriter - Interactive fiction writing tool",
   "private": true,
+  "type": "module",
   "scripts": {
     "test": "npx qunit test/javascript/**/*_test.js"
   },
