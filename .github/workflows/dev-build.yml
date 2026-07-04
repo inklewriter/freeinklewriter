@@ -33,5 +33,5 @@ jobs:
           tags: |
             albancrommer/inklewriter:${{ github.event.workflow_run.head_sha }}
             albancrommer/inklewriter:dev-candidate
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          cache-from: type=gha,scope=dev-build
+          cache-to: type=gha,mode=max,scope=dev-build

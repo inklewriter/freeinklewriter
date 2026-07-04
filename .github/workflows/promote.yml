@@ -60,8 +60,8 @@ jobs:
           push: false
           load: true
           tags: albancrommer/inklewriter:${{ steps.source.outputs.source_sha }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          cache-from: type=gha,scope=promote
+          cache-to: type=gha,mode=max,scope=promote
 
       - name: Get next version
         id: version

@@ -26,8 +26,8 @@ jobs:
           push: false
           load: true
           tags: albancrommer/inklewriter:ci
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          cache-from: type=gha,scope=test
+          cache-to: type=gha,mode=max,scope=test
 
       - name: Start test environment
         run: |
