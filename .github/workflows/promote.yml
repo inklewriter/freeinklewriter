@@ -77,7 +77,7 @@ jobs:
 
       - name: Tag and push release images
         env:
-          VERSION: ${{ steps.version.outputs.version_tag }}
+          VERSION: ${{ steps.version.outputs.current }}
           SOURCE_SHA: ${{ steps.source.outputs.source_sha }}
         run: |
           docker tag albancrommer/inklewriter:${SOURCE_SHA} albancrommer/inklewriter:${VERSION}
