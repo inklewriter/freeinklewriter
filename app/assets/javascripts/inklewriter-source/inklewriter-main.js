@@ -19,6 +19,7 @@
 //= require editor
 //= require editorAccount
 //= require editorMenu
+//= require storyEngine
 //= require playMode
 //= require tutorialStory_fromRead
 //= require splash
